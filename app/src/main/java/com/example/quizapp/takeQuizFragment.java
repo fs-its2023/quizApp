@@ -50,10 +50,30 @@ public class takeQuizFragment extends Fragment {
         //ファイル読み込み
         lines = mainApp.readFileAsList(packId);
         //quizData = readQuizData(this.quizNum);
+
+        //問題の表示
     }
 
     /*
     public String[] readQuizData(quizNum){
 
     }*/
+
+    public void OnclickAnswer(){
+        //正解の場合の処理
+
+        //不正解の場合の処理
+
+    }
+
+    public void onclickShowExplanation(){
+
+    }
+
+    public void onClickNextQuiz(){
+        this.quizNum = this.quizNum + 1;
+
+
+    }
+
 }
