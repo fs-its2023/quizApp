@@ -26,5 +26,6 @@ public class MainActivity extends AppCompatActivity {
         //テス
         //ささがわです
 
+        //岡部>_<
     }
 }
