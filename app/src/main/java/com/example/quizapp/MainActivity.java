@@ -24,12 +24,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //テス
+<<<<<<< HEAD
 
+=======
+>>>>>>> c02405fc0dbc20f860469e80eb78c4a661f26ddd
         //ささがわです
-
         //岡部>_<
+<<<<<<< HEAD
 
         //岡部
 
+=======
+        //岡部
+>>>>>>> c02405fc0dbc20f860469e80eb78c4a661f26ddd
     }
 }
