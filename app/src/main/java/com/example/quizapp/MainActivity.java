@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //テス
-        //笹川
+        //ささがわです
 
     }
 }
