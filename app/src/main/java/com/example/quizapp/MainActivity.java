@@ -24,6 +24,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //テス
-
+        //岡部>_<
     }
 }
