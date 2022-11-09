@@ -23,8 +23,9 @@ public class resultFragment extends Fragment {
 
     //フィールド変数の宣言
     takeQuizPackActivity tqActivity;
+    MainActivity mainActivity;
     mainApplication mainApplication;
-    int puckNum;
+    int packNum;
     int quizNumProblem;
     String[] listData;
     List<String> allList=new ArrayList<>();
@@ -46,8 +47,9 @@ public class resultFragment extends Fragment {
 
         //フィールド変数に値を代入
         tqActivity=(takeQuizPackActivity)getActivity();  //Activityをインスタンス化して、Activityのメソッドが使えるようにする
-        mainApplication =tqActivity.getMainApplication();
-        puckNum= mainApplication.getPackNum();
+        mainActivity=(MainActivity)getActivity();
+        mainApplication = (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
+        packNum = mainApplication.getPackNum();
 
         //Applicationクラスにあるパックの情報をリストに代入
         allList= mainApplication.getAllList();
@@ -67,7 +69,7 @@ public class resultFragment extends Fragment {
 
     //リストの情報を","区切りでパックの情報を入れる配列に代入するメソッド
     public void setListData(List<String> allList){
-        listData=allList.get(puckNum).split(",");
+        listData=allList.get(packNum).split(",");
     }
 
 
