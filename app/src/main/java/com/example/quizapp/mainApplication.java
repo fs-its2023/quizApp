@@ -20,7 +20,7 @@ public class mainApplication extends Application {
     private List<String> allList = new ArrayList<String>();
     private List<String> selectList = new ArrayList<String>();
     private int quizNum;
-    private String puckId="0";
+    private String packId ="0";
     private boolean fromMakePackActivity=false;
     private boolean fromTakeQuizFragment=false;
     private boolean fromResultFragment=false;
@@ -167,12 +167,12 @@ public class mainApplication extends Application {
         this.quizNum = quizNum;
     }
 
-    public String getPuckId() {
-        return puckId;
+    public String getPackId() {
+        return packId;
     }
 
-    public void setPuckId(String puckId) {
-        this.puckId = puckId;
+    public void setPackId(String packId) {
+        this.packId = packId;
     }
 
     public boolean getFromTakeQuizFragment() {
