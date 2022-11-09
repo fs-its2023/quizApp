@@ -24,8 +24,8 @@ public class showExplanationFragment extends Fragment {
     takeQuizPackActivity tqActivity;
     mainApplication mainApplication;
     int quizNum;
-    String puckId;
-    String[] quizDatas;
+    String packId;
+    String[] quizData;
     List<String> quizList=new ArrayList<>();
 
 
@@ -47,16 +47,16 @@ public class showExplanationFragment extends Fragment {
         mainApplication=tqActivity.getMainApplication();
 
         //パックIDをmainApplicationから受け取る
-        puckId =mainApplication.getPackId();
+        packId =mainApplication.getPackId();
 
         //パックIDに該当するファイルを読み込み各行をリストとして受け取る
-        quizList=mainApplication.readFileAsList(puckId);
+        quizList=mainApplication.readFileAsList(packId);
 
         //mainApplicationの問題番号を受け取る
         quizNum=mainApplication.getQuizNum();
 
         //クイズが入っているリストを","区切りで配列に代入
-        setQuizDatas(quizList);
+        setQuizData(quizList);
 
         //Viewの生成
         createView();
@@ -91,13 +91,13 @@ public class showExplanationFragment extends Fragment {
             textView.setTextSize(30);
             switch (i){
                 case 1:
-                    textView.setText("問題文\n"+quizDatas[i]);
+                    textView.setText("問題文\n"+ quizData[i]);
                     break;
                 case 2:
-                    textView.setText("解説\n"+quizDatas[i]);
+                    textView.setText("解説\n"+ quizData[i]);
                     break;
                 case 3:
-                    textView.setText("正解の選択し\n"+quizDatas[i]);
+                    textView.setText("正解の選択し\n"+ quizData[i]);
                     break;
             }
 
@@ -141,8 +141,8 @@ public class showExplanationFragment extends Fragment {
     }
 
     //選ばれた問題番号の問題文、解説、選択しを入れておく配列に値を入れる
-    public void setQuizDatas(List<String> list) {
+    public void setQuizData(List<String> list) {
         //問題番号に該当する、問題の行を","区切りで配列に代入（問題番号1は行酢でいえば0行目にあたる）
-        quizDatas = list.get(quizNum-1).split(",");
+        quizData = list.get(quizNum-1).split(",");
     }
 }
