@@ -60,7 +60,16 @@ public class takeQuizPackActivity extends AppCompatActivity {
 
     //遷移先のFragmentからメニューボタンを再表示させるメソッド
     public LinearLayout getLinearLayout() {
-        LinearLayout layout = null;
+        LinearLayout layout=new LinearLayout(this);
+        //layout.setId(101);
+        //垂直方向にViewを追加していく
+        layout.setOrientation(LinearLayout.VERTICAL);
+        //layoutの幅、高さの設定
+        layout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+
+
         Button button = new Button(this);
         button.setTextSize(10);
         button.setText("メニュー");
