@@ -22,6 +22,7 @@ public class showExplanationFragment extends Fragment {
     //フィールド変数の宣言
     LinearLayout layout;
     takeQuizPackActivity tqActivity;
+    MainActivity mainActivity;
     mainApplication mainApplication;
     int quizNum;
     String packId;
@@ -43,8 +44,10 @@ public class showExplanationFragment extends Fragment {
         //takeQuizPackActivityのメソッドをつくためにインスタンス化
         tqActivity=(takeQuizPackActivity)getActivity();
 
+        mainActivity=(MainActivity)getActivity();
+
         //mainApplicationを使えるようにActivityからApplicationを受け取る
-        mainApplication=tqActivity.getMainApplication();
+        mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
 
         //パックIDをmainApplicationから受け取る
         packId =mainApplication.getPackId();
