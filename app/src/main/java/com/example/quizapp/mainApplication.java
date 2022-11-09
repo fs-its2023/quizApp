@@ -16,15 +16,15 @@ import java.util.List;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class mainApplication extends Application {
     private int packNum=0;
-    private String fileName = "packData.csvのことかしら";
     private List<String> allList = new ArrayList<String>();
     private List<String> selectList = new ArrayList<String>();
     private int quizNum;
-    private String packId ="0";
+    private String packId;
     private boolean fromMakePackActivity=false;
+    private boolean fromTakeQuizPackActivity =false;
     private boolean fromTakeQuizFragment=false;
     private boolean fromResultFragment=false;
-    private String PACK_DATA_PATH = "packData.csv";//パスでなくファイル名を使うならfileNameだけでいい
+    private final String PACK_DATA_FILE_NAME = "packData.csv";
 
     public void setSelectList(List<String> inputSelectList) {
         this.selectList = inputSelectList;
@@ -42,19 +42,12 @@ public class mainApplication extends Application {
         this.packNum=puckNum;
     }
 
-    //修正必要
-    //allListに代入→returnでよさそう？　
+
     public List<String> getAllList() {
-        String str= readFileAsText(fileName);
+        allList=readFileAsList(PACK_DATA_FILE_NAME);
         return allList;
     }
 
-    //修正必要
-    //いる？
-    public void setAllList(){
-        deleteFile(fileName);
-        saveFile(fileName, "0,ワンピースクイズ,50,ワンピースのクイズです,漫画\n");
-    }
 
     /*
     *ファイルに書き込みをする機能
@@ -199,4 +192,11 @@ public class mainApplication extends Application {
         this.fromMakePackActivity = fromMakePackActivity;
     }
 
+    public boolean getFromTakeQuizPackActivity() {
+        return fromTakeQuizPackActivity;
+    }
+
+    public void setFromTakeQuizPackActivity(boolean fromTakeQuizPackActivity) {
+        this.fromTakeQuizPackActivity = fromTakeQuizPackActivity;
+    }
 }
