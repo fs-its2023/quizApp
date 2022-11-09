@@ -19,7 +19,6 @@ public class MakePackActivity extends AppCompatActivity {
     private int quizTotalNum;
 
     private FragmentTransaction transaction;
-    public mainApplication mainApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,7 @@ public class MakePackActivity extends AppCompatActivity {
         Button btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> finish());
 
+        //新規作成のボタンを押したときの処理
         Button btnMakeNewQuiz = findViewById(R.id.btnMakeNewQuiz);
         btnMakeNewQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +41,7 @@ public class MakePackActivity extends AppCompatActivity {
             }
         });
 
+        //編集のボタンを押したときの処理
         Button btnEditQuiz = findViewById(R.id.btnEditQuiz);
         btnEditQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,24 +51,26 @@ public class MakePackActivity extends AppCompatActivity {
         });
     }
 
+    //編集ボタンを押した後の動作、selectPackFragmentを開く
     public void selectPack(){
+        packTitle=null;
+        packGenre=null;
+        packIntroduction=null;
         selectPackFragment selectPackFragment = new selectPackFragment();
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, selectPackFragment);
         transaction.commit();
+    }
+
+    //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く
+    public void makeNewPack(){
         packTitle=null;
         packGenre=null;
         packIntroduction=null;
-    }
-
-    public void makeNewPack(){
         //makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
         //transaction = getSupportFragmentManager().beginTransaction();
         //transaction.add(R.id.container, makeNewPackFragment);
         //transaction.commit();
-        packTitle=null;
-        packGenre=null;
-        packIntroduction=null;
     }
 
     //遷移先のFragmentからメニューボタンを再表示させるメソッド
