@@ -23,5 +23,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //テス
+<<<<<<< HEAD
+        //ささがわです
+
+        //岡部>_<
+=======
+        //岡部
+>>>>>>> 5b2f37232e5fe9bfaea186c0b51643d877e04dfd
     }
 }
