@@ -18,6 +18,7 @@ public class takeQuizFragment extends Fragment {
     private int[] order={1,2,3,4};
     //takeQuizPackActivity内変数
     private takeQuizPackActivity tqActivity;
+    private MainActivity mainActivity;
     private int correctNum;
     //mainApplication内変数
     private mainApplication mainApp;
@@ -42,8 +43,9 @@ public class takeQuizFragment extends Fragment {
 
         //外部クラスのデータ取得
         this.tqActivity = (takeQuizPackActivity)getActivity();
+        this.mainActivity=(MainActivity)getActivity();
         this.correctNum = this.tqActivity.getCorrectNum();
-        this.mainApp = tqActivity.getMainApplication();
+        this.mainApp = (mainApplication) mainActivity.getMainApplication();
         this.packId = this.mainApp.getPackId();
         this.quizNum = mainApp.getQuizNum();
 

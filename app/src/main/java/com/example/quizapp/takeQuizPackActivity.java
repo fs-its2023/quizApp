@@ -14,7 +14,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
 
     private int correctNum;
     private FragmentTransaction transaction;
-    public mainApplication mainApp;
 
     //Activity起動時, パック選択画面を表示するメソッド
     @Override
@@ -91,10 +90,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
         }
     };
 
-    //mainApplicationのgetter
-    public mainApplication getMainApplication(){
-        return mainApp;
-    }
+
 
     //correctNumのgetterとsetter
     public int getCorrectNum() {
