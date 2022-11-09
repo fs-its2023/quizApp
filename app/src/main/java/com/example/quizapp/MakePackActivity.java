@@ -41,7 +41,7 @@ public class MakePackActivity extends AppCompatActivity {
             }
         });
 
-        //編集のボタンを押したときの処理
+        //編集のボタンを押したときの処理 
         Button btnEditQuiz = findViewById(R.id.btnEditQuiz);
         btnEditQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
