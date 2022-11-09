@@ -2,17 +2,21 @@ package com.example.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    mainApplication mainApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mainApplication=(mainApplication)getApplication();
 
         //activity遷移ボタン
         Button button0 = findViewById(R.id.button0);
@@ -23,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //テス
-        //ささがわです
-        //岡部>_<
-        //岡部
+    }
+
+    public Application getMainApplication(){
+        return mainApplication;
     }
 }
