@@ -64,13 +64,13 @@ public class MakePackActivity extends AppCompatActivity {
 
     //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く
     public void makeNewPack(){
+        makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container, makeNewPackFragment);
+        transaction.commit();
         packTitle=null;
         packGenre=null;
         packIntroduction=null;
-        //makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
-        //transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.add(R.id.container, makeNewPackFragment);
-        //transaction.commit();
     }
 
     //遷移先のFragmentからメニューボタンを再表示させるメソッド
