@@ -61,10 +61,10 @@ public class MakePackActivity extends AppCompatActivity {
     }
 
     public void makeNewPack(){
-        //makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
-        //transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.add(R.id.container, makeNewPackFragment);
-        //transaction.commit();
+        makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container, makeNewPackFragment);
+        transaction.commit();
         packTitle=null;
         packGenre=null;
         packIntroduction=null;
