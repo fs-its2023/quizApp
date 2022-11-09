@@ -26,43 +26,20 @@ public class mainApplication extends Application {
     private boolean fromResultFragment=false;
     private final String PACK_DATA_FILE_NAME = "packData.csv";
 
-    public void setSelectList(List<String> inputSelectList) {
-        this.selectList = inputSelectList;
-    }
-
-    public List<String> getSelectList(){
-        return this.selectList;
-    }
-
-    public int getPackNum() {
-        return packNum;
-    }
-
-    public void setPackNum(int puckNum) {
-        this.packNum=puckNum;
-    }
-
-
-    public List<String> getAllList() {
-        allList=readFileAsList(PACK_DATA_FILE_NAME);
-        return allList;
-    }
-
-
     /*
     *ファイルに書き込みをする機能
      */
-    public void saveFile(String file, String str){
+    public void saveFile(String fileName, String strSaveData){
         try {
             /*
             *書き込みをするファイルの指定、指定されたファイルがなければ新規作成
              */
-            FileOutputStream fileOutputStream = openFileOutput(file, MODE_PRIVATE | MODE_APPEND);
+            FileOutputStream fileOutputStream = openFileOutput(fileName, MODE_PRIVATE | MODE_APPEND);
 
             /*
             *指定したファイルに書き込み
              */
-            fileOutputStream.write(str.getBytes());
+            fileOutputStream.write(strSaveData.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,13 +49,13 @@ public class mainApplication extends Application {
     *ファイルの読み込みをするメソッド String
     String型で全データ扱わないからいらない？
      */
-    public String readFileAsText(String file){
+    public String readFileAsText(String fileName){
         String text=null;
         try{
             /*
              *読み込むファイルの指定
              */
-            FileInputStream fileInputStream = openFileInput(file);
+            FileInputStream fileInputStream = openFileInput(fileName);
 
             /*
              *指定したファイルを読み込む機能を使うために宣言
@@ -112,16 +89,15 @@ public class mainApplication extends Application {
 
     /*
     *ファイルの読み込みをするメソッド　List
-    ・allListを作る
-    ・クイズ一覧のリストを作る？
+    ・allListに最新のファイル情報を入れる
      */
-    public List<String> readFileAsList(String file) {
+    public List<String> readFileAsList(String fileName) {
         List<String> list=new ArrayList<>();
         try {
             /*
             *読み込むファイルの指定
              */
-            FileInputStream fileInputStream = openFileInput(file);
+            FileInputStream fileInputStream = openFileInput(fileName);
 
             /*
             *指定したファイルを読み込む機能を使うために宣言
@@ -151,6 +127,26 @@ public class mainApplication extends Application {
         return list;
     }
 
+    public void setSelectList(List<String> inputSelectList) {
+        this.selectList = inputSelectList;
+    }
+
+    public List<String> getSelectList(){
+        return this.selectList;
+    }
+
+    public int getPackNum() {
+        return packNum;
+    }
+
+    public void setPackNum(int puckNum) {
+        this.packNum=puckNum;
+    }
+
+    public List<String> getAllList() {
+        allList=readFileAsList(PACK_DATA_FILE_NAME);
+        return allList;
+    }
 
     public int getQuizNum() {
         return quizNum;
