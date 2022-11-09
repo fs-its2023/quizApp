@@ -3,19 +3,15 @@ package com.example.quizapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import android.app.Activity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
-
 
 
 /**
@@ -24,8 +20,12 @@ import android.widget.ArrayAdapter;
  * create an instance of this fragment.
  */
 public class makeNewPackFragment extends Fragment {
-
-    MainActivity MaActivity;
+    /*MainaActivityをインスタンス化するための変数*/
+    MainActivity maActivity;
+    /*MakePackActivityをインスタンス化するための変数*/
+    MakePackActivity makePackActivity;
+    /*mainApplicationをインスタンス化するための変数*/
+    mainApplication mainApplication;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,6 +57,10 @@ public class makeNewPackFragment extends Fragment {
         return fragment;
     }
 
+    /*
+     *このフラグメントが生成された時に行われる処理
+     * フィールド変数を定義している
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,9 @@ public class makeNewPackFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        maActivity=(MainActivity) getActivity();
+        mainApplication= (com.example.quizapp.mainApplication) maActivity.getMainApplication();
+        makePackActivity=(MakePackActivity) getActivity();
     }
 
     @Override
@@ -72,32 +79,40 @@ public class makeNewPackFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_make_new_pack,container,false);
         return view;
     }
+
+    /*
+    *入力確定ボタンが押された時の処理
+     */
     public void onClickEnter(View view) {
 
-        Button btnSend = view.findViewById(R.id.btnSend);
+        /*
+        *ボタンの処理の中に書いては意味がないのではいだろうか(無くても動くと思われる)
+        * Button btnSend = view.findViewById(R.id.btnSend);
+         */
+
         EditText packTitleSub = view.findViewById(R.id.packTitle);
         EditText packIntroductionSub = view.findViewById(R.id.packIntroduction);
         TextView textView = view.findViewById(R.id.textView);
 
-        //スピナーを取得
+        /*スピナーを取得*/
         Spinner sp = (Spinner) view.findViewById(R.id.spinner);
-        //スピナーに対してイベントリスナーを登録
 
-        //sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            //@Override
-            //項目が選択された場合の処理
-            //public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-           //     Spinner sp = (Spinner) parent;
-            //}
-          //  @Override
-            //public void onNothingSelected(AdapterView<?> adapterView) {
-           // }
-        //});
+        /*タイトルのテキストエディットに入力された値を取得*/
+        String packTitle = packTitleSub.getText().toString();
 
+        /*説明文のテキストエディットに入力された値を取得*/
+        String packIntroduction = packIntroductionSub.getText().toString();
 
-        String packTitle = packTitleSub.getText().toString();//タイトルのテキストエディットに入力された値を取得
-        String packIntroduction = packIntroductionSub.getText().toString();//説明文のテキストエディットに入力された値を取得
-        String packGenre = sp.getSelectedItem().toString();//スピナーで選択された値を取得
+        /*スピナーで選択された値を取得*/
+        String packGenre = sp.getSelectedItem().toString();
+
+        /*
+         *多分タイトルと説明文とスピナーの値ははMakePackActivityに渡す必要があるのでその処理を追加してください
+         *             ↓今のところMakePackActivityにセッターとゲッターがない状況なので仮に書くとしたらこんな感じになると思う
+         * makePackActivity.setPackTitle(packTitle);
+         * makePackActivity.setPackIntroduction(packIntroduction);
+         * makePackActivity.setPackGenre(packGenre);
+         */
 
         if(!packTitle.equals("")||!packIntroduction.equals("")||!packGenre.equals("なし")){
             textView.setText(String.format("タイトルは" + packTitle + ",説明文は" + packIntroduction + ",ジャンルは" + packGenre + "になります"));
@@ -107,8 +122,6 @@ public class makeNewPackFragment extends Fragment {
             //「すべての欄に入力してください」というポップアップを表示
             //×を押してポップアップが消える
         }
-
-
     }
 
 }

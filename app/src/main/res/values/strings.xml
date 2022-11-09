@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">quizApp</string>
+    <string name="app_name">My Application</string>
+    <string name="spnOs_prompt">OSを選択してください</string>
+    <string-array name="spnOs_items">
+        <item>なし</item>
+        <item>動物</item>
+        <item>アニメ</item>
+        <item>歴史</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
