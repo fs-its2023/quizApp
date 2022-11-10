@@ -28,6 +28,7 @@ public class makeNewPackFragment extends Fragment {
     MakePackActivity makePackActivity;
     /*mainApplicationをインスタンス化するための変数*/
     mainApplication mainApplication;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -122,7 +123,7 @@ public class makeNewPackFragment extends Fragment {
             // フラグメントトランザクションの開始
             FragmentTransaction transaction = manager.beginTransaction();
             // レイアウトをfragmentに置き換え（追加）
-            transaction.replace(R.id.,editPackFragment);
+            transaction.replace(R.id.layout,editQuizFragment);
             // 置き換えのトランザクションをバックスタックに保存する
             transaction.addToBackStack(null);
             // フラグメントトランザクションをコミット
