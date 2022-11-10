@@ -13,7 +13,7 @@ import android.annotation.SuppressLint;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class MainActivity extends AppCompatActivity {
+public class mainActivity extends AppCompatActivity {
     mainApplication mainApplication;
 
     @Override
