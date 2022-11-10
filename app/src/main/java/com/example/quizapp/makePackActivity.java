@@ -1,6 +1,6 @@
 package com.example.quizapp;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-public class MakePackActivity extends AppCompatActivity {
+public class makePackActivity extends AppCompatActivity {
 
     private String packTitle;
     private String packGenre;
@@ -56,6 +56,7 @@ public class MakePackActivity extends AppCompatActivity {
         packTitle=null;
         packGenre=null;
         packIntroduction=null;
+        quizTotalNum=0;
         selectPackFragment selectPackFragment = new selectPackFragment();
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, selectPackFragment);
@@ -64,19 +65,21 @@ public class MakePackActivity extends AppCompatActivity {
 
     //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く
     public void makeNewPack(){
+        packTitle=null;
+        packGenre=null;
+        packIntroduction=null;
+        quizTotalNum=0;
         makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, makeNewPackFragment);
         transaction.commit();
-        packTitle=null;
-        packGenre=null;
-        packIntroduction=null;
     }
 
     //遷移先のFragmentからメニューボタンを再表示させるメソッド
+    @SuppressLint("ResourceType")
     public LinearLayout getLinearLayout() {
         LinearLayout layout=new LinearLayout(this);
-        //layout.setId(101);
+        layout.setId(101);
         //垂直方向にViewを追加していく
         layout.setOrientation(LinearLayout.VERTICAL);
         //layoutの幅、高さの設定
@@ -106,7 +109,7 @@ public class MakePackActivity extends AppCompatActivity {
         }
     };
 
-    //フィールドのセッター、ゲッター
+    //フィールドのセッターとゲッター
     public void setPackTitle(String packTitle){
         this.packTitle = packTitle;
     }
