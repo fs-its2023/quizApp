@@ -248,17 +248,6 @@ public class selectPackFragment extends Fragment {
     /*
     *searchFragmentの生成
      */
-    /*public void creaateSearchFragment(Activity activity,LinearLayout layout){
-        // フラグメントマネージャーの取得
-        //FragmentManager manager = activity.getSupportFragmentManager(); // アクティビティではgetSupportFragmentManager()?
-        // フラグメントトランザクションの開始
-        FragmentTransaction transaction =
-        // レイアウトをfragmentに置き換え（追加）
-        transaction.replace(layout.getId(),new showExplanationFragment());
-        // 置き換えのトランザクションをバックスタックに保存する
-        transaction.addToBackStack(null);
-        // フラグメントを表示する
-        transaction.commit();
-    }*/
+
 
 }
