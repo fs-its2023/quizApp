@@ -39,6 +39,7 @@ public class selectPackFragment extends Fragment {
      */
     int pageCurrent;
     int pageAll;
+    String[] listData;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -49,13 +50,16 @@ public class selectPackFragment extends Fragment {
         mainActivity=(MainActivity)getActivity();
         mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
 
+        /*ApplicationのallListを取得*/
         allList=mainApplication.getAllList();
 
+        /*selectListにallListを入れ、新着順に変更*/
         mainApplication.deleteSelectList();
         mainApplication.setSelectList(allList);
         selectList=mainApplication.getSelectList();
         Collections.reverse(selectList);
 
+        /*ページ数を表示するために変数に値を代入*/
         pageAll=((selectList.size()-1)/10)+1;
         pageCurrent=1;
 
@@ -66,8 +70,11 @@ public class selectPackFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         super.onCreateView(inflater, container, savedInstance);
+
+        /*ページ数を表示するために変数に値を代入*/
         pageCurrent=1;
         pageAll=((selectList.size()-1)/10)+1;
+
         return inflater.inflate(R.layout.fragment_select_pack, container, false);
     }
 
@@ -114,14 +121,14 @@ public class selectPackFragment extends Fragment {
         scrollView.addView(verticalLayout);
 
         /*
-        *リニアレイアウト()の設定表示
+        *リニアレイアウト(HORIZONTAL)の設定表示
          */
         LinearLayout horizontalLayout=new LinearLayout(activity);
         horizontalLayout.setId(2);
         horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
         horizontalLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         verticalLayout.addView(horizontalLayout);
 
         /*
@@ -138,18 +145,54 @@ public class selectPackFragment extends Fragment {
         horizontalLayout.addView(searchButton);
 
         /*
-        *現在のページ数と全ページ数を表示する
-         */
-        TextView pageNumText=new TextView(activity);
-        pageNumText.setText("現在のページ数");
-
-        /*
         *ひとつ前のページに戻るボタンの生成
          */
-        Button backPage=new Button(activity);
-        backPage.setText("◀");
-        backPage.setTextSize(15);
-        backPage.setTag(-1);
+        Button backPageButton=new Button(activity);
+        backPageButton.setText("◀");
+        backPageButton.setTextSize(15);
+        backPageButton.setTag(-1);
+        backPageButton.setLayoutParams(buttonLayoutParams);
+        horizontalLayout.addView(backPageButton);
+
+        /*
+         *現在のページ数と全ページ数を表示する
+         */
+        TextView pageNumText=new TextView(activity);
+        pageNumText.setText(pageCurrent+"/"+pageAll);
+        pageNumText.setTextSize(15);
+        LinearLayout.LayoutParams textLayoutParams=new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        pageNumText.setLayoutParams(textLayoutParams);
+        horizontalLayout.addView(pageNumText);
+
+        /*
+        *次のページに行くボタンを作る
+         */
+        Button nextPageButton=new Button(activity);
+        nextPageButton.setText("▶");
+        nextPageButton.setTextSize(15);
+        nextPageButton.setTag(1);
+        nextPageButton.setLayoutParams(buttonLayoutParams);
+        horizontalLayout.addView(nextPageButton);
+
+        /*
+        *パックの情報を出力する
+         */
+        for(int i=10*pageCurrent-10;i<10*pageCurrent;i++){
+            setListData(i,selectList);
+
+            /*
+            *リニアレイアウト(HORIZONTAL)の設定表示
+             */
+            LinearLayout packIntroductionHorizontalLayout=new LinearLayout(activity);
+            packIntroductionHorizontalLayout.setId(3);
+            packIntroductionHorizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
+            packIntroductionHorizontalLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            verticalLayout.addView(packIntroductionHorizontalLayout);
+        }
 
     }
 
@@ -159,5 +202,9 @@ public class selectPackFragment extends Fragment {
 
         }
     };
+
+    public void setListData(int i,List<String> allList){
+        listData=allList.get(i).split(",");
+    }
 
 }

@@ -23,10 +23,11 @@ public class resultFragment extends Fragment {
 
     //フィールド変数の宣言
     takeQuizPackActivity tqActivity;
-    MainActivity mainActivity;
+    mainActivity mainActivity;
     mainApplication mainApplication;
     int packNum;
     int quizNumProblem;
+    String packId;
     String[] listData;
     List<String> allList=new ArrayList<>();
     Button button;
@@ -47,12 +48,13 @@ public class resultFragment extends Fragment {
 
         //フィールド変数に値を代入
         tqActivity=(takeQuizPackActivity)getActivity();  //Activityをインスタンス化して、Activityのメソッドが使えるようにする
-        mainActivity=(MainActivity)getActivity();
+        mainActivity=(mainActivity)getActivity();
         mainApplication = (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
         packNum = mainApplication.getPackNum();
+        packId=mainApplication.getPackId();
 
         //Applicationクラスにあるパックの情報をリストに代入
-        allList= mainApplication.getAllList();
+        allList= mainApplication.readFileAsList(packId);
 
         //配列に値を代入
         setListData(allList);
