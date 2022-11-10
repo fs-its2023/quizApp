@@ -108,7 +108,7 @@ public class MakePackActivity extends AppCompatActivity {
         }
     };
 
-    //フィールドのセッター、ゲッター
+    //フィールドのセッターとゲッター
     public void setPackTitle(String packTitle){
         this.packTitle = packTitle;
     }

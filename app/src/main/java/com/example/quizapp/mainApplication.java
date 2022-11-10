@@ -127,7 +127,7 @@ public class mainApplication extends Application {
         return list;
     }
 
-    //selectリストの初期化
+    //selectリストの初期化メソッド追加します
 
     public void setSelectList(List<String> inputSelectList) {
         this.selectList = inputSelectList;
