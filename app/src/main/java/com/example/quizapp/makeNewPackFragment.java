@@ -20,7 +20,7 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class makeNewPackFragment extends Fragment {
-    /*MainaActivityをインスタンス化するための変数*/
+    /*MainActivityをインスタンス化するための変数*/
     MainActivity maActivity;
     /*MakePackActivityをインスタンス化するための変数*/
     MakePackActivity makePackActivity;
@@ -84,12 +84,6 @@ public class makeNewPackFragment extends Fragment {
     *入力確定ボタンが押された時の処理
      */
     public void onClickEnter(View view) {
-
-        /*
-        *ボタンの処理の中に書いては意味がないのではいだろうか(無くても動くと思われる)
-        * Button btnSend = view.findViewById(R.id.btnSend);
-         */
-
         EditText packTitleSub = view.findViewById(R.id.packTitle);
         EditText packIntroductionSub = view.findViewById(R.id.packIntroduction);
         TextView textView = view.findViewById(R.id.textView);
@@ -107,7 +101,7 @@ public class makeNewPackFragment extends Fragment {
         String packGenre = sp.getSelectedItem().toString();
 
         /*
-         *多分タイトルと説明文とスピナーの値ははMakePackActivityに渡す必要があるのでその処理を追加してください
+         *多分タイトルと説明文とスピナーの値はMakePackActivityに渡す必要があるのでその処理を追加してください
          *             ↓今のところMakePackActivityにセッターとゲッターがない状況なので仮に書くとしたらこんな感じになると思う
          * makePackActivity.setPackTitle(packTitle);
          * makePackActivity.setPackIntroduction(packIntroduction);
@@ -116,11 +110,15 @@ public class makeNewPackFragment extends Fragment {
 
         if(!packTitle.equals("")||!packIntroduction.equals("")||!packGenre.equals("なし")){
             textView.setText(String.format("タイトルは" + packTitle + ",説明文は" + packIntroduction + ",ジャンルは" + packGenre + "になります"));
+            makePackActivity.setPackTitle(packTitle);
+            makePackActivity.setPackIntroduction(packIntroduction);
+            makePackActivity.setPackGenre(packGenre);
             //makeNewPackFragmentをスタックしてeditQuizFragmentを起動させる
         }else{
+            /*「すべての欄に入力してください」というポップアップを表示*/
             Toast.makeText(view.getContext(), "すべての欄に入力してください", Toast.LENGTH_SHORT).show();
-            //「すべての欄に入力してください」というポップアップを表示
-            //×を押してポップアップが消える
+
+
         }
     }
 
