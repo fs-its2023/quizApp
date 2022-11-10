@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ public class makeNewPackFragment extends Fragment {
     /*MainActivityをインスタンス化するための変数*/
     MainActivity maActivity;
     /*MakePackActivityをインスタンス化するための変数*/
-    MakePackActivity makePackActivity;
+    com.example.quizapp.makePackActivity makePackActivity;
     /*mainApplicationをインスタンス化するための変数*/
     mainApplication mainApplication;
     // TODO: Rename parameter arguments, choose names that match
@@ -72,7 +71,7 @@ public class makeNewPackFragment extends Fragment {
         }
         maActivity=(MainActivity) getActivity();
         mainApplication= (com.example.quizapp.mainApplication) maActivity.getMainApplication();
-        makePackActivity=(MakePackActivity) getActivity();
+        makePackActivity=(com.example.quizapp.makePackActivity) getActivity();
     }
 
     @Override
