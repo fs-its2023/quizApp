@@ -128,8 +128,8 @@ public class mainApplication extends Application {
     }
 
     //selectリストの初期化
-    public void deleteSelectList(List<String> inputSelectList){
-        inputSelectList.clear();
+    public void deleteSelectList(){
+        selectList.clear();
     }
 
     public void setSelectList(List<String> inputSelectList) {
