@@ -119,13 +119,13 @@ public class makeNewPackFragment extends Fragment {
             /*makeNewPackFragmentをスタックしてeditQuizFragmentを起動させる*/
             /* フラグメントマネージャーの取得*/
             FragmentManager manager = makePackActivity.getSupportFragmentManager();
-            // フラグメントトランザクションの開始
+            /* フラグメントトランザクションの開始*/
             FragmentTransaction transaction = manager.beginTransaction();
-            // レイアウトをfragmentに置き換え（追加）
-            transaction.replace(R.id.layout,editQuizFragment);
-            // 置き換えのトランザクションをバックスタックに保存する
+            /* レイアウトをfragmentに置き換え（追加）*/
+            transaction.replace(R.id.container,new editQuizFragment());
+            /* 置き換えのトランザクションをバックスタックに保存する*/
             transaction.addToBackStack(null);
-            // フラグメントトランザクションをコミット
+            /* フラグメントトランザクションをコミット*/
             transaction.commit();
         }else{
             /*「すべての欄に入力してください」というポップアップを表示*/
