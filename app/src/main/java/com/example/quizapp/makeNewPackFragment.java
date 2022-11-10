@@ -3,15 +3,16 @@ package com.example.quizapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 
 /**
@@ -23,9 +24,10 @@ public class makeNewPackFragment extends Fragment {
     /*MainActivityをインスタンス化するための変数*/
     MainActivity maActivity;
     /*MakePackActivityをインスタンス化するための変数*/
-    MakePackActivity makePackActivity;
+    com.example.quizapp.makePackActivity makePackActivity;
     /*mainApplicationをインスタンス化するための変数*/
     mainApplication mainApplication;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,7 +72,7 @@ public class makeNewPackFragment extends Fragment {
         }
         maActivity=(MainActivity) getActivity();
         mainApplication= (com.example.quizapp.mainApplication) maActivity.getMainApplication();
-        makePackActivity=(MakePackActivity) getActivity();
+        makePackActivity=(com.example.quizapp.makePackActivity) getActivity();
     }
 
     @Override
@@ -113,7 +115,18 @@ public class makeNewPackFragment extends Fragment {
             makePackActivity.setPackTitle(packTitle);
             makePackActivity.setPackIntroduction(packIntroduction);
             makePackActivity.setPackGenre(packGenre);
-            //makeNewPackFragmentをスタックしてeditQuizFragmentを起動させる
+
+            /*makeNewPackFragmentをスタックしてeditQuizFragmentを起動させる*/
+            /* フラグメントマネージャーの取得*/
+            FragmentManager manager = makePackActivity.getSupportFragmentManager();
+            /* フラグメントトランザクションの開始*/
+            FragmentTransaction transaction = manager.beginTransaction();
+            /* レイアウトをfragmentに置き換え（追加）*/
+            transaction.replace(R.id.container,new editQuizFragment());
+            /* 置き換えのトランザクションをバックスタックに保存する*/
+            transaction.addToBackStack(null);
+            /* フラグメントトランザクションをコミット*/
+            transaction.commit();
         }else{
             /*「すべての欄に入力してください」というポップアップを表示*/
             Toast.makeText(view.getContext(), "すべての欄に入力してください", Toast.LENGTH_SHORT).show();

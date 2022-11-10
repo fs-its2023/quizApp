@@ -127,6 +127,11 @@ public class mainApplication extends Application {
         return list;
     }
 
+    //selectリストの初期化する
+    public void deleteSelectList(){
+        selectList.clear();
+    }
+
     public void setSelectList(List<String> inputSelectList) {
         this.selectList = inputSelectList;
     }
@@ -144,6 +149,7 @@ public class mainApplication extends Application {
     }
 
     public List<String> getAllList() {
+        allList.clear();
         allList=readFileAsList(PACK_DATA_FILE_NAME);
         return allList;
     }

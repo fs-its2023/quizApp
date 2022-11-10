@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -58,9 +59,10 @@ public class takeQuizPackActivity extends AppCompatActivity {
     }
 
     //遷移先のFragmentからメニューボタンを再表示させるメソッド
+    @SuppressLint("ResourceType")
     public LinearLayout getLinearLayout() {
         LinearLayout layout=new LinearLayout(this);
-        //layout.setId(101);
+        layout.setId(0);
         //垂直方向にViewを追加していく
         layout.setOrientation(LinearLayout.VERTICAL);
         //layoutの幅、高さの設定
