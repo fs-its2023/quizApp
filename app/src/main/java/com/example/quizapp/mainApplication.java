@@ -127,6 +127,8 @@ public class mainApplication extends Application {
         return list;
     }
 
+    //selectリストの初期化メソッド追加します
+
     public void setSelectList(List<String> inputSelectList) {
         this.selectList = inputSelectList;
     }
@@ -144,6 +146,7 @@ public class mainApplication extends Application {
     }
 
     public List<String> getAllList() {
+        //初期化するコード書きます
         allList=readFileAsList(PACK_DATA_FILE_NAME);
         return allList;
     }
