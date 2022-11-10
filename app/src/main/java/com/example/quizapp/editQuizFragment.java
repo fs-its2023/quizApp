@@ -19,7 +19,7 @@ public class editQuizFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_edit_quiz,container,false);
     }
 
-    //フラグメントが生成されたときに行う処理、主に結果の表示とボタンの生成
+    //フラグメントが生成されたときに行う処理
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
