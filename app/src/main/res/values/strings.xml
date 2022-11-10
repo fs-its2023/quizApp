@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="spnOs_prompt">OSを選択してください</string>
+    <string name="spnOs_prompt">ジャンルを選択してください</string>
     <string-array name="spnOs_items">
         <item>なし</item>
         <item>動物</item>
