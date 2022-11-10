@@ -49,7 +49,7 @@ public class editQuizFragment extends Fragment {
             List<String> allList = new ArrayList<String>();
             allList = mainApplication.getAllList();
             String[] strLastRowAllList = allList.get(allList.size()-1).split(",");
-            String newPackId = String.valueOf(Integer.parseInt(strLastRowAllList[0]+1));
+            String newPackId = String.valueOf(Integer.parseInt(strLastRowAllList[0])+1);
             mainApplication.setPackId(newPackId);
 
         }
