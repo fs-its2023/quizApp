@@ -11,29 +11,51 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class takeQuizPackActivity extends AppCompatActivity {
 
     private int correctNum;
     private FragmentTransaction transaction;
+    private List<String> lstPackIdFile;
+    private mainApplication mainApp;
 
-    //Activity起動時, パック選択画面を表示するメソッド
+    /*
+    * @fn
+    * Activity起動時, パック選択画面を表示するメソッド
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_quiz_pack);
 
-        //画面遷移用transaction初期化
+        /*
+        * 画面遷移用transaction初期化
+         */
         transaction = getSupportFragmentManager().beginTransaction();
 
-        //メニューボタン作成
+        /*
+        * mainApplicationクラスの取得
+         */
+        this.mainApp = (mainApplication)getApplication();
+
+        /*
+        * メニューボタン作成
+         */
         Button btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> finish());
 
-        //パック選択画面起動
+        /*
+        * パック選択画面起動
+         */
         this.selectPack();
     }
 
-    //パック作成画面を表示するメソッド
+    /*
+    * @fn
+    * パック選択画面を表示するメソッド
+     */
     public void selectPack(){
         selectPackFragment selectPackFragment = new selectPackFragment();
         transaction = getSupportFragmentManager().beginTransaction();
@@ -41,9 +63,21 @@ public class takeQuizPackActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    //クイズ回答画面を表示するメソッド
+    /*
+    * @fn
+    * クイズ回答画面を表示するメソッド
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void takeQuiz(){
+        /*
+        * クイズ初期化
+         */
         this.correctNum = 0;
+        this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+
+        /*
+        * クイズ回答画面表示
+         */
         takeQuizFragment takeQuizFragment = new takeQuizFragment();
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, takeQuizFragment);
@@ -94,12 +128,21 @@ public class takeQuizPackActivity extends AppCompatActivity {
 
 
 
-    //correctNumのgetterとsetter
+    /*
+    * correctNumのgetterとsetter
+     */
     public int getCorrectNum() {
-        return correctNum;
+        return this.correctNum;
     }
     public void setCorrectNum(int correctNum){
         this.correctNum = correctNum;
+    }
+
+    /*
+    * lstPackIdFileのgetter
+     */
+    public List<String> getLstPackIdFile(){
+        return this.lstPackIdFile;
     }
 
 }
