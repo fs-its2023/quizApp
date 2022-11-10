@@ -16,8 +16,8 @@ import java.util.List;
 public class editQuizFragment extends Fragment {
 
     //MainApplicationの取得
-    mainActivity MainActivity=(mainActivity)getActivity();
-    mainApplication mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
+    MainActivity MainActivity=(MainActivity)getActivity();
+    mainApplication mainApplication= (com.example.quizapp.mainApplication) MainActivity.getMainApplication();
 
     //新規か編集かの判定、trueなら新規
     boolean isMakeNewPack;
