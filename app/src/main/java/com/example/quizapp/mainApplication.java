@@ -127,7 +127,7 @@ public class mainApplication extends Application {
         return list;
     }
 
-    //selectリストの初期化
+    //selectリストの初期化する
     public void deleteSelectList(){
         selectList.clear();
     }
