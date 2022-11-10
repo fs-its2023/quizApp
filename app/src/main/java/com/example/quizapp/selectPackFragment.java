@@ -1,12 +1,15 @@
 package com.example.quizapp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -21,13 +24,19 @@ public class selectPackFragment extends Fragment {
      */
     mainApplication mainApplication;
     takeQuizPackActivity takeQuizPackActivity;
-    MakePackActivity makePackActivity;
+    com.example.quizapp.makePackActivity makePackActivity;
     MainActivity mainActivity;
 
     /*
     *フィールド編巣の定義
      */
     List<String> allList=new ArrayList<>();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
 
 
@@ -47,7 +56,7 @@ public class selectPackFragment extends Fragment {
         mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
         if(mainApplication.getFromMakePackActivity()){
             /*makePackActivityのインスタンス化*/
-            makePackActivity=(MakePackActivity) getActivity();
+            makePackActivity=(com.example.quizapp.makePackActivity) getActivity();
             createView(makePackActivity);
         }
         if(mainApplication.getFromTakeQuizPackActivity()){
@@ -61,8 +70,71 @@ public class selectPackFragment extends Fragment {
     /*
     *Viewの生成
      */
+    @SuppressLint("ResourceType")
     public void createView(Activity activity){
 
+        /*
+        *スクロールバーの設定・表示
+         */
+        ScrollView scrollView=new ScrollView(activity);
+        activity.setContentView(scrollView);
+
+        /*
+        *リニアレイアウト(VERTICAL)の設定・表示
+         */
+        LinearLayout verticalLayout=new LinearLayout(activity);
+        verticalLayout.setId(1);
+        verticalLayout.setOrientation(LinearLayout.VERTICAL);
+        verticalLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        scrollView.addView(verticalLayout);
+
+        /*
+        *リニアレイアウト()の設定表示
+         */
+        LinearLayout horizontalLayout=new LinearLayout(activity);
+        horizontalLayout.setId(2);
+        horizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
+        horizontalLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        verticalLayout.addView(horizontalLayout);
+
+        /*
+        *検索ボタンの生成
+         */
+        Button searchButton=new Button(activity);
+        searchButton.setText("検索");
+        searchButton.setTextSize(30);
+        searchButton.setOnClickListener(search);
+        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        searchButton.setLayoutParams(buttonLayoutParams);
+        horizontalLayout.addView(searchButton);
+
+        /*
+        *現在のページ数と全ページ数を表示する
+         */
+        TextView pageNumText=new TextView(activity);
+        pageNumText.setText("現在のページ数");
+
+        /*
+        *ひとつ前のページに戻るボタンの生成
+         */
+        Button backPage=new Button(activity);
+        backPage.setText("◀");
+        backPage.setTextSize(15);
+        backPage.setTag(-1);
+
     }
+
+    private View.OnClickListener search=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 
 }
