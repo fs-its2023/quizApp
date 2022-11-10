@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isChecked) {
                     // スイッチ(トグル)がオンの時
                 } else {
-                    // スイッチ(トグル)がオフの時
+                    // スイッチ(トグル)がオフの時　
                 }
             }
         });
