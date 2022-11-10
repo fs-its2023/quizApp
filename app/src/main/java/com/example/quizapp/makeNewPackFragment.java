@@ -22,7 +22,7 @@ import android.widget.Toast;
  */
 public class makeNewPackFragment extends Fragment {
     /*MainActivityをインスタンス化するための変数*/
-    MainActivity maActivity;
+    mainActivity maActivity;
     /*MakePackActivityをインスタンス化するための変数*/
     com.example.quizapp.makePackActivity makePackActivity;
     /*mainApplicationをインスタンス化するための変数*/
@@ -70,7 +70,7 @@ public class makeNewPackFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        maActivity=(MainActivity) getActivity();
+        maActivity=(mainActivity) getActivity();
         mainApplication= (com.example.quizapp.mainApplication) maActivity.getMainApplication();
         makePackActivity=(com.example.quizapp.makePackActivity) getActivity();
     }
