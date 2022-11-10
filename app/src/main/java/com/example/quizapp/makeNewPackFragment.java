@@ -122,7 +122,7 @@ public class makeNewPackFragment extends Fragment {
             /* フラグメントトランザクションの開始*/
             FragmentTransaction transaction = manager.beginTransaction();
             /* レイアウトをfragmentに置き換え（追加）*/
-            transaction.replace(R.id.container,new resultFragment());
+            transaction.replace(R.id.container,new editQuizFragment());
             /* 置き換えのトランザクションをバックスタックに保存する*/
             transaction.addToBackStack(null);
             /* フラグメントトランザクションをコミット*/
