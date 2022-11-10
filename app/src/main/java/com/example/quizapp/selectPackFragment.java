@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class selectPackFragment extends Fragment {
@@ -28,10 +29,16 @@ public class selectPackFragment extends Fragment {
     MainActivity mainActivity;
 
     /*
-    *フィールド編巣の定義
+    *フィールドリストの定義
      */
     List<String> allList=new ArrayList<>();
     List<String> selectList=new ArrayList<>();
+
+    /*
+    *フィールド変数の定義
+     */
+    int pageCurrent;
+    int pageAll;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,8 +49,16 @@ public class selectPackFragment extends Fragment {
         mainActivity=(MainActivity)getActivity();
         mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
 
-        mainApplication.deleteSelectList();
         allList=mainApplication.getAllList();
+
+        mainApplication.deleteSelectList();
+        mainApplication.setSelectList(allList);
+        selectList=mainApplication.getSelectList();
+        Collections.reverse(selectList);
+
+        pageAll=((selectList.size()-1)/10)+1;
+        pageCurrent=1;
+
     }
 
 
@@ -51,6 +66,8 @@ public class selectPackFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         super.onCreateView(inflater, container, savedInstance);
+        pageCurrent=1;
+        pageAll=((selectList.size()-1)/10)+1;
         return inflater.inflate(R.layout.fragment_select_pack, container, false);
     }
 
@@ -63,12 +80,12 @@ public class selectPackFragment extends Fragment {
         if(mainApplication.getFromMakePackActivity()){
             /*makePackActivityのインスタンス化*/
             makePackActivity=(com.example.quizapp.makePackActivity) getActivity();
-            createView(makePackActivity);
+            showPackList(makePackActivity);
         }
         if(mainApplication.getFromTakeQuizPackActivity()){
             /*takeQuizPackActivityのインスタンス化*/
             takeQuizPackActivity=(com.example.quizapp.takeQuizPackActivity) getActivity();
-            createView(takeQuizPackActivity);
+            showPackList(takeQuizPackActivity);
         }
     }
 
@@ -77,7 +94,7 @@ public class selectPackFragment extends Fragment {
     *Viewの生成
      */
     @SuppressLint("ResourceType")
-    public void createView(Activity activity){
+    public void showPackList(Activity activity){
 
         /*
         *スクロールバーの設定・表示
