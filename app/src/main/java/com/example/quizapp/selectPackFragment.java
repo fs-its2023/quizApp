@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -16,12 +17,18 @@ import java.util.List;
 
 public class selectPackFragment extends Fragment {
     /*
-    *フィールド変数の定義
+    *ActivityとApplicationの定義
      */
     mainApplication mainApplication;
-    Activity activity;
+    takeQuizPackActivity takeQuizPackActivity;
+    MakePackActivity makePackActivity;
     MainActivity mainActivity;
+
+    /*
+    *フィールド編巣の定義
+     */
     List<String> allList=new ArrayList<>();
+
 
 
     @Override
@@ -40,16 +47,21 @@ public class selectPackFragment extends Fragment {
         mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
         if(mainApplication.getFromMakePackActivity()){
             /*makePackActivityのインスタンス化*/
-            //activity=(com.example.quizapp.makePackActivity);
+            makePackActivity=(MakePackActivity) getActivity();
+            createView(makePackActivity);
         }
         if(mainApplication.getFromTakeQuizPackActivity()){
             /*takeQuizPackActivityのインスタンス化*/
-            activity=(com.example.quizapp.takeQuizPackActivity) getActivity();
+            takeQuizPackActivity=(com.example.quizapp.takeQuizPackActivity) getActivity();
+            createView(takeQuizPackActivity);
         }
-
     }
 
-    public void createHorizontalView(){
+
+    /*
+    *Viewの生成
+     */
+    public void createView(Activity activity){
 
     }
 
