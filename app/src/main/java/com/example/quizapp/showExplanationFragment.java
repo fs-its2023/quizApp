@@ -24,7 +24,7 @@ public class showExplanationFragment extends Fragment {
      */
     LinearLayout layout;
     takeQuizPackActivity tqActivity;
-    mainActivity mainActivity;
+    MainActivity mainActivity;
     mainApplication mainApplication;
     int quizNum;
     String packId;
@@ -55,7 +55,7 @@ public class showExplanationFragment extends Fragment {
         /*
         *MainActivityをインスタンス化
          */
-        mainActivity=(mainActivity)getActivity();
+        mainActivity=(MainActivity)getActivity();
 
         /*
         *mainApplicationを使えるようにActivityからApplicationを受け取る

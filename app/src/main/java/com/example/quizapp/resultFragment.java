@@ -23,7 +23,7 @@ public class resultFragment extends Fragment {
 
     //フィールド変数の宣言
     takeQuizPackActivity tqActivity;
-    mainActivity mainActivity;
+    MainActivity mainActivity;
     mainApplication mainApplication;
     int packNum;
     int quizNumProblem;
@@ -48,7 +48,7 @@ public class resultFragment extends Fragment {
 
         //フィールド変数に値を代入
         tqActivity=(takeQuizPackActivity)getActivity();  //Activityをインスタンス化して、Activityのメソッドが使えるようにする
-        mainActivity=(mainActivity)getActivity();
+        mainActivity=(MainActivity)getActivity();
         mainApplication = (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
         packNum = mainApplication.getPackNum();
         packId=mainApplication.getPackId();

@@ -13,7 +13,7 @@ import android.annotation.SuppressLint;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-public class mainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     mainApplication mainApplication;
 
     @Override
@@ -49,7 +49,7 @@ public class mainActivity extends AppCompatActivity {
 
     // パック編集へ遷移
     public void onClickMakePack() {
-        Intent intent = new Intent(getApplication(), MakePackActivity.class);
+        Intent intent = new Intent(getApplication(), makePackActivity.class);
         startActivity(intent);
     }
 

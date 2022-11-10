@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +41,7 @@ public class selectPackFragment extends Fragment {
     int pageCurrent;
     int pageAll;
     String[] listData;
+    LinearLayout verticalLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -53,23 +55,21 @@ public class selectPackFragment extends Fragment {
         /*ApplicationのallListを取得*/
         allList=mainApplication.getAllList();
 
-        /*selectListにallListを入れ、新着順に変更*/
+        /*ApplicationのselectListにallListを入れる*/
         mainApplication.deleteSelectList();
         mainApplication.setSelectList(allList);
-        selectList=mainApplication.getSelectList();
-        Collections.reverse(selectList);
-
-        /*ページ数を表示するために変数に値を代入*/
-        pageAll=((selectList.size()-1)/10)+1;
-        pageCurrent=1;
-
     }
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         super.onCreateView(inflater, container, savedInstance);
+
+        /*selectListに値を入れ、新着順に変更*/
+        selectList=mainApplication.getSelectList();
+        Collections.reverse(selectList);
 
         /*ページ数を表示するために変数に値を代入*/
         pageCurrent=1;
@@ -112,7 +112,7 @@ public class selectPackFragment extends Fragment {
         /*
         *リニアレイアウト(VERTICAL)の設定・表示
          */
-        LinearLayout verticalLayout=new LinearLayout(activity);
+        verticalLayout=new LinearLayout(activity);
         verticalLayout.setId(1);
         verticalLayout.setOrientation(LinearLayout.VERTICAL);
         verticalLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -137,7 +137,7 @@ public class selectPackFragment extends Fragment {
         Button searchButton=new Button(activity);
         searchButton.setText("検索");
         searchButton.setTextSize(30);
-        searchButton.setOnClickListener(search);
+        searchButton.setOnClickListener(onClickSearch);
         LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -192,19 +192,73 @@ public class selectPackFragment extends Fragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             verticalLayout.addView(packIntroductionHorizontalLayout);
+
+            /*
+            *パック情報のボタンを表示
+             */
+            for(int j=0;j<2;j++){
+                Button packButton=new Button(activity);
+                packButton.setText(""+listData[3]);
+                packButton.setTextSize(20);
+                packButton.setTag(i);
+                packButton.setOnClickListener(onClickSetPackId);
+                packButton.setLayoutParams(buttonLayoutParams);
+                packIntroductionHorizontalLayout.addView(packButton);
+            }
         }
 
     }
 
-    private View.OnClickListener search=new View.OnClickListener() {
+    /*
+    *検索ボタンが押された時の処理
+     */
+    private View.OnClickListener onClickSearch =new View.OnClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onClick(View view) {
+            /*現在のページ数の変数を1にする*/
+            pageCurrent=1;
+
+            if(mainApplication.getFromMakePackActivity()){
+                FragmentManager manager=makePackActivity.getSupportFragmentManager();
+            }
+            if(mainApplication.getFromTakeQuizPackActivity()){
+
+            }
+        }
+    };
+
+    /*
+    *パックが選択された時の処理
+     */
+    private View.OnClickListener onClickSetPackId=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
         }
     };
 
+    /*
+    *selectListを","区切りで配列に入れている
+     */
     public void setListData(int i,List<String> allList){
         listData=allList.get(i).split(",");
     }
+
+    /*
+    *searchFragmentの生成
+     */
+    /*public void creaateSearchFragment(Activity activity,LinearLayout layout){
+        // フラグメントマネージャーの取得
+        //FragmentManager manager = activity.getSupportFragmentManager(); // アクティビティではgetSupportFragmentManager()?
+        // フラグメントトランザクションの開始
+        FragmentTransaction transaction =
+        // レイアウトをfragmentに置き換え（追加）
+        transaction.replace(layout.getId(),new showExplanationFragment());
+        // 置き換えのトランザクションをバックスタックに保存する
+        transaction.addToBackStack(null);
+        // フラグメントを表示する
+        transaction.commit();
+    }*/
 
 }
