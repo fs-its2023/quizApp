@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// ヒサダ追加
+import android.annotation.SuppressLint;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
 public class MainActivity extends AppCompatActivity {
     mainApplication mainApplication;
 
@@ -27,6 +32,36 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
+        Switch sw = findViewById(R.id.switch1);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // スイッチ(トグル)がオンの時
+                } else {
+                    // スイッチ(トグル)がオフの時
+                }
+            }
+        });
+    }
+
+    // パック編集へ遷移
+    public void onClickMakePack() {
+        Intent intent = new Intent(getApplication(), MakePackActivity.class);
+        startActivity(intent);
+    }
+
+    // クイズ回答へ遷移
+    public void onClickTakeQuiz() {
+        Intent intent = new Intent(getApplication(), takeQuizPackActivity.class);
+        startActivity(intent);
+    }
+
+    // スイッチでミュートの切り替えをする
+    public void onClickMute() {
+
     }
 
     public Application getMainApplication(){
