@@ -105,4 +105,37 @@ public class MakePackActivity extends AppCompatActivity {
             finish();
         }
     };
+
+    //フィールドのセッター、ゲッター
+    public void setPackTitle(String packTitle){
+        this.packTitle = packTitle;
+    }
+
+    public String getPackTitle(){
+        return this.packTitle;
+    }
+
+    public void setPackGenre(String packGenre){
+        this.packGenre = packGenre;
+    }
+
+    public String getPackGenre(){
+        return this.packGenre;
+    }
+
+    public void setPackIntroduction(String packIntroduction){
+        this.packIntroduction = packIntroduction;
+    }
+
+    public String getPackIntroduction(){
+        return this.packIntroduction;
+    }
+
+    public void setQuizTotalNum(int quizTotalNum){
+        this.quizTotalNum = quizTotalNum;
+    }
+
+    public int getQuizTotalNum(){
+        return this.quizTotalNum;
+    }
 }
