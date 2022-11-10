@@ -5,15 +5,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class editQuizFragment extends Fragment {
 
-    MainActivity mainActivity;
-    mainApplication mainApplication;
+    //MainApplicationの取得
+    MainActivity MainActivity=(MainActivity)getActivity();
+    mainApplication mainApplication= (com.example.quizapp.mainApplication) MainActivity.getMainApplication();
+
+    //新規か編集かの判定、trueなら新規
     boolean isMakeNewPack;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreateView(inflater, container, savedInstanceState);
@@ -25,9 +33,46 @@ public class editQuizFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
+        //makePackActivityのフィールドの取得
+        makePackActivity makePackActivity = (makePackActivity)getActivity();
 
+        //新規か編集かの判定
+        if(makePackActivity.getQuizTotalNum()==0){
+            this.isMakeNewPack=true;
+        }else{
+            this.isMakeNewPack=false;
+        }
+
+        //新規だった場合。パックタイトルを表示する、packIdの新規作成を行う
+        if(isMakeNewPack=true){
+            //packIdの新規作成 ファイル最終行のId+1のIdを作成する
+            List<String> allList = new ArrayList<String>();
+            allList = mainApplication.getAllList();
+            String[] strLastRowAllList = allList.get(allList.size()-1).split(",");
+            String newPackId = String.valueOf(Integer.parseInt(strLastRowAllList[0])+1);
+            mainApplication.setPackId(newPackId);
+
+        }
+
+        //編集だった場合。入力欄に保存されていた情報を表示する、mainApplicationからpackIdを取得する
+        if(isMakeNewPack=false){
+
+        }
+    }
+
+
+    //「保存して終了」を押された時の処理。
+    //保存出来たらフラグメントを閉じる、保存できなかったら何もしない
+    public void onClickSaveAndClose(View view){
+        
+    }
+
+    //「保存して次の問題」を作成を押された時の処理。
+    // 保存出来たら入力欄の削除、保存できなかったら何もしない
+    public void onClickSaveAndNext(View view){
 
     }
+
 
     //クイズデータを保存する
     public boolean saveQuiz(){

@@ -27,6 +27,7 @@ public class resultFragment extends Fragment {
     mainApplication mainApplication;
     int packNum;
     int quizNumProblem;
+    String packId;
     String[] listData;
     List<String> allList=new ArrayList<>();
     Button button;
@@ -50,9 +51,10 @@ public class resultFragment extends Fragment {
         mainActivity=(MainActivity)getActivity();
         mainApplication = (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
         packNum = mainApplication.getPackNum();
+        packId=mainApplication.getPackId();
 
         //Applicationクラスにあるパックの情報をリストに代入
-        allList= mainApplication.getAllList();
+        allList= mainApplication.readFileAsList(packId);
 
         //配列に値を代入
         setListData(allList);
