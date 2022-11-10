@@ -31,11 +31,19 @@ public class selectPackFragment extends Fragment {
     *フィールド編巣の定義
      */
     List<String> allList=new ArrayList<>();
+    List<String> selectList=new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*MainActivityとmainApplicationをインスタンス化*/
+        mainActivity=(MainActivity)getActivity();
+        mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
+
+        mainApplication.deleteSelectList();
+        allList=mainApplication.getAllList();
     }
 
 
@@ -51,9 +59,7 @@ public class selectPackFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /*Activityのインスタンス化*/
-        mainActivity=(MainActivity)getActivity();
-        mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
+
         if(mainApplication.getFromMakePackActivity()){
             /*makePackActivityのインスタンス化*/
             makePackActivity=(com.example.quizapp.makePackActivity) getActivity();
