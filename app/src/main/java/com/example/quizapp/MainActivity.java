@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     // パック編集へ遷移
     public void onClickMakePack() {
-        Intent intent = new Intent(getApplication(), MakePackActivity.class);
+        Intent intent = new Intent(getApplication(), makePackActivity.class);
         startActivity(intent);
     }
 

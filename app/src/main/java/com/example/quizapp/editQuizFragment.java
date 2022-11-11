@@ -10,11 +10,14 @@ import android.widget.Button;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class editQuizFragment extends Fragment {
 
     //MainApplicationの取得
-    MainActivity mainActivity=(MainActivity)getActivity();
-    mainApplication mainApplication= (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
+    MainActivity MainActivity=(MainActivity)getActivity();
+    mainApplication mainApplication= (com.example.quizapp.mainApplication) MainActivity.getMainApplication();
 
     //新規か編集かの判定、trueなら新規
     boolean isMakeNewPack;
@@ -42,6 +45,12 @@ public class editQuizFragment extends Fragment {
 
         //新規だった場合。パックタイトルを表示する、packIdの新規作成を行う
         if(isMakeNewPack=true){
+            //packIdの新規作成 ファイル最終行のId+1のIdを作成する
+            List<String> allList = new ArrayList<String>();
+            allList = mainApplication.getAllList();
+            String[] strLastRowAllList = allList.get(allList.size()-1).split(",");
+            String newPackId = String.valueOf(Integer.parseInt(strLastRowAllList[0])+1);
+            mainApplication.setPackId(newPackId);
 
         }
 
