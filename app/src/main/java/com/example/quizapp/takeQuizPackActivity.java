@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class takeQuizPackActivity extends AppCompatActivity {
@@ -25,6 +25,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
     * @fn
     * Activity起動時, パック選択画面を表示するメソッド
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,11 @@ public class takeQuizPackActivity extends AppCompatActivity {
         /*
         * パック選択画面起動
          */
-        this.selectPack();
+        if(mainApp.getSelectPack()){
+            this.takeQuiz();
+        }else{
+            this.selectPack();
+        }
     }
 
     /*
@@ -57,10 +62,9 @@ public class takeQuizPackActivity extends AppCompatActivity {
     * パック選択画面を表示するメソッド
      */
     public void selectPack(){
-        selectPackFragment selectPackFragment = new selectPackFragment();
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, selectPackFragment);
-        transaction.commit();
+        Intent intent =new Intent(getApplication(), selectPackActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /*
@@ -143,6 +147,10 @@ public class takeQuizPackActivity extends AppCompatActivity {
      */
     public List<String> getLstPackIdFile(){
         return this.lstPackIdFile;
+    }
+
+    public mainApplication getMainApplication(){
+        return mainApp;
     }
 
 }

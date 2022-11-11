@@ -23,7 +23,6 @@ public class resultFragment extends Fragment {
 
     //フィールド変数の宣言
     takeQuizPackActivity tqActivity;
-    MainActivity mainActivity;
     mainApplication mainApplication;
     int packNum;
     int quizNumProblem;
@@ -42,14 +41,14 @@ public class resultFragment extends Fragment {
 
 
     //フラグメントが生成されたときに行う処理、主に結果の表示とボタンの生成
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
         //フィールド変数に値を代入
         tqActivity=(takeQuizPackActivity)getActivity();  //Activityをインスタンス化して、Activityのメソッドが使えるようにする
-        mainActivity=(MainActivity)getActivity();
-        mainApplication = (com.example.quizapp.mainApplication) mainActivity.getMainApplication();
+        mainApplication = (com.example.quizapp.mainApplication) tqActivity.getMainApplication();
         packNum = mainApplication.getPackNum();
         packId=mainApplication.getPackId();
 

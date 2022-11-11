@@ -1,9 +1,11 @@
 package com.example.quizapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.Switch;
 public class MainActivity extends AppCompatActivity {
     mainApplication mainApplication;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,15 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         mainApplication=(mainApplication)getApplication();
 
-        //activity遷移ボタン
-        Button button0 = findViewById(R.id.button0);
-        button0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplication(), takeQuizPackActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
         @SuppressLint("UseSwitchCompatOrMaterialCode")
@@ -48,14 +42,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // パック編集へ遷移
-    public void onClickMakePack() {
+    public void onClickMakePack(View view) {
         Intent intent = new Intent(getApplication(), makePackActivity.class);
         startActivity(intent);
     }
 
     // クイズ回答へ遷移
-    public void onClickTakeQuiz() {
-        Intent intent = new Intent(getApplication(), takeQuizPackActivity.class);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void onClickTakeQuiz(View view) {
+        mainApplication.setSelectPack(false);
+        Intent intent = new Intent(getApplication(),takeQuizPackActivity.class);
         startActivity(intent);
     }
 

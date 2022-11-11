@@ -16,8 +16,11 @@ import java.util.List;
 public class editQuizFragment extends Fragment {
 
     //MainApplicationの取得
-    MainActivity MainActivity=(MainActivity)getActivity();
-    mainApplication mainApplication= (com.example.quizapp.mainApplication) MainActivity.getMainApplication();
+    //MainActivity MainActivity=(MainActivity)getActivity();
+
+    makePackActivity makePackActivity;
+    //mainApplication mainApplication= (com.example.quizapp.mainApplication) MainActivity.getMainApplication();
+    mainApplication mainApplication;
 
     //新規か編集かの判定、trueなら新規
     boolean isMakeNewPack;
@@ -33,8 +36,8 @@ public class editQuizFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        //makePackActivityのフィールドの取得
-        makePackActivity makePackActivity = (makePackActivity)getActivity();
+        makePackActivity =(makePackActivity)getActivity();
+        mainApplication=(com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
 
         //新規か編集かの判定
         if(makePackActivity.getQuizTotalNum()==0){
@@ -44,18 +47,16 @@ public class editQuizFragment extends Fragment {
         }
 
         //新規だった場合。パックタイトルを表示する、packIdの新規作成を行う
-        if(isMakeNewPack=true){
+        if(isMakeNewPack){
             //packIdの新規作成 ファイル最終行のId+1のIdを作成する
-            List<String> allList = new ArrayList<String>();
-            allList = mainApplication.getAllList();
+            List<String> allList = this.mainApplication.getAllList();
             String[] strLastRowAllList = allList.get(allList.size()-1).split(",");
             String newPackId = String.valueOf(Integer.parseInt(strLastRowAllList[0])+1);
             mainApplication.setPackId(newPackId);
-
         }
 
         //編集だった場合。入力欄に保存されていた情報を表示する、mainApplicationからpackIdを取得する
-        if(isMakeNewPack=false){
+        if(!isMakeNewPack){
 
         }
     }
