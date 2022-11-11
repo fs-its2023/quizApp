@@ -1,9 +1,11 @@
 package com.example.quizapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -17,13 +19,18 @@ public class makePackActivity extends AppCompatActivity {
     private String packGenre;
     private String packIntroduction;
     private int quizTotalNum;
+    private mainApplication mainApplication;
 
+    Button btnMakeNewQuiz;
+    Button btnEditQuiz;
     private FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_pack);
+
+        mainApplication=(mainApplication)this.getApplication();
 
         //画面遷移用transaction初期化
         transaction = getSupportFragmentManager().beginTransaction();
@@ -33,7 +40,7 @@ public class makePackActivity extends AppCompatActivity {
         btnMenu.setOnClickListener(v -> finish());
 
         //新規作成のボタンを押したときの処理
-        Button btnMakeNewQuiz = findViewById(R.id.btnMakeNewQuiz);
+        btnMakeNewQuiz = findViewById(R.id.btnMakeNewQuiz);
         btnMakeNewQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +49,7 @@ public class makePackActivity extends AppCompatActivity {
         });
 
         //編集のボタンを押したときの処理 
-        Button btnEditQuiz = findViewById(R.id.btnEditQuiz);
+        btnEditQuiz = findViewById(R.id.btnEditQuiz);
         btnEditQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,10 +64,8 @@ public class makePackActivity extends AppCompatActivity {
         packGenre=null;
         packIntroduction=null;
         quizTotalNum=0;
-        selectPackFragment selectPackFragment = new selectPackFragment();
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, selectPackFragment);
-        transaction.commit();
+        Intent intent=new Intent(getApplication(), selectPackActivity.class);
+        startActivity(intent);
     }
 
     //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く
@@ -69,9 +74,11 @@ public class makePackActivity extends AppCompatActivity {
         packGenre=null;
         packIntroduction=null;
         quizTotalNum=0;
+        btnEditQuiz.setVisibility(View.GONE);
+        btnMakeNewQuiz.setVisibility(View.GONE);
         makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
         transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, makeNewPackFragment);
+        transaction.replace(R.id.container, makeNewPackFragment);
         transaction.commit();
     }
 
@@ -141,4 +148,9 @@ public class makePackActivity extends AppCompatActivity {
     public int getQuizTotalNum(){
         return this.quizTotalNum;
     }
+
+    public mainApplication getMainApplication(){
+        return mainApplication;
+    }
 }
+

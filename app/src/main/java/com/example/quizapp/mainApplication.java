@@ -24,6 +24,7 @@ public class mainApplication extends Application {
     private boolean fromTakeQuizPackActivity =false;
     private boolean fromTakeQuizFragment=false;
     private boolean fromResultFragment=false;
+    private boolean selectPack=false;
     private final String PACK_DATA_FILE_NAME = "packData.csv";
 
     /*
@@ -124,6 +125,7 @@ public class mainApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return list;
     }
 
@@ -200,5 +202,13 @@ public class mainApplication extends Application {
 
     public void setFromTakeQuizPackActivity(boolean fromTakeQuizPackActivity) {
         this.fromTakeQuizPackActivity = fromTakeQuizPackActivity;
+    }
+
+    public boolean getSelectPack() {
+        return selectPack;
+    }
+
+    public void setSelectPack(boolean selectPack) {
+        this.selectPack = selectPack;
     }
 }

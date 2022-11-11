@@ -7,21 +7,6 @@
     android:background="#878787"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button0"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:autoText="true"
-        android:backgroundTint="#673AB7"
-        android:onClick="onClickMakePack"
-        android:text="クイズを解く"
-        android:textColor="#FFEB3B"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        tools:textSize="24sp" />
 
     <Switch
         android:id="@+id/switch1"
@@ -40,7 +25,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#673AB7"
-        android:onClick="onClickTakeQuiz"
+        android:onClick="onClickMakePack"
         android:text="パックの編集"
         android:textColor="#FFEB3B"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,5 +53,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.2"
         tools:onClick="onClickMute" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#673AB7"
+        android:onClick="onClickTakeQuiz"
+        android:text="クイズを解く"
+        android:textColor="#FFEB3B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499"
+        tools:textSize="24sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

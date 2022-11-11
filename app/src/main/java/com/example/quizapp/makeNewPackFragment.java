@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 public class makeNewPackFragment extends Fragment {
     /*MainActivityをインスタンス化するための変数*/
-    MainActivity maActivity;
+    //MainActivity maActivity;
     /*MakePackActivityをインスタンス化するための変数*/
     com.example.quizapp.makePackActivity makePackActivity;
     /*mainApplicationをインスタンス化するための変数*/
@@ -34,9 +35,9 @@ public class makeNewPackFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        maActivity=(MainActivity) getActivity();
-        mainApplication= (com.example.quizapp.mainApplication) maActivity.getMainApplication();
+        //maActivity=(MainActivity) getActivity();
         makePackActivity=(com.example.quizapp.makePackActivity) getActivity();
+        mainApplication= (com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
     }
 
     @Override
@@ -45,7 +46,7 @@ public class makeNewPackFragment extends Fragment {
         Button btnSend = (Button)view.findViewById(R.id.btnSend);
         EditText packTitleSub = view.findViewById(R.id.packTitle);
         EditText packIntroductionSub = view.findViewById(R.id.packIntroduction);
-        TextView textView = view.findViewById(R.id.textView);
+
 
         /*スピナーを取得*/
         Spinner sp = (Spinner) view.findViewById(R.id.spinner);
@@ -65,22 +66,14 @@ public class makeNewPackFragment extends Fragment {
                     /*「すべての欄に入力してください」というポップアップを表示*/
                     Toast.makeText(view.getContext(), "すべての欄に入力してください", Toast.LENGTH_SHORT).show();
                 }else{
-                    textView.setText(String.format("タイトルは" + packTitle + ",説明文は" + packIntroduction + ",ジャンルは" + packGenre + "になります"));
+
                     makePackActivity.setPackTitle(packTitle);
                     makePackActivity.setPackIntroduction(packIntroduction);
                     makePackActivity.setPackGenre(packGenre);
-
-                    /*makeNewPackFragmentをスタックしてeditQuizFragmentを起動させる*/
-                    /* フラグメントマネージャーの取得*/
-                    FragmentManager manager = makePackActivity.getSupportFragmentManager();
-                    /* フラグメントトランザクションの開始*/
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    /* レイアウトをfragmentに置き換え（追加）*/
-                    transaction.replace(R.id.container,new editQuizFragment());
-                    /* 置き換えのトランザクションをバックスタックに保存する*/
-                    transaction.addToBackStack(null);
-                    /* フラグメントトランザクションをコミット*/
-                    transaction.commit();
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.container,new editQuizFragment())
+                            .addToBackStack(null)
+                            .commit();
                 }
             }
         });
