@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
@@ -11,7 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class takeQuizPackActivity extends AppCompatActivity {
@@ -20,7 +24,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
     private FragmentTransaction transaction;
     private List<String> lstPackIdFile;
     private mainApplication mainApp;
-
+    private takeQuizFragment takeQuizFragment;
     /*
     * @fn
     * Activity起動時, パック選択画面を表示するメソッド
@@ -68,7 +72,15 @@ public class takeQuizPackActivity extends AppCompatActivity {
     * クイズ回答画面を表示するメソッド
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void takeQuiz(){
+    public void takeQuiz() throws IOException {
+        /*
+        * テスト用ファイル作成
+         */
+        Path p = Paths.get(this.mainApp.getPackId());
+        Files.delete(p);
+        this.mainApp.saveFile(this.mainApp.getPackId(),
+                "問題文,選択肢1,選択肢2,選択肢3,選択肢4,解説\n");
+
         /*
         * クイズ初期化
          */
@@ -82,6 +94,25 @@ public class takeQuizPackActivity extends AppCompatActivity {
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, takeQuizFragment);
         transaction.commit();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void reloadQuiz(){
+        this.mainApp.setQuizNum(this.mainApp.getQuizNum() + 1);
+
+        if(this.mainApp.getQuizNum() > this.lstPackIdFile.size()){
+            /*
+            Fragment再読み込み
+             */
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.detach(this.takeQuizFragment);
+            this.takeQuizFragment = new takeQuizFragment();
+            transaction.attach(this.takeQuizFragment);
+            transaction.commit();
+
+        }else{
+            this.result();
+        }
     }
 
     //結果を表示するメソッド

@@ -1,11 +1,14 @@
 package com.example.quizapp;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -17,10 +20,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-//takequiz
-public class takeQuizFragment extends Fragment {
+public class takeQuizFragment extends Fragment implements View.OnClickListener {
 
     private List<Integer> order;
+    private String[] quizData;
+
     /*
     *takeQuizPackActivity内変数
     */
@@ -31,8 +35,6 @@ public class takeQuizFragment extends Fragment {
     *mainApplication内変数
     */
     private mainApplication mainApp;
-    private String packId;
-    private int quizNum;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
@@ -50,11 +52,26 @@ public class takeQuizFragment extends Fragment {
         this.mainActivity=(MainActivity)getActivity();
         this.correctNum = this.tqActivity.getCorrectNum();
         this.mainApp = (mainApplication) mainActivity.getMainApplication();
-        this.packId = this.mainApp.getPackId();
-        this.quizNum = this.mainApp.getQuizNum();
 
-        //クイズ画面を表示
-        this.setLayout();
+        this.setOrder();
+        this.readQuizData();
+
+        /*
+        * 画面表示 (問題文, 選択肢ボタン)
+         */
+        TextView txtQuiz = view.findViewById(R.id.txtQuiz);
+        txtQuiz.setText(this.quizData[0]);
+
+        Button btnTopRight, btnTopLeft, btnBottomRight, btnBottomLeft;
+        btnTopLeft = view.findViewById(R.id.btnTopLeft);
+        btnTopRight = view.findViewById(R.id.btnTopRight);
+        btnBottomLeft = view.findViewById(R.id.btnBottomLeft);
+        btnBottomRight = view.findViewById(R.id.btnBottomRight);
+        Button[] btnArray = {btnTopLeft, btnTopRight, btnBottomLeft, btnBottomRight};
+        for(int i = 0; i < btnArray.length; i++){
+            btnArray[this.order.get(i)].setText(this.quizData[i + 1]);
+            btnArray[this.order.get(i)].setTag(i);
+        }
 
     }
 
@@ -63,7 +80,7 @@ public class takeQuizFragment extends Fragment {
     * packIdファイルからquizNum行目を読み込むメソッド
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void setLayout(){
+    public void readQuizData(){
         /*
         選択肢の表示順を決定
          */
@@ -71,13 +88,9 @@ public class takeQuizFragment extends Fragment {
 
         /*
         * dataにファイルのquizNum行目を読み込み
-        * data = [問題文, 正答, 誤答1, 誤答2, 誤答3]
+        * quizData = [問題文, 正答, 誤答1, 誤答2, 誤答3, 解説]
          */
-        String[] data = this.tqActivity.getLstPackIdFile().get(this.mainApp.getQuizNum()).split(",");
-
-        /*
-        * 画面を表示 (後日layoutと一緒に作成
-         */
+        this.quizData = this.tqActivity.getLstPackIdFile().get(this.mainApp.getQuizNum()).split(",");
     }
 
     /*
@@ -89,51 +102,85 @@ public class takeQuizFragment extends Fragment {
         Collections.shuffle(this.order);
     }
 
-    public void OnclickAnswer(){
-        //正解の場合の処理
-
-        //不正解の場合の処理
-
-    }
-
-    /*
-     * @fn
-     * 「解説を表示」ボタンが押された時に実行するメソッド
-     */
-    public void onclickShowExplanation(){
+    @SuppressLint("ResourceType")
+    public void OnclickAnswer(View view) {
         /*
-        * このFragmentをスタックし解説Fragment起動
+        * 正誤判定
+        * ボタンTAGは左上0, 右上1, 左下2, 右下3
+        * order = [正答のTAG, 誤答1のTAG, 誤答2のTAG, 誤答3のTAG]
          */
-        LinearLayout layout = this.tqActivity.getLinearLayout();
-        FragmentManager manager = this.tqActivity.getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(layout.getId(), new showExplanationFragment());
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+        if((int)view.getTag() == 0){
+            //「正解」表
 
-    /*
-    * @fn
-    * 「次の問題へ」ボタンが押された時に実行するメソッド
-     */
+            /*
+            + 正解数更新
+             */
+            this.tqActivity.setCorrectNum(this.tqActivity.getCorrectNum() + 1);
+        }else{
+            //不正解表示
+        }
+
+        /*
+        * ボタンに色でも付ける?
+         */
+
+        /*
+        * 「次の問題へ」「解説へ」ボタン作成
+         */
+        LinearLayout layout=tqActivity.getLinearLayout();
+
+        Button btnNext = new Button(tqActivity);
+        btnNext.setText("次の問題");
+        btnNext.setTextSize(30);
+        btnNext.setTag("Next");
+        btnNext.setOnClickListener(this);
+        LinearLayout.LayoutParams buttonNextParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        btnNext.setLayoutParams(buttonNextParams);
+        layout.addView(btnNext);
+
+        Button btnShowExplanation = new Button(tqActivity);
+        btnShowExplanation.setText("次の問題");
+        btnShowExplanation.setTextSize(30);
+        btnNext.setTag("Explain");
+        btnShowExplanation.setOnClickListener(this);
+        LinearLayout.LayoutParams buttonExplainParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        btnNext.setLayoutParams(buttonExplainParams);
+        layout.addView(btnShowExplanation);
+    }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void onClickNextQuiz(){
-        /*
-        * 問題番号のインクリメント
-         */
-        this.mainApp.setQuizNum(this.mainApp.getQuizNum()+1);
+    @Override
+    public void onClick(View view) {
+        if (view.getTag() == "Next") {
+            /*
+             * 問題番号のインクリメント
+             */
+            this.mainApp.setQuizNum(this.mainApp.getQuizNum()+1);
 
-        /*
-        * fragmentの再読み込み
-         */
+            this.tqActivity.reloadQuiz();
+
+        } else if (view.getTag() == "Explain") {
+            /*
+             * このFragmentをスタックし解説Fragment起動
+             */
+            LinearLayout layout = this.tqActivity.getLinearLayout();
+            FragmentManager manager = this.tqActivity.getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(layout.getId(), new showExplanationFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+            /*
+            getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragmentcontainer, new ***Fragment)
+                .addToBackStack(null)
+                .commit();
+             */
+        }
     }
+
 
 }
-
-/*
-* 残り作業
-* layout作成
-* setLayout
-* 選択肢選択時処理
-* fragment reload
- */
