@@ -2,7 +2,6 @@ package com.example.quizapp;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
@@ -13,10 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class takeQuizPackActivity extends AppCompatActivity {
@@ -25,7 +22,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
     private FragmentTransaction transaction;
     private List<String> lstPackIdFile;
     private mainApplication mainApp;
-    private takeQuizFragment takeQuizFragment;
+
     /*
     * @fn
     * Activity起動時, パック選択画面を表示するメソッド
@@ -55,12 +52,10 @@ public class takeQuizPackActivity extends AppCompatActivity {
         /*
         * パック選択画面起動
          */
+        this.mainApp.setSelectPack(true);   //select省略
         if(mainApp.getSelectPack()){
-            try {
-                this.takeQuiz();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            this.takeQuiz();
+
         }else{
             this.selectPack();
         }
@@ -81,20 +76,16 @@ public class takeQuizPackActivity extends AppCompatActivity {
     * クイズ回答画面を表示するメソッド
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void takeQuiz() throws IOException {
-        /*
-        * テスト用ファイル作成
-         */
-        Path p = Paths.get(this.mainApp.getPackId());
-        Files.delete(p);
-        this.mainApp.saveFile(this.mainApp.getPackId(),
-                "問題文,選択肢1,選択肢2,選択肢3,選択肢4,解説\n");
+    public void takeQuiz(){
 
         /*
         * クイズ初期化
          */
         this.correctNum = 0;
-        this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+        //this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+        this.lstPackIdFile = new ArrayList<>(Arrays.asList("q1,a1,b1,c1,d1,ex1",
+                "q2,a2,b2,c2,d2,ex2",
+                "q3,a3,b3,c3,d3,exq3"));
 
         /*
         * クイズ回答画面表示
@@ -105,32 +96,13 @@ public class takeQuizPackActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void reloadQuiz(){
-        this.mainApp.setQuizNum(this.mainApp.getQuizNum() + 1);
-
-        if(this.mainApp.getQuizNum() > this.lstPackIdFile.size()){
-            /*
-            Fragment再読み込み
-             */
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.detach(this.takeQuizFragment);
-            this.takeQuizFragment = new takeQuizFragment();
-            transaction.attach(this.takeQuizFragment);
-            transaction.commit();
-
-        }else{
-            this.result();
-        }
-    }
-
-    //結果を表示するメソッド
-    public void result(){
+    //結果を表示するメソッド (不要かも)
+    /*public void result(){
         resultFragment resultFragment = new resultFragment();
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container, resultFragment);
         transaction.commit();
-    }
+    }*/
 
     //遷移先のFragmentからメニューボタンを再表示させるメソッド
     @SuppressLint("ResourceType")
