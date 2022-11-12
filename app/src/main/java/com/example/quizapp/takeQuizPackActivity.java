@@ -52,7 +52,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
         /*
         * パック選択画面起動
          */
-        this.mainApp.setSelectPack(true);   //select省略
+        this.mainApp.setSelectPack(true);   //takeQuizテスト用select省略, 後でこの1行は削除
         if(mainApp.getSelectPack()){
             this.takeQuiz();
 
@@ -80,12 +80,13 @@ public class takeQuizPackActivity extends AppCompatActivity {
 
         /*
         * クイズ初期化
+        * テスト用仮データで初期化中
          */
         this.correctNum = 0;
         //this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
-        this.lstPackIdFile = new ArrayList<>(Arrays.asList("q1,a1,b1,c1,d1,ex1",
-                "q2,a2,b2,c2,d2,ex2",
-                "q3,a3,b3,c3,d3,exq3"));
+        this.lstPackIdFile = new ArrayList<>(Arrays.asList("Q1,a1,b1,c1,d1,ex1",
+                "Q2,a2,b2,c2,d2,ex2",
+                "Q3,a3,b3,c3,d3,exq3"));
 
         /*
         * クイズ回答画面表示
