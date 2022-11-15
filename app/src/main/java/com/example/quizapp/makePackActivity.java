@@ -13,6 +13,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class makePackActivity extends AppCompatActivity {
 
     private String packTitle;
@@ -20,6 +23,11 @@ public class makePackActivity extends AppCompatActivity {
     private String packIntroduction;
     private int quizTotalNum;
     private static mainApplication mainApplication;
+
+    //↓あるパックに含まれる全クイズデータを入れるリスト。↑のquizTotalNumいらなくね？
+    private List<String> quizData = new ArrayList<String>();
+
+    private mainApplication mainApplication;
 
     private Button btnMakeNewQuiz;
     private Button btnEditQuiz;
@@ -150,6 +158,14 @@ public class makePackActivity extends AppCompatActivity {
 
     public mainApplication getMainApplication(){
         return mainApplication;
+    }
+
+    public void setQuizData(List<String> inputQuizData){
+        this.quizData=inputQuizData;
+    }
+
+    public List<String> getQuizData(){
+        return this.quizData;
     }
 }
 
