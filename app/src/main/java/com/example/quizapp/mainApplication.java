@@ -6,6 +6,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,17 +16,34 @@ import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class mainApplication extends Application {
-    private int packNum=0;
-    private List<String> allList = new ArrayList<String>();
-    private List<String> selectList = new ArrayList<String>();
-    private int quizNum;
-    private String packId;
-    private boolean fromMakePackActivity=false;
-    private boolean fromTakeQuizPackActivity =false;
-    private boolean fromTakeQuizFragment=false;
-    private boolean fromResultFragment=false;
-    private boolean selectPack=false;
-    private final String PACK_DATA_FILE_NAME = "packData.csv";
+    private static int packNum=0;
+    private static List<String> allList = new ArrayList<String>();
+    private static List<String> selectList = new ArrayList<String>();
+    private static int quizNum;
+    private static String packId;
+    private static boolean fromMakePackActivity=false;
+    private static boolean fromTakeQuizPackActivity =false;
+    private static boolean fromTakeQuizFragment=false;
+    private static boolean fromResultFragment=false;
+    private static boolean selectPack=false;
+    private static final String PACK_DATA_FILE_NAME = "packData.csv";
+
+    /*
+    * ファイル削除
+    * isRemainedでファイル自体を残すか選択
+     */
+    public void deleteFile(String fileName, boolean isRemained){
+        if(isRemained){
+            try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
+                //空白で置き換え
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            File file = new File(fileName);
+            file.delete();
+        }
+    };
 
     /*
     *ファイルに書き込みをする機能
@@ -41,6 +59,29 @@ public class mainApplication extends Application {
             *指定したファイルに書き込み
              */
             fileOutputStream.write(strSaveData.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *リストからファイルに書き込みをする機能
+     */
+    public void saveFileByList(String fileName, List<String> lstSaveData){
+        try {
+            /*
+             *書き込みをするファイルの指定、指定されたファイルがなければ新規作成
+             */
+            FileOutputStream fileOutputStream = openFileOutput(fileName, MODE_PRIVATE | MODE_APPEND);
+
+            /*
+             *指定したファイルに書き込み
+             */
+            String buffer;
+            for(int i = 0; i < lstSaveData.size(); i++){
+                buffer = lstSaveData.get(i);
+                fileOutputStream.write(buffer.getBytes());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,24 +171,24 @@ public class mainApplication extends Application {
     }
 
     //selectリストの初期化する
-    public void deleteSelectList(){
+    public static void deleteSelectList(){
         selectList.clear();
     }
 
-    public void setSelectList(List<String> inputSelectList) {
-        this.selectList = inputSelectList;
+    public static void setSelectList(List<String> inputSelectList) {
+        mainApplication.selectList = inputSelectList;
     }
 
-    public List<String> getSelectList(){
-        return this.selectList;
+    public static List<String> getSelectList(){
+        return mainApplication.selectList;
     }
 
-    public int getPackNum() {
+    public static int getPackNum() {
         return packNum;
     }
 
-    public void setPackNum(int puckNum) {
-        this.packNum=puckNum;
+    public static void setPackNum(int puckNum) {
+        mainApplication.packNum=puckNum;
     }
 
     public List<String> getAllList() {
@@ -156,59 +197,59 @@ public class mainApplication extends Application {
         return allList;
     }
 
-    public int getQuizNum() {
+    public static int getQuizNum() {
         return quizNum;
     }
 
-    public void setQuizNum(int quizNum) {
-        this.quizNum = quizNum;
+    public static void setQuizNum(int quizNum) {
+        mainApplication.quizNum = quizNum;
     }
 
-    public String getPackId() {
+    public static String getPackId() {
         return packId;
     }
 
-    public void setPackId(String packId) {
-        this.packId = packId;
+    public static void setPackId(String packId) {
+        mainApplication.packId = packId;
     }
 
-    public boolean getFromTakeQuizFragment() {
+    public static boolean getFromTakeQuizFragment() {
         return fromTakeQuizFragment;
     }
 
-    public void setFromTakeQuizFragment(boolean fromTakeQuizFragment) {
-        this.fromTakeQuizFragment = fromTakeQuizFragment;
+    public static void setFromTakeQuizFragment(boolean fromTakeQuizFragment) {
+        mainApplication.fromTakeQuizFragment = fromTakeQuizFragment;
     }
 
-    public boolean getFromResultFragment() {
+    public static boolean getFromResultFragment() {
         return fromResultFragment;
     }
 
-    public void setFromResultFragment(boolean fromResultFragment) {
-        this.fromResultFragment = fromResultFragment;
+    public static void setFromResultFragment(boolean fromResultFragment) {
+        mainApplication.fromResultFragment = fromResultFragment;
     }
     
-    public boolean getFromMakePackActivity() {
+    public static boolean getFromMakePackActivity() {
         return fromMakePackActivity;
     }
 
-    public void setFromMakePackActivity(boolean fromMakePackActivity) {
-        this.fromMakePackActivity = fromMakePackActivity;
+    public static void setFromMakePackActivity(boolean fromMakePackActivity) {
+        mainApplication.fromMakePackActivity = fromMakePackActivity;
     }
 
-    public boolean getFromTakeQuizPackActivity() {
+    public static boolean getFromTakeQuizPackActivity() {
         return fromTakeQuizPackActivity;
     }
 
-    public void setFromTakeQuizPackActivity(boolean fromTakeQuizPackActivity) {
-        this.fromTakeQuizPackActivity = fromTakeQuizPackActivity;
+    public static void setFromTakeQuizPackActivity(boolean fromTakeQuizPackActivity) {
+        mainApplication.fromTakeQuizPackActivity = fromTakeQuizPackActivity;
     }
 
-    public boolean getSelectPack() {
+    public static boolean getSelectPack() {
         return selectPack;
     }
 
-    public void setSelectPack(boolean selectPack) {
-        this.selectPack = selectPack;
+    public static void setSelectPack(boolean selectPack) {
+        mainApplication.selectPack = selectPack;
     }
 }
