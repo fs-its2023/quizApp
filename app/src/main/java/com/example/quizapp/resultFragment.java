@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +55,13 @@ public class resultFragment extends Fragment {
         packId=mainApplication.getPackId();
 
         //Applicationクラスにあるパックの情報をリストに代入
-        allList= mainApplication.readFileAsList(packId);
+        allList= mainApplication.readFileAsList(mainApplication.PACK_DATA_FILE_NAME);
 
         //配列に値を代入
         setListData(allList);
 
         //問題数をint型に変換
-        quizNumProblem=toListDataQuizNumProblems(listData[2]);
+        quizNumProblem=toListDataQuizNumProblems(listData[3]);
 
         //最終結果の表示とボタンの生成を行う
         createView(quizNumProblem);

@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,12 +86,28 @@ public class takeQuizPackActivity extends AppCompatActivity {
          */
         this.correctNum = 0;
         //this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+        //ここから数行は本来は削除, 上はアンコメント
         this.lstPackIdFile = new ArrayList<>(Arrays.asList("Q1,a1,b1,c1,d1,ex1",
                 "Q2,a2,b2,c2,d2,ex2",
                 "Q3,a3,b3,c3,d3,exq3"));
+        this.mainApp.deleteFile("0000");
+        this.mainApp.saveFileByList("0000", this.lstPackIdFile);
+        this.mainApp.deleteFile("0001");
+        this.mainApp.saveFileByList("0001", this.lstPackIdFile);
+        this.mainApp.deleteFile("0002");
+        this.mainApp.saveFileByList("0002", this.lstPackIdFile);
+        this.mainApp.setPackId("0000");
+        String path = this.mainApp.PACK_DATA_FILE_NAME;
+        this.mainApp.deleteFile(this.mainApp.PACK_DATA_FILE_NAME,false);
+        List<String> lstFile = new ArrayList<>();
+        lstFile.add("0000,usr0,title0,3,intro0,genre0");
+        lstFile.add("0001,usr1,title1,3,intro1,genre1");
+        lstFile.add("0002,usr2,title2,3,intro2,genre2");
+        this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME,lstFile);
+        //ここまで削除
 
         /*
-        * クイズ回答画面表示
+        * クイズ回答画面表示 本当はtakeQuizFragment
          */
         takeQuizFragment takeQuizFragment = new takeQuizFragment();
         transaction = getSupportFragmentManager().beginTransaction();
@@ -138,8 +156,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
             finish();
         }
     };
-
-
 
     /*
     * correctNumのgetterとsetter

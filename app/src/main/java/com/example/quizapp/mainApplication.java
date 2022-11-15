@@ -26,7 +26,7 @@ public class mainApplication extends Application {
     private static boolean fromTakeQuizFragment=false;
     private static boolean fromResultFragment=false;
     private static boolean selectPack=false;
-    private static final String PACK_DATA_FILE_NAME = "packData.csv";
+    public static final String PACK_DATA_FILE_NAME = "packData";
 
     /*
     * ファイル削除
@@ -34,7 +34,7 @@ public class mainApplication extends Application {
      */
     public void deleteFile(String fileName, boolean isRemained){
         if(isRemained){
-            try (FileOutputStream fos = new FileOutputStream(fileName, false)) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(fileName, false)) {
                 //空白で置き換え
             } catch (IOException e) {
                 e.printStackTrace();
@@ -43,7 +43,7 @@ public class mainApplication extends Application {
             File file = new File(fileName);
             file.delete();
         }
-    };
+    }
 
     /*
     *ファイルに書き込みをする機能
@@ -54,11 +54,9 @@ public class mainApplication extends Application {
             *書き込みをするファイルの指定、指定されたファイルがなければ新規作成
              */
             FileOutputStream fileOutputStream = openFileOutput(fileName, MODE_PRIVATE | MODE_APPEND);
-
             /*
             *指定したファイルに書き込み
              */
-            fileOutputStream.write(strSaveData.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,7 +77,7 @@ public class mainApplication extends Application {
              */
             String buffer;
             for(int i = 0; i < lstSaveData.size(); i++){
-                buffer = lstSaveData.get(i);
+                buffer = lstSaveData.get(i) + "\n";
                 fileOutputStream.write(buffer.getBytes());
             }
         } catch (IOException e) {
