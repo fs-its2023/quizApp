@@ -57,15 +57,16 @@ public class editQuizFragment extends Fragment {
         makePackActivity =(makePackActivity)getActivity();
         mainApplication=(com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
 
-        Button btnSaveAndNext=layout.findViewById(R.id.btnSaveAndNext);
-        Button btnSaveAndExit=layout.findViewById(R.id.btnSaveAndExit);
-        EditText editTxtQuizSentence=layout.findViewById(R.id.editTxtQuizSentence);
-        EditText editTxtCorrectOption=layout.findViewById(R.id.editTxtCorrectOption);
-        EditText editTxtIncorrectOption1=layout.findViewById(R.id.editTxtIncorrectOption1);
-        EditText editTxtIncorrectOption2=layout.findViewById(R.id.editTxtIncorrectOption2);
-        EditText editTxtIncorrectOption3=layout.findViewById(R.id.editTxtIncorrectOption3);
-        EditText editTxtQuizExplanation=layout.findViewById(R.id.editTxtQuizExplanation);
-        TextView txtPackTitle=layout.findViewById(R.id.txtPackTitle);
+        Button btnSaveAndNext=view.findViewById(R.id.btnSaveAndNext);
+        Button btnSaveAndExit=view.findViewById(R.id.btnSaveAndExit);
+        EditText editTxtQuizSentence=view.findViewById(R.id.editTxtQuizSentence);
+        EditText editTxtCorrectOption=view.findViewById(R.id.editTxtCorrectOption);
+        EditText editTxtIncorrectOption1=view.findViewById(R.id.editTxtIncorrectOption1);
+        EditText editTxtIncorrectOption2=view.findViewById(R.id.editTxtIncorrectOption2);
+        EditText editTxtIncorrectOption3=view.findViewById(R.id.editTxtIncorrectOption3);
+        EditText editTxtQuizExplanation=view.findViewById(R.id.editTxtQuizExplanation);
+        TextView txtPackTitle=view.findViewById(R.id.txtPackTitle);
+
 
         //新規か編集かの判定
         if(makePackActivity.getQuizTotalNum()==0){
@@ -112,6 +113,7 @@ public class editQuizFragment extends Fragment {
 
     //「保存して終了」を押された時の処理。
     //保存出来たらフラグメントを閉じる、保存できなかったら何もしない
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClickSaveAndClose(View view){
         if(saveQuiz()){
             //フラグメントを閉じる
@@ -120,6 +122,7 @@ public class editQuizFragment extends Fragment {
 
     //「保存して次の問題」を作成を押された時の処理。
     // 保存出来たら入力欄の削除、保存できなかったら何もしない
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClickSaveAndNext(View view){
         if(saveQuiz()){
             //editTxtたちを消す
@@ -134,6 +137,7 @@ public class editQuizFragment extends Fragment {
 
 
     //クイズデータを保存する
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean saveQuiz(){
         if(isSavePossible()){
             //入力情報の取得
