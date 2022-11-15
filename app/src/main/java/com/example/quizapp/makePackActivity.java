@@ -19,10 +19,10 @@ public class makePackActivity extends AppCompatActivity {
     private String packGenre;
     private String packIntroduction;
     private int quizTotalNum;
-    private mainApplication mainApplication;
+    private static mainApplication mainApplication;
 
-    Button btnMakeNewQuiz;
-    Button btnEditQuiz;
+    private Button btnMakeNewQuiz;
+    private Button btnEditQuiz;
     private FragmentTransaction transaction;
 
     @Override
@@ -93,7 +93,6 @@ public class makePackActivity extends AppCompatActivity {
         layout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-
 
         Button button = new Button(this);
         button.setTextSize(10);
