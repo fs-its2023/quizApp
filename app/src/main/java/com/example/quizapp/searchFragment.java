@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.quizapp;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class searchFragment extends Fragment {
-    String spinner1;
-    String spinner2;
+    String spinner1;//問題数
+    String spinner2;//ジャンル
     String keyword;
     int maxQuiz;
     int minQuiz ;
