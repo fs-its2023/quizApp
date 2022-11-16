@@ -112,6 +112,7 @@ public class editQuizFragment extends Fragment {
 
     //「保存して終了」を押された時の処理。
     //保存出来たらフラグメントを閉じる、保存できなかったら何もしない
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClickSaveAndClose(View view){
         if(saveQuiz()){
             //フラグメントを閉じる
@@ -120,10 +121,11 @@ public class editQuizFragment extends Fragment {
 
     //「保存して次の問題」を作成を押された時の処理。
     // 保存出来たら入力欄の削除、保存できなかったら何もしない
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClickSaveAndNext(View view){
         if(saveQuiz()){
             //editTxtたちを消す
-            editTxtQuizSentence.setText("");
+            editTxtQuizSentence.setVisibility(View.INVISIBLE);
             editTxtCorrectOption.setText("");
             editTxtIncorrectOption1.setText("");
             editTxtIncorrectOption2.setText("");
@@ -134,6 +136,7 @@ public class editQuizFragment extends Fragment {
 
 
     //クイズデータを保存する
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean saveQuiz(){
         if(isSavePossible()){
             //入力情報の取得
