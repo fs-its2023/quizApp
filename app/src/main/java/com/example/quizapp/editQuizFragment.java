@@ -17,9 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-public class editQuizFragment extends Fragment {
-    View layout;
+public class editQuizFragment extends Fragment{
     private Button btnSaveAndNext;
     private Button btnSaveAndExit;
     private EditText editTxtQuizSentence;
@@ -45,7 +46,6 @@ public class editQuizFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreateView(inflater, container, savedInstanceState);
-        View layout = inflater.inflate(R.layout.fragment_edit_quiz,container,false);
         return inflater.inflate(R.layout.fragment_edit_quiz,container,false);
     }
 
@@ -57,15 +57,15 @@ public class editQuizFragment extends Fragment {
         makePackActivity =(makePackActivity)getActivity();
         mainApplication=(com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
 
-        Button btnSaveAndNext=view.findViewById(R.id.btnSaveAndNext);
-        Button btnSaveAndExit=view.findViewById(R.id.btnSaveAndExit);
-        EditText editTxtQuizSentence=view.findViewById(R.id.editTxtQuizSentence);
-        EditText editTxtCorrectOption=view.findViewById(R.id.editTxtCorrectOption);
-        EditText editTxtIncorrectOption1=view.findViewById(R.id.editTxtIncorrectOption1);
-        EditText editTxtIncorrectOption2=view.findViewById(R.id.editTxtIncorrectOption2);
-        EditText editTxtIncorrectOption3=view.findViewById(R.id.editTxtIncorrectOption3);
-        EditText editTxtQuizExplanation=view.findViewById(R.id.editTxtQuizExplanation);
-        TextView txtPackTitle=view.findViewById(R.id.txtPackTitle);
+        btnSaveAndNext=view.findViewById(R.id.btnSaveAndNext);
+        btnSaveAndExit=view.findViewById(R.id.btnSaveAndExit);
+        editTxtQuizSentence=view.findViewById(R.id.editTxtQuizSentence);
+        editTxtCorrectOption=view.findViewById(R.id.editTxtCorrectOption);
+        editTxtIncorrectOption1=view.findViewById(R.id.editTxtIncorrectOption1);
+        editTxtIncorrectOption2=view.findViewById(R.id.editTxtIncorrectOption2);
+        editTxtIncorrectOption3=view.findViewById(R.id.editTxtIncorrectOption3);
+        editTxtQuizExplanation=view.findViewById(R.id.editTxtQuizExplanation);
+        txtPackTitle=view.findViewById(R.id.txtPackTitle);
 
 
         //新規か編集かの判定
@@ -74,6 +74,18 @@ public class editQuizFragment extends Fragment {
         }else{
             isMakeNewPack=false;
         }
+
+        //テスト用,編集の場合
+        isMakeNewPack=false;
+        makePackActivity.setPackTitle("編集テスト：タイトル");
+        List<String> list1 = new ArrayList<>();
+        list1.add("title,aaa,bbb,ccc,ddd,kaisetsu");
+        makePackActivity.setQuizData(list1);
+        makePackActivity.getMainApplication().setQuizNum(1);
+
+//        //テスト用,新規の場合
+//        isMakeNewPack=true;
+//        makePackActivity.setPackTitle("新規作成テスト：タイトル");
 
         //新規だった場合。パックタイトルを表示する、packIdの新規作成を行う
         if(isMakeNewPack){
@@ -89,15 +101,16 @@ public class editQuizFragment extends Fragment {
         }
 
         //編集だった場合。入力欄に、保存されていた情報を表示する
-        if(!isMakeNewPack){
+        if(!isMakeNewPack) {
             //保存されている情報を取り出す
             String packTitle = makePackActivity.getPackTitle();
             quizData = makePackActivity.getQuizData();
             quizNum = mainApplication.getQuizNum();
             String strQuizData;
             String[] arrayQuizData;
-            strQuizData = quizData.get(quizNum-1);
+            strQuizData = quizData.get(quizNum - 1);
             arrayQuizData = strQuizData.split(",");
+
 
             //テキストを表示
             txtPackTitle.setText(packTitle);
@@ -108,56 +121,62 @@ public class editQuizFragment extends Fragment {
             editTxtIncorrectOption3.setText(arrayQuizData[4]);
             editTxtQuizExplanation.setText(arrayQuizData[5]);
         }
+
+        //保存して新規作成ボタン　保存出来たら入力欄を空欄にする
+        btnSaveAndNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (saveQuiz()) {
+                        //editTxtたちを消す
+                        editTxtQuizSentence.setText("");
+                        editTxtCorrectOption.setText("");
+                        editTxtIncorrectOption1.setText("");
+                        editTxtIncorrectOption2.setText("");
+                        editTxtIncorrectOption3.setText("");
+                        editTxtQuizExplanation.setText("");
+                    }
+            }
+        });
+
+        //保存して終了ボタン　保存出来たらフラグメントを閉じる
+        //フラグメント閉じれない
+        btnSaveAndExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (saveQuiz()) {
+                    FragmentTransaction transaction;
+                    FragmentManager fragmentManager = getFragmentManager();
+                    editQuizFragment editQuizFragment = new editQuizFragment();
+                    transaction = fragmentManager.beginTransaction();
+                    transaction.remove(editQuizFragment);
+                    transaction.commit();
+                }
+            }
+        });
+
     }
-
-
-    //「保存して終了」を押された時の処理。
-    //保存出来たらフラグメントを閉じる、保存できなかったら何もしない
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void onClickSaveAndClose(View view){
-        if(saveQuiz()){
-            //フラグメントを閉じる
-        }
-    }
-
-    //「保存して次の問題」を作成を押された時の処理。
-    // 保存出来たら入力欄の削除、保存できなかったら何もしない
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void onClickSaveAndNext(View view){
-        if(saveQuiz()){
-            //editTxtたちを消す
-            editTxtQuizSentence.setVisibility(View.INVISIBLE);
-            editTxtCorrectOption.setText("");
-            editTxtIncorrectOption1.setText("");
-            editTxtIncorrectOption2.setText("");
-            editTxtIncorrectOption3.setText("");
-            editTxtQuizExplanation.setText("");
-        }
-    }
-
 
     //クイズデータを保存する
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean saveQuiz(){
         if(isSavePossible()){
-            //入力情報の取得
-            String quizSentence=editTxtQuizSentence.getText().toString();
-            String correctOption=editTxtCorrectOption.getText().toString();
-            String inCorrectOption1=editTxtIncorrectOption1.getText().toString();
-            String inCorrectOption2=editTxtIncorrectOption2.getText().toString();
-            String inCorrectOption3=editTxtIncorrectOption3.getText().toString();
-            String quizExplanation=editTxtQuizExplanation.getText().toString();
-
-            String strQuizData = quizSentence+","+correctOption+","+inCorrectOption1+","+inCorrectOption2+","+inCorrectOption3+","+quizExplanation;
-            //保存する
-            quizData.set(quizNum-1, strQuizData);
-            String packId = mainApplication.getPackId();
-            mainApplication.deleteFile(packId,false);
-            mainApplication.saveFileByList(packId,quizData);
+//            //入力情報の取得
+//            String quizSentence=editTxtQuizSentence.getText().toString();
+//            String correctOption=editTxtCorrectOption.getText().toString();
+//            String inCorrectOption1=editTxtIncorrectOption1.getText().toString();
+//            String inCorrectOption2=editTxtIncorrectOption2.getText().toString();
+//            String inCorrectOption3=editTxtIncorrectOption3.getText().toString();
+//            String quizExplanation=editTxtQuizExplanation.getText().toString();
+//
+//            String strQuizData = quizSentence+","+correctOption+","+inCorrectOption1+","+inCorrectOption2+","+inCorrectOption3+","+quizExplanation;
+//            //保存する
+//            quizData.set(quizNum-1, strQuizData);
+//            String packId = mainApplication.getPackId();
+//            mainApplication.deleteFile(packId,false);
+//            mainApplication.saveFileByList(packId,quizData);
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 
     //保存可能かどうか判定する、保存できない場合は警告を出す
@@ -183,7 +202,7 @@ public class editQuizFragment extends Fragment {
             isSavePossible = false;
         }
         //保存不可の場合に警告を出す
-        if(isSavePossible){
+        if(!isSavePossible){
             Toast myToast = Toast.makeText(
                     makePackActivity.getApplicationContext(),
                     "全ての項目を入力してください",
@@ -196,6 +215,14 @@ public class editQuizFragment extends Fragment {
 
     //パックのデータを保存する、新規と編集で保存内容が増減する
     public void savePack(){
+        //新規だった場合。パック情報をpackData.csvの最終行に追加
+        if(isMakeNewPack){
+
+        }
+        //編集だった場合。パックリストを取得、合計クイズ数を変更して再度保存
+        if(!isMakeNewPack){
+
+        }
 
     }
 }
