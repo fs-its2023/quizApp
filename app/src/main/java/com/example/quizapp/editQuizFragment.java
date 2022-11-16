@@ -57,15 +57,16 @@ public class editQuizFragment extends Fragment {
         makePackActivity =(makePackActivity)getActivity();
         mainApplication=(com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
 
-        Button btnSaveAndNext=layout.findViewById(R.id.btnSaveAndNext);
-        Button btnSaveAndExit=layout.findViewById(R.id.btnSaveAndExit);
-        EditText editTxtQuizSentence=layout.findViewById(R.id.editTxtQuizSentence);
-        EditText editTxtCorrectOption=layout.findViewById(R.id.editTxtCorrectOption);
-        EditText editTxtIncorrectOption1=layout.findViewById(R.id.editTxtIncorrectOption1);
-        EditText editTxtIncorrectOption2=layout.findViewById(R.id.editTxtIncorrectOption2);
-        EditText editTxtIncorrectOption3=layout.findViewById(R.id.editTxtIncorrectOption3);
-        EditText editTxtQuizExplanation=layout.findViewById(R.id.editTxtQuizExplanation);
-        TextView txtPackTitle=layout.findViewById(R.id.txtPackTitle);
+        Button btnSaveAndNext=view.findViewById(R.id.btnSaveAndNext);
+        Button btnSaveAndExit=view.findViewById(R.id.btnSaveAndExit);
+        EditText editTxtQuizSentence=view.findViewById(R.id.editTxtQuizSentence);
+        EditText editTxtCorrectOption=view.findViewById(R.id.editTxtCorrectOption);
+        EditText editTxtIncorrectOption1=view.findViewById(R.id.editTxtIncorrectOption1);
+        EditText editTxtIncorrectOption2=view.findViewById(R.id.editTxtIncorrectOption2);
+        EditText editTxtIncorrectOption3=view.findViewById(R.id.editTxtIncorrectOption3);
+        EditText editTxtQuizExplanation=view.findViewById(R.id.editTxtQuizExplanation);
+        TextView txtPackTitle=view.findViewById(R.id.txtPackTitle);
+
 
         //新規か編集かの判定
         if(makePackActivity.getQuizTotalNum()==0){

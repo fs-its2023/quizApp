@@ -22,14 +22,15 @@ public class makePackActivity extends AppCompatActivity {
     private String packGenre;
     private String packIntroduction;
     private int quizTotalNum;
+    private static mainApplication mainApplication;
 
     //↓あるパックに含まれる全クイズデータを入れるリスト。↑のquizTotalNumいらなくね？
     private List<String> quizData = new ArrayList<String>();
 
     private mainApplication mainApplication;
 
-    Button btnMakeNewQuiz;
-    Button btnEditQuiz;
+    private Button btnMakeNewQuiz;
+    private Button btnEditQuiz;
     private FragmentTransaction transaction;
 
     @Override
@@ -100,7 +101,6 @@ public class makePackActivity extends AppCompatActivity {
         layout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-
 
         Button button = new Button(this);
         button.setTextSize(10);
