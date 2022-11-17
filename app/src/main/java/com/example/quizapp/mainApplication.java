@@ -176,8 +176,8 @@ public class mainApplication extends Application {
         return packNum;
     }
 
-    public static void setPackNum(int puckNum) {
-        mainApplication.packNum=puckNum;
+    public static void setPackNum(int packNum) {
+        mainApplication.packNum=packNum;
     }
 
     public List<String> getAllList() {
