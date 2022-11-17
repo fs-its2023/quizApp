@@ -33,6 +33,7 @@ public class editQuizFragment extends Fragment{
 
     int quizNum;
     List<String> quizData;
+    int quizTotalNum;
 
     //MainApplicationの取得
     //MainActivity MainActivity=(MainActivity)getActivity();
@@ -98,6 +99,9 @@ public class editQuizFragment extends Fragment{
             //パックタイトルの表示
             String packTitle = makePackActivity.getPackTitle();
             txtPackTitle.setText(packTitle);
+
+            //クイズ数の初期化
+            quizTotalNum = 0;
         }
 
         //編集だった場合。入力欄に、保存されていた情報を表示する
@@ -122,58 +126,61 @@ public class editQuizFragment extends Fragment{
             editTxtQuizExplanation.setText(arrayQuizData[5]);
         }
 
-        //保存して新規作成ボタン　保存出来たら入力欄を空欄にする
+        //保存して次の問題を作成するボタン　保存出来たら入力欄を空欄にする
         btnSaveAndNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (saveQuiz()) {
-                        //editTxtたちを消す
-                        editTxtQuizSentence.setText("");
-                        editTxtCorrectOption.setText("");
-                        editTxtIncorrectOption1.setText("");
-                        editTxtIncorrectOption2.setText("");
-                        editTxtIncorrectOption3.setText("");
-                        editTxtQuizExplanation.setText("");
-                    }
-            }
-        });
+                    //editTxtたちを消す
+                    editTxtQuizSentence.setText("");
+                    editTxtCorrectOption.setText("");
+                    editTxtIncorrectOption1.setText("");
+                    editTxtIncorrectOption2.setText("");
+                    editTxtIncorrectOption3.setText("");
+                    editTxtQuizExplanation.setText("");
 
-        //保存して終了ボタン　保存出来たらフラグメントを閉じる
-        //フラグメント閉じれない
-        btnSaveAndExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (saveQuiz()) {
-                    FragmentTransaction transaction;
-                    FragmentManager fragmentManager = getFragmentManager();
-                    editQuizFragment editQuizFragment = new editQuizFragment();
-                    transaction = fragmentManager.beginTransaction();
-                    transaction.remove(editQuizFragment);
-                    transaction.commit();
+                    //パックデータの更新
+                    savePack();
                 }
             }
         });
 
+        //保存して終了ボタン　保存出来たらフラグメントを閉じる
+        btnSaveAndExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(saveQuiz()){
+                    //makePackActivityを再表示する
+                    makePackActivity.reload();
+                }
+            }
+        });
     }
 
     //クイズデータを保存する
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean saveQuiz(){
         if(isSavePossible()){
-//            //入力情報の取得
-//            String quizSentence=editTxtQuizSentence.getText().toString();
-//            String correctOption=editTxtCorrectOption.getText().toString();
-//            String inCorrectOption1=editTxtIncorrectOption1.getText().toString();
-//            String inCorrectOption2=editTxtIncorrectOption2.getText().toString();
-//            String inCorrectOption3=editTxtIncorrectOption3.getText().toString();
-//            String quizExplanation=editTxtQuizExplanation.getText().toString();
-//
-//            String strQuizData = quizSentence+","+correctOption+","+inCorrectOption1+","+inCorrectOption2+","+inCorrectOption3+","+quizExplanation;
-//            //保存する
-//            quizData.set(quizNum-1, strQuizData);
-//            String packId = mainApplication.getPackId();
+            //入力情報の取得
+            String quizSentence=editTxtQuizSentence.getText().toString();
+            String correctOption=editTxtCorrectOption.getText().toString();
+            String inCorrectOption1=editTxtIncorrectOption1.getText().toString();
+            String inCorrectOption2=editTxtIncorrectOption2.getText().toString();
+            String inCorrectOption3=editTxtIncorrectOption3.getText().toString();
+            String quizExplanation=editTxtQuizExplanation.getText().toString();
+
+            String strQuizData = quizSentence+","+correctOption+","+inCorrectOption1+","+inCorrectOption2+","+inCorrectOption3+","+quizExplanation;
+            //保存する
+            quizData.set(quizNum-1, strQuizData);
+            String packId = mainApplication.getPackId();
 //            mainApplication.deleteFile(packId,false);
 //            mainApplication.saveFileByList(packId,quizData);
+            Toast myToast = Toast.makeText(
+                    makePackActivity.getApplicationContext(),
+                    "保存しました",
+                    Toast.LENGTH_SHORT
+            );
+            myToast.show();
             return true;
         }
         return false;
@@ -214,15 +221,20 @@ public class editQuizFragment extends Fragment{
     }
 
     //パックのデータを保存する、新規と編集で保存内容が増減する
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void savePack(){
         //新規だった場合。パック情報をpackData.csvの最終行に追加
         if(isMakeNewPack){
+            String packId = mainApplication.getPackId();
+            String packTitle = makePackActivity.getPackTitle();
+            String packIntroduction = makePackActivity.getPackIntroduction();
+            String packGenre = makePackActivity.getPackGenre();
+//            String userName;
 
         }
         //編集だった場合。パックリストを取得、合計クイズ数を変更して再度保存
         if(!isMakeNewPack){
 
         }
-
     }
 }
