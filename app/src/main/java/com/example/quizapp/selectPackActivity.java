@@ -41,9 +41,9 @@ public class selectPackActivity extends AppCompatActivity {
 
         mainApplication=(com.example.quizapp.mainApplication) getApplication();
 
-        mainApplication.deleteFile("packData.csv");
+        mainApplication.deleteFile("packData");
         for(int i=1;i<=20;i++){
-            mainApplication.saveFile("packData.csv",""+i+",パック名"+i+",20,パック"+i+"説明,ジャンル1\n");
+            mainApplication.saveFile("packData",""+i+",パック名"+i+",20,パック"+i+"説明,ジャンル1\n");
         }
 
         allList= mainApplication.getAllList();

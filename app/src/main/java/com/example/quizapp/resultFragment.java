@@ -16,8 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class resultFragment extends Fragment {
     int packNum;
     int quizNumProblem;
     String packId;
-    String[] listData;
+    String[] listData=new String[6];
     List<String> allList=new ArrayList<>();
     Button button;
     LinearLayout layout;
@@ -119,7 +117,7 @@ public class resultFragment extends Fragment {
             button = new Button(tqActivity);
             button.setText("問題番号"+i+"番");
             button.setTextSize(30);
-            button.setTag(i);
+            button.setTag(i-1);
             button.setOnClickListener(createShowExplanationFragment);
             //ボタンの幅、高さの設定
             LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
@@ -141,11 +139,13 @@ public class resultFragment extends Fragment {
 
             mainApplication.setFromTakeQuizFragment(false);
             // フラグメントマネージャーの取得
-            FragmentManager manager = tqActivity.getSupportFragmentManager(); // アクティビティではgetSupportFragmentManager()?
+            //FragmentManager manager = tqActivity.getSupportFragmentManager(); // アクティビティではgetSupportFragmentManager()?
+            FragmentManager manager = getParentFragmentManager();
             // フラグメントトランザクションの開始
             FragmentTransaction transaction = manager.beginTransaction();
             // レイアウトをfragmentに置き換え（追加）
-            transaction.replace(layout.getId(),new showExplanationFragment());
+            showExplanationFragment showExplanationFragment=new showExplanationFragment();
+            transaction.replace(layout.getId(),showExplanationFragment);
             // 置き換えのトランザクションをバックスタックに保存する
             transaction.addToBackStack(null);
             // フラグメントを表示する

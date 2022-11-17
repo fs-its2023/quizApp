@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,6 +82,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
         * クイズ初期化
         * テスト用仮データで初期化中
          */
+        mainApplication.setQuizNum(0);
         this.correctNum = 0;
         //this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
         //ここから数行は本来は削除, 上はアンコメント
@@ -119,7 +118,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
     @SuppressLint("ResourceType")
     public LinearLayout getLinearLayout() {
         LinearLayout layout=new LinearLayout(this);
-        layout.setId(0);
+        layout.setId(100);
         //垂直方向にViewを追加していく
         layout.setOrientation(LinearLayout.VERTICAL);
         //layoutの幅、高さの設定
