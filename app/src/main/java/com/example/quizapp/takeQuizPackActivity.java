@@ -90,15 +90,15 @@ public class takeQuizPackActivity extends AppCompatActivity {
         this.lstPackIdFile = new ArrayList<>(Arrays.asList("Q1,a1,b1,c1,d1,ex1",
                 "Q2,a2,b2,c2,d2,ex2",
                 "Q3,a3,b3,c3,d3,exq3"));
-        this.mainApp.deleteFile("0000");
+        deleteFile("0000");
         this.mainApp.saveFileByList("0000", this.lstPackIdFile);
-        this.mainApp.deleteFile("0001");
+        deleteFile("0001");
         this.mainApp.saveFileByList("0001", this.lstPackIdFile);
-        this.mainApp.deleteFile("0002");
+        deleteFile("0002");
         this.mainApp.saveFileByList("0002", this.lstPackIdFile);
         this.mainApp.setPackId("0000");
         String path = this.mainApp.PACK_DATA_FILE_NAME;
-        this.mainApp.deleteFile(this.mainApp.PACK_DATA_FILE_NAME,false);
+        this.mainApp.clearFile(this.mainApp.PACK_DATA_FILE_NAME);
         List<String> lstFile = new ArrayList<>();
         lstFile.add("0000,usr0,title0,3,intro0,genre0");
         lstFile.add("0001,usr1,title1,3,intro1,genre1");
@@ -114,14 +114,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
         transaction.add(R.id.container, takeQuizFragment);
         transaction.commit();
     }
-
-    //結果を表示するメソッド (不要かも)
-    /*public void result(){
-        resultFragment resultFragment = new resultFragment();
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.container, resultFragment);
-        transaction.commit();
-    }*/
 
     //遷移先のFragmentからメニューボタンを再表示させるメソッド
     @SuppressLint("ResourceType")
