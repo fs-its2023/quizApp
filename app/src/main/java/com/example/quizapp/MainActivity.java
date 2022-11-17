@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         mainApplication=(mainApplication)getApplication();
 
+        audioPlay();
+
         //activity遷移ボタン
         /*Button button0 = findViewById(R.id.buttonTakeQuiz);
         button0.setOnClickListener(new View.OnClickListener() {
