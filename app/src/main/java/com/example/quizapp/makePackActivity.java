@@ -27,7 +27,6 @@ public class makePackActivity extends AppCompatActivity {
     //↓あるパックに含まれる全クイズデータを入れるリスト。↑のquizTotalNumいらなくね？
     private List<String> quizData = new ArrayList<String>();
 
-    private mainApplication mainApplication;
 
     private Button btnMakeNewQuiz;
     private Button btnEditQuiz;
@@ -84,44 +83,21 @@ public class makePackActivity extends AppCompatActivity {
         quizTotalNum=0;
         btnEditQuiz.setVisibility(View.GONE);
         btnMakeNewQuiz.setVisibility(View.GONE);
-        makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
+//        makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
+        editQuizFragment editQuizFragment = new editQuizFragment();
         transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, makeNewPackFragment);
+//        transaction.replace(R.id.container, makeNewPackFragment);
+        transaction.replace(R.id.container, editQuizFragment);
         transaction.commit();
     }
 
-    //遷移先のFragmentからメニューボタンを再表示させるメソッド
-    @SuppressLint("ResourceType")
-    public LinearLayout getLinearLayout() {
-        LinearLayout layout=new LinearLayout(this);
-        layout.setId(101);
-        //垂直方向にViewを追加していく
-        layout.setOrientation(LinearLayout.VERTICAL);
-        //layoutの幅、高さの設定
-        layout.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
 
-        Button button = new Button(this);
-        button.setTextSize(10);
-        button.setText("メニュー");
-        button.setOnClickListener(backMainActivity);
-        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        button.setLayoutParams(buttonLayoutParams);
-        layout.addView(button);
 
-        return layout;
+    public void reload() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
-    //再作成したメニューボタンの処理
-    View.OnClickListener backMainActivity = new View.OnClickListener(){
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        public void onClick(View v){
-            finish();
-        }
-    };
 
     //フィールドのセッターとゲッター
     public void setPackTitle(String packTitle){
