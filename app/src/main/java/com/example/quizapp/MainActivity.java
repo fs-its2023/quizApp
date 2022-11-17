@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
 
-    boolean isisChecked = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainApplication=(mainApplication)getApplication();
 
+        // アプリ開始時に音楽を再生
         audioPlay();
 
         //activity遷移ボタン
