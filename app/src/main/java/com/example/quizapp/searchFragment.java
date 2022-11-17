@@ -1,3 +1,4 @@
+/*
 package com.example.quizapp;
 
 import android.os.Bundle;
@@ -46,7 +47,9 @@ public class searchFragment extends Fragment {
 
                 } else {
                     textView.setText(String.format("ジャンルは" + spinner1 + ",問題数は" + spinner2 + ",キーワードは" + keyword + "になります"));
-                    /*listUpPackを起動*/
+                    */
+/*listUpPackを起動*//*
+
                     listUpPack();
 
                 }
@@ -84,3 +87,4 @@ public class searchFragment extends Fragment {
         }
     }
 }
+*/
