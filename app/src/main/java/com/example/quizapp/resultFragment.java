@@ -59,7 +59,7 @@ public class resultFragment extends Fragment {
         setListData(allList);
 
         //問題数をint型に変換
-        quizNumProblem=toListDataQuizNumProblems(listData[3]);
+        quizNumProblem=toListDataQuizNumProblems(listData[2]);
 
         //最終結果の表示とボタンの生成を行う
         createView(quizNumProblem);
