@@ -26,7 +26,7 @@ public class mainApplication extends Application {
     private static boolean fromTakeQuizFragment=false;
     private static boolean fromResultFragment=false;
     private static boolean selectPack=false;
-    public static final String PACK_DATA_FILE_NAME = "packData";
+    public static final String PACK_DATA_FILE_NAME = "packData.csv";
 
     /*
     * ファイル削除
@@ -57,6 +57,7 @@ public class mainApplication extends Application {
             /*
             *指定したファイルに書き込み
              */
+            fileOutputStream.write(strSaveData.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
