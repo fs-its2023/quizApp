@@ -34,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // スイッチ(トグル)がオンの時
+                    
                 } else {
                     // スイッチ(トグル)がオフの時　
+                    
                 }
             }
         });
