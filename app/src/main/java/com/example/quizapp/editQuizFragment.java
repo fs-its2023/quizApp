@@ -58,6 +58,11 @@ public class editQuizFragment extends Fragment{
         makePackActivity =(makePackActivity)getActivity();
         mainApplication=(com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
 
+        //test用packData.csvファイルの作成
+//        mainApplication.testPackDataFileMaker();
+//        mainApplication.testQuizDataFileMaker();
+
+        //レイアウトたちの取得
         btnSaveAndNext=view.findViewById(R.id.btnSaveAndNext);
         btnSaveAndExit=view.findViewById(R.id.btnSaveAndExit);
         editTxtQuizSentence=view.findViewById(R.id.editTxtQuizSentence);
@@ -82,7 +87,7 @@ public class editQuizFragment extends Fragment{
         List<String> list1 = new ArrayList<>();
         list1.add("title,aaa,bbb,ccc,ddd,kaisetsu");
         makePackActivity.setQuizData(list1);
-        makePackActivity.getMainApplication().setQuizNum(1);
+        makePackActivity.getMainApplication().setQuizNum(0);
 
 //        //テスト用,新規の場合
 //        isMakeNewPack=true;
@@ -112,7 +117,7 @@ public class editQuizFragment extends Fragment{
             quizNum = mainApplication.getQuizNum();
             String strQuizData;
             String[] arrayQuizData;
-            strQuizData = quizData.get(quizNum - 1);
+            strQuizData = quizData.get(quizNum);
             arrayQuizData = strQuizData.split(",");
 
 
