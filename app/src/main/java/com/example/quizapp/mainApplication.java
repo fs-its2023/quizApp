@@ -30,19 +30,9 @@ public class mainApplication extends Application {
 
     /*
     * ファイル削除
-    * isRemainedでファイル自体を残すか選択
      */
-    public void deleteFile(String fileName, boolean isRemained){
-        if(isRemained){
-            try (FileOutputStream fileOutputStream = new FileOutputStream(fileName, false)) {
-                //空白で置き換え
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else{
-            File file = new File(fileName);
-            file.delete();
-        }
+    public void clearFile(String fileName){
+        deleteFile(fileName);
     }
 
     /*
@@ -57,6 +47,7 @@ public class mainApplication extends Application {
             /*
             *指定したファイルに書き込み
              */
+            fileOutputStream.write(strSaveData.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
