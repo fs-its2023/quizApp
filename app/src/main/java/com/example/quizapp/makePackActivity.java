@@ -27,7 +27,10 @@ public class makePackActivity extends AppCompatActivity {
     //↓あるパックに含まれる全クイズデータを入れるリスト。↑のquizTotalNumいらなくね？
     private List<String> quizData = new ArrayList<String>();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> sasa
     private Button btnMakeNewQuiz;
     private Button btnEditQuiz;
     private FragmentTransaction transaction;
