@@ -27,7 +27,7 @@ public class showExplanationFragment extends Fragment {
     mainApplication mainApplication;
     int quizNum;
     String packId;
-    String[] quizData;
+    String[] quizData=new String[6];
     List<String> quizList=new ArrayList<>();
 
 
@@ -119,17 +119,17 @@ public class showExplanationFragment extends Fragment {
         /*
         *テキストの設定
          */
-        for(int i=1;i<=3;i++){
+        for(int i=0;i<3;i++){
             TextView textView=new TextView(tqActivity);
             textView.setTextSize(30);
             switch (i){
-                case 1:
+                case 0:
                     textView.setText("問題文\n"+ quizData[i]);
                     break;
-                case 2:
+                case 1:
                     textView.setText("解説\n"+ quizData[i]);
                     break;
-                case 3:
+                case 2:
                     textView.setText("正解の選択し\n"+ quizData[i]);
                     break;
             }
@@ -155,14 +155,13 @@ public class showExplanationFragment extends Fragment {
     View.OnClickListener backFragment =new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
+            replaceFragment();
             if(mainApplication.getFromTakeQuizFragment()){
                 mainApplication.setFromTakeQuizFragment(false);
-                replaceFragment(new takeQuizFragment());
             }
             if(mainApplication.getFromResultFragment()){
                 mainApplication.setFromResultFragment(false);
-                replaceFragment(new resultFragment());
             }
         }
     };
@@ -171,33 +170,37 @@ public class showExplanationFragment extends Fragment {
     /*
     *指定したフラグメントを表示
      */
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(){
+        getFragmentManager().beginTransaction().remove(this).commit();
         /*
          *フラグメントマネージャーの取得
          */
-        FragmentManager manager = tqActivity.getSupportFragmentManager();
+        //FragmentManager manager = tqActivity.getSupportFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager.popBackStack();
         /*
          *フラグメントトランザクションの開始
          */
-        FragmentTransaction transaction = manager.beginTransaction();
+        //FragmentTransaction transaction = manager.beginTransaction();
+
         /*
          *レイアウトをfragmentに置き換え（追加）
          */
-        transaction.replace(layout.getId(),fragment);
+        //transaction.replace(layout.getId(),fragment);
         /*
          *置き換えのトランザクションをバックスタックに保存する
          */
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         /*
          *フラグメントを表示する
          */
-        transaction.commit();
+        //transaction.commit();
     }
 
     /*
     *選ばれた問題番号の問題文、解説、選択しを入れておく配列に値を入れる
      */
     public void setQuizData(List<String> list) {
-        quizData = list.get(quizNum-1).split(",");
+        quizData = list.get(quizNum).split(",");
     }
 }
