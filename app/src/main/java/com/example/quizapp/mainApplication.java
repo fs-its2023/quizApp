@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import android.app.Application;
 import android.os.Build;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -42,7 +43,7 @@ public class mainApplication extends Application {
 
         for(int i = 0 ;i<100;i++){
             testPackId = String.format("%04d",i);
-            randomQuizTotalNum = rand.nextInt(100)+1;
+            randomQuizTotalNum = rand.nextInt(30)+1;
             ranomGenre = rand.nextInt(10)+1;
             testPackData = ""+testPackId+",パック名"+i+","+randomQuizTotalNum+","+testPackIntroduction+i+","+testPackGenre+ranomGenre+"\n";
             saveFile(PACK_DATA_FILE_NAME,testPackData);
@@ -55,13 +56,14 @@ public class mainApplication extends Application {
         int testQuizTotalNum;
         String testPackId;
         String testQuizData;
+
         for(int i = 0 ; i<testDataAlllist.size();i++){
             String[] testQuizDatas = testDataAlllist.get(i).split(",");
-            testQuizTotalNum = Integer.parseInt(testQuizDatas[3]);
-            for(int j = 0 ; j<testQuizTotalNum;j++){
-                testPackId = String.format("%04d",i);
-                clearFile(testPackId);
-                testQuizData = "問題文"+j+",正解,不正解1,不正解2,不正解3,解説文"+j;
+            testQuizTotalNum = Integer.parseInt(testQuizDatas[2]);
+            testPackId = String.format("%04d",i);
+            clearFile(testPackId);
+            for(int j = 1 ; j<=testQuizTotalNum;j++){
+                testQuizData = "問題文"+j+",正解,不正解1,不正解2,不正解3,解説文"+j+"\n";
                 saveFile(testPackId,testQuizData);
             }
         }
