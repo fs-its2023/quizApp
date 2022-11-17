@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class mainApplication extends Application {
@@ -26,7 +27,45 @@ public class mainApplication extends Application {
     private static boolean fromTakeQuizFragment=false;
     private static boolean fromResultFragment=false;
     private static boolean selectPack=false;
-    public static final String PACK_DATA_FILE_NAME = "packData.csv";
+    public static final String PACK_DATA_FILE_NAME = "packData";
+
+    //デバック用クイズデータ作成
+    public void testPackDataFileMaker(){
+        clearFile(PACK_DATA_FILE_NAME);
+        String testPackData ="";
+        String testPackId;
+        String testPackIntroduction = "パックの説明文";
+        String testPackGenre = "パックのジャンル";
+        Random rand = new Random();
+        int randomQuizTotalNum ;
+        int ranomGenre;
+
+        for(int i = 0 ;i<100;i++){
+            testPackId = String.format("%04d",i);
+            randomQuizTotalNum = rand.nextInt(100)+1;
+            ranomGenre = rand.nextInt(10)+1;
+            testPackData = ""+testPackId+",パック名"+i+","+randomQuizTotalNum+","+testPackIntroduction+i+","+testPackGenre+ranomGenre+"\n";
+            saveFile(PACK_DATA_FILE_NAME,testPackData);
+        }
+    }
+
+    public void testQuizDataFileMaker(){
+        List<String> testDataAlllist = new ArrayList<String>();
+        testDataAlllist=getAllList();
+        int testQuizTotalNum;
+        String testPackId;
+        String testQuizData;
+        for(int i = 0 ; i<testDataAlllist.size();i++){
+            String[] testQuizDatas = testDataAlllist.get(i).split(",");
+            testQuizTotalNum = Integer.parseInt(testQuizDatas[3]);
+            for(int j = 0 ; j<testQuizTotalNum;j++){
+                testPackId = String.format("%04d",i);
+                clearFile(testPackId);
+                testQuizData = "問題文"+j+",正解,不正解1,不正解2,不正解3,解説文"+j;
+                saveFile(testPackId,testQuizData);
+            }
+        }
+    }
 
     /*
     * ファイル削除
