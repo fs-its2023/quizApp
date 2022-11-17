@@ -48,6 +48,7 @@ public class mainApplication extends Application {
             testPackData = ""+testPackId+",パック名"+i+","+randomQuizTotalNum+","+testPackIntroduction+i+","+testPackGenre+ranomGenre+"\n";
             saveFile(PACK_DATA_FILE_NAME,testPackData);
         }
+        testQuizDataFileMaker();
     }
 
     public void testQuizDataFileMaker(){
