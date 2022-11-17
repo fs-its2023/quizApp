@@ -37,25 +37,25 @@ public class MainActivity extends AppCompatActivity {
         mainApplication=(mainApplication)getApplication();
 
         //activity遷移ボタン
-        Button button0 = findViewById(R.id.buttonTakeQuiz);
+        /*Button button0 = findViewById(R.id.buttonTakeQuiz);
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplication(), takeQuizPackActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
     //--- パック編集へ遷移
-    public void onClickMakePack() {
+    public void onClickMakePack(View view) {
         Intent intent = new Intent(getApplication(), makePackActivity.class);
         startActivity(intent);
     }
 
     //--- クイズ回答へ遷移
-    public void onClickTakeQuiz() {
+    public void onClickTakeQuiz(View view) {
         Intent intent = new Intent(getApplication(), takeQuizPackActivity.class);
         startActivity(intent);
     }
