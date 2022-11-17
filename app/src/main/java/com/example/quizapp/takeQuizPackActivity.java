@@ -26,7 +26,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
     private mainApplication mainApp;
 
     /*
-    * @fn
     * Activity起動時, パック選択画面を表示するメソッド
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -61,10 +60,10 @@ public class takeQuizPackActivity extends AppCompatActivity {
         }else{
             this.selectPack();
         }
+
     }
 
     /*
-    * @fn
     * パック選択画面を表示するメソッド
      */
     public void selectPack(){
@@ -74,7 +73,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
     }
 
     /*
-    * @fn
     * クイズ回答画面を表示するメソッド
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -84,8 +82,10 @@ public class takeQuizPackActivity extends AppCompatActivity {
         * クイズ初期化
         * テスト用仮データで初期化中
          */
+        mainApplication.setQuizNum(0);
         this.correctNum = 0;
         //this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+
         //ここから数行は本来は削除, 上はアンコメント
         this.lstPackIdFile = new ArrayList<>(Arrays.asList("Q1,a1,b1,c1,d1,ex1",
                 "Q2,a2,b2,c2,d2,ex2",
@@ -100,9 +100,9 @@ public class takeQuizPackActivity extends AppCompatActivity {
         String path = this.mainApp.PACK_DATA_FILE_NAME;
         this.mainApp.clearFile(this.mainApp.PACK_DATA_FILE_NAME);
         List<String> lstFile = new ArrayList<>();
-        lstFile.add("0000,usr0,title0,3,intro0,genre0");
-        lstFile.add("0001,usr1,title1,3,intro1,genre1");
-        lstFile.add("0002,usr2,title2,3,intro2,genre2");
+        lstFile.add("0000,title0,3,intro0,genre0");
+        lstFile.add("0001,title1,3,intro1,genre1");
+        lstFile.add("0002,title2,3,intro2,genre2");
         this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME,lstFile);
         //ここまで削除
 
@@ -119,7 +119,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
     @SuppressLint("ResourceType")
     public LinearLayout getLinearLayout() {
         LinearLayout layout=new LinearLayout(this);
-        layout.setId(0);
+        layout.setId(100);
         //垂直方向にViewを追加していく
         layout.setOrientation(LinearLayout.VERTICAL);
         //layoutの幅、高さの設定

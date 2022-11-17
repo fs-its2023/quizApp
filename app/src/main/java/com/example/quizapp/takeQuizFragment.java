@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -30,30 +31,38 @@ public class takeQuizFragment extends Fragment implements View.OnClickListener {
     private mainApplication mainApp;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         super.onCreateView(inflater, container, savedInstance);
         return inflater.inflate(R.layout.fragment_take_quiz, container, false);
     }
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //外部クラスのデータ取得
+        /*
+        * 外部クラス取得
+         */
         this.tqActivity = (takeQuizPackActivity)getActivity();
         this.mainApp = tqActivity.getMainApplication();
 
+        /*
+        * 問題文, 選択肢の取得
+         */
         this.setOrder();
         String[] quizData = this.tqActivity.getLstPackIdFile().
                 get(this.mainApp.getQuizNum()).split(",");
 
         /*
-        * 画面表示 (問題文, 選択肢ボタン, 正解率)
+        * 画面表示 (問題文)
          */
         TextView txtQuiz = view.findViewById(R.id.txtQuiz);
         txtQuiz.setText(quizData[0]);
 
+        /*
+        * 画面表示(ボタン)
+         */
         this.btnTopLeft = view.findViewById(R.id.btnTopLeft);
         this.btnTopRight = view.findViewById(R.id.btnTopRight);
         this.btnBottomLeft = view.findViewById(R.id.btnBottomLeft);
@@ -69,6 +78,9 @@ public class takeQuizFragment extends Fragment implements View.OnClickListener {
             }
         }
 
+        /*
+         * 画面表示(正解率)
+         */
         this.txtCorrectRatio = view.findViewById(R.id.txtCorrectRatio);
         this.setRatio(this.tqActivity.getCorrectNum(), this.mainApp.getQuizNum());
 
@@ -85,7 +97,6 @@ public class takeQuizFragment extends Fragment implements View.OnClickListener {
     }
 
     /*
-    * @fn
     * 選択肢の表示順をランダムに決定するメソッド
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -99,12 +110,18 @@ public class takeQuizFragment extends Fragment implements View.OnClickListener {
         this.txtCorrectRatio.setText(ratio);
     }
 
+    /*
+    * ボタン処理
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view) {
         FragmentTransaction ft;
         FragmentManager fm = getParentFragmentManager();
         switch(view.getId()){
+            /*
+            * 回答選択時
+             */
             case R.id.btnTopLeft:
             case R.id.btnTopRight:
             case R.id.btnBottomLeft:
@@ -142,7 +159,7 @@ public class takeQuizFragment extends Fragment implements View.OnClickListener {
 
                 break;
             /*
-             * 次へボタンが押された時の処理
+             * 「次へ」ボタンが押された時の処理
              */
             case R.id.btnNext:
                 if(this.mainApp.getQuizNum() < this.tqActivity.getLstPackIdFile().size() - 1){
@@ -151,18 +168,19 @@ public class takeQuizFragment extends Fragment implements View.OnClickListener {
                     ft.replace(R.id.container, new takeQuizFragment());
                 }else{
                     ft = fm.beginTransaction();
-                    ft.addToBackStack(null);
                     ft.replace(R.id.container, new resultFragment());
                 }
+                ft.addToBackStack(null);
                 ft.commit();
                 break;
             /*
             * 解説表示ボタンが押された時の処理
              */
             case R.id.btnExplain:
+                mainApplication.setFromTakeQuizFragment(true);
                 ft = fm.beginTransaction();
-                ft.addToBackStack(null);
                 ft.replace(R.id.container, new showExplanationFragment());
+                ft.addToBackStack(null);
                 ft.commit();
                 break;
         }

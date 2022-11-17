@@ -95,6 +95,7 @@ public class editPackFragment extends Fragment {
                 break;
             }
         }
+
         this.mpActivity.setPackTitle(lineDataFile[2]);
         this.mpActivity.setQuizTotalNum(Integer.parseInt(lineDataFile[3]));
         this.mpActivity.setPackIntroduction(lineDataFile[4]);
@@ -117,7 +118,7 @@ public class editPackFragment extends Fragment {
 
     public boolean canDelete(){
         boolean isDeleteConfirmed=false;
-
+//toast
         return isDeleteConfirmed;
     }
 }
