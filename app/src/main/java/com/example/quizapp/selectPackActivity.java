@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -31,7 +30,8 @@ public class selectPackActivity extends AppCompatActivity {
      *フィールド変数の定義
      */
     int pageCurrent;
-    int pageAll=5;
+    int pageAll;
+    int pageInitialNum;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -41,21 +41,26 @@ public class selectPackActivity extends AppCompatActivity {
 
         mainApplication=(com.example.quizapp.mainApplication) getApplication();
 
+        mainApplication.deleteFile("packData.csv");
+        for(int i=1;i<=20;i++){
+            mainApplication.saveFile("packData.csv",""+i+",パック名"+i+",20,パック"+i+"説明,ジャンル1\n");
+        }
+
         allList= mainApplication.getAllList();
         /*selectListに値を入れ、新着順に変更*/
         mainApplication.deleteSelectList();
+        Collections.reverse(allList);
         mainApplication.setSelectList(allList);
-        selectList=mainApplication.getSelectList();
-        Collections.reverse(selectList);
-        mainApplication.setSelectList(selectList);
 
-        /*ページ数を表示するために変数に値を代入*/
+        selectList=mainApplication.getSelectList();
+
         pageCurrent=1;
         pageAll=((selectList.size()-1)/10)+1;
 
         /*パック情報の表示*/
         showPackList();
     }
+
 
 
     /*
@@ -66,8 +71,11 @@ public class selectPackActivity extends AppCompatActivity {
         /*selectListの取得*/
         selectList=mainApplication.getSelectList();
 
+        /*ページ数を表示するために変数に値を代入*/
+
+
         /*レイアウトの取得*/
-        vLayout=findViewById(R.id.vertivalLayout);
+        vLayout=findViewById(R.id.verticalLayout);
 
         /*ページ数の表示*/
         TextView page=findViewById(R.id.pageNum);
@@ -78,28 +86,18 @@ public class selectPackActivity extends AppCompatActivity {
             String[] listData=selectList.get(i).split(",");  //ここが悪さしてそう
 
             //ここより下、確認してないけどなんかミスってそう
-            /*リニアレイアウト(HORIZONTAL)の設定表示*/
-            LinearLayout packIntroductionHorizontalLayout=new LinearLayout(this);
-            packIntroductionHorizontalLayout.setId(0);
-            packIntroductionHorizontalLayout.setOrientation(LinearLayout.HORIZONTAL);
-            packIntroductionHorizontalLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
-            vLayout.addView(packIntroductionHorizontalLayout);
 
-            /*パック情報のボタンを表示*/
-            for(int j=0;j<2;j++){
+
                 Button packButton=new Button(this);
-                packButton.setText(""+listData[3]);
+                packButton.setText(listData[3]);
                 packButton.setTextSize(20);
                 packButton.setTag(i);
                 packButton.setOnClickListener(onClickSetPackId);
                 LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
                 packButton.setLayoutParams(buttonLayoutParams);
-                packIntroductionHorizontalLayout.addView(packButton);
-            }
+                vLayout.addView(packButton);
         }
 
     }
