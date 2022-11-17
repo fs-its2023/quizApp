@@ -76,7 +76,7 @@ public class makePackActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く
+    //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く。
     public void makeNewPack(){
         packTitle=null;
         packGenre=null;
