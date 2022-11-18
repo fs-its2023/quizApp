@@ -31,6 +31,7 @@ public class makePackActivity extends AppCompatActivity {
     private Button btnEditQuiz;
     private FragmentTransaction transaction;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,11 @@ public class makePackActivity extends AppCompatActivity {
         Button btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> finish());
 
+        /*変更を加えました詳しくは佐竹君に聞いてください*/
+        if(!mainApplication.getSelectPack()){
+            this.editPackFragment();
+        }
+
         //新規作成のボタンを押したときの処理
         btnMakeNewQuiz = findViewById(R.id.btnMakeNewQuiz);
         btnMakeNewQuiz.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +63,7 @@ public class makePackActivity extends AppCompatActivity {
         //編集のボタンを押したときの処理 
         btnEditQuiz = findViewById(R.id.btnEditQuiz);
         btnEditQuiz.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 selectPack();
@@ -65,11 +72,13 @@ public class makePackActivity extends AppCompatActivity {
     }
 
     //編集ボタンを押した後の動作、selectPackFragmentを開く
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectPack(){
         packTitle=null;
         packGenre=null;
         packIntroduction=null;
         quizTotalNum=0;
+        mainApplication.setFromMakePackActivity(true);
         Intent intent=new Intent(getApplication(), selectPackActivity.class);
         startActivity(intent);
     }
@@ -87,6 +96,20 @@ public class makePackActivity extends AppCompatActivity {
         transaction = getSupportFragmentManager().beginTransaction();
 //        transaction.replace(R.id.container, makeNewPackFragment);
         transaction.replace(R.id.container, editQuizFragment);
+        transaction.commit();
+    }
+
+    /*変更を加えました詳しくは佐竹君に聞いてください*/
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void editPackFragment(){
+        mainApplication.setFromMakePackActivity(false);
+        editPackFragment editPackFragment=new editPackFragment();
+        btnEditQuiz=(Button)findViewById(R.id.btnEditQuiz);
+        btnEditQuiz.setVisibility(View.GONE);
+        btnMakeNewQuiz = (Button) findViewById(R.id.btnMakeNewQuiz);
+        btnMakeNewQuiz.setVisibility(View.GONE);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container, editPackFragment);
         transaction.commit();
     }
 

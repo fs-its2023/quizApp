@@ -1,5 +1,6 @@
 package com.example.quizapp;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +21,7 @@ public class selectPackActivity extends AppCompatActivity {
 
     mainApplication mainApplication;
 
-    LinearLayout vLayout;
+
 
     /*
      *フィールドリストの定義
@@ -31,7 +34,7 @@ public class selectPackActivity extends AppCompatActivity {
      */
     int pageCurrent;
     int pageAll;
-    int pageInitialNum;
+    LinearLayout vLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -40,11 +43,11 @@ public class selectPackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_pack);
 
         mainApplication=(com.example.quizapp.mainApplication) getApplication();
-
         mainApplication.deleteFile("packData");
-        for(int i=1;i<=20;i++){
-            mainApplication.saveFile("packData",""+i+",パック名"+i+",20,パック"+i+"説明,ジャンル1\n");
-        }
+        mainApplication.testPackDataFileMaker();
+        vLayout=(LinearLayout) findViewById(R.id.verticalLayout);
+
+        //mainApplication.saveFile("packData","1,パック名,20,パック1説明,ジャンル1\n");
 
         allList= mainApplication.getAllList();
         /*selectListに値を入れ、新着順に変更*/
@@ -56,6 +59,8 @@ public class selectPackActivity extends AppCompatActivity {
 
         pageCurrent=1;
         pageAll=((selectList.size()-1)/10)+1;
+
+        mainApplication.setSelectPack(true);
 
         /*パック情報の表示*/
         showPackList();
@@ -70,36 +75,34 @@ public class selectPackActivity extends AppCompatActivity {
     public void showPackList(){
         /*selectListの取得*/
         selectList=mainApplication.getSelectList();
+        pageAll=((selectList.size()-1)/10)+1;
 
-        /*ページ数を表示するために変数に値を代入*/
-
-
-        /*レイアウトの取得*/
-        vLayout=findViewById(R.id.verticalLayout);
+        /*レイアウトの取得
+        LinearLayout vLayout=(LinearLayout) findViewById(R.id.verticalLayout);*/
 
         /*ページ数の表示*/
         TextView page=findViewById(R.id.pageNum);
         page.setText(""+pageCurrent+"ページ/"+pageAll+"ページ");
 
         /*パックの情報を出力する（修正必要）*/
+        vLayout.removeAllViews();
         for(int i=10*pageCurrent-10;i<10*pageCurrent;i++){
-            String[] listData=selectList.get(i).split(",");  //ここが悪さしてそう
 
-            //ここより下、確認してないけどなんかミスってそう
-
-
-                Button packButton=new Button(this);
-                packButton.setText(listData[3]);
-                packButton.setTextSize(20);
-                packButton.setTag(i);
-                packButton.setOnClickListener(onClickSetPackId);
-                LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
-                packButton.setLayoutParams(buttonLayoutParams);
-                vLayout.addView(packButton);
+            if(i>=selectList.size()){
+                break;
+            }
+            String[] listData=selectList.get(i).split(",");
+            Button packButton=new Button(this);
+            packButton.setText(listData[3]);
+            packButton.setTextSize(20);
+            packButton.setTag(i);
+            packButton.setOnClickListener(onClickSetPackId);
+            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT);
+            packButton.setLayoutParams(buttonLayoutParams);
+            vLayout.addView(packButton);
         }
-
     }
 
 
@@ -107,9 +110,27 @@ public class selectPackActivity extends AppCompatActivity {
      *パックが選択された時の処理
      */
     private View.OnClickListener onClickSetPackId=new View.OnClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View view) {
+            String[] selectListData=selectList.get((int)view.getTag()).split(",");
+            mainApplication.setPackId(selectListData[0]);
+            mainApplication.setSelectPack(false);
+            /*makePackActivityから来ていた場合*/
+            if(mainApplication.getFromMakePackActivity()){
+                mainApplication.setFromMakePackActivity(false);
+                Intent intent =new Intent(getApplication(), makePackActivity.class);
+                startActivity(intent);
+                finish();
+            }
 
+            /*takeQuizPackActivityから来ていた場合*/
+            if(mainApplication.getFromTakeQuizPackActivity()){
+                mainApplication.setFromTakeQuizPackActivity(false);
+                Intent intent =new Intent(getApplication(), takeQuizPackActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     };
 
