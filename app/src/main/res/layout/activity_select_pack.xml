@@ -61,7 +61,6 @@
         app:layout_constraintVertical_bias="0.092" />
 
 
-
     <Button
         android:id="@+id/search"
         android:layout_width="wrap_content"
@@ -85,11 +84,13 @@
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="SpeakableTextPresentCheck">
 
-        <LinearLayout
-            android:id="@+id/verticalLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+    <LinearLayout
+        android:id="@+id/verticalLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
