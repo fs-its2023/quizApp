@@ -58,9 +58,10 @@ public class editQuizFragment extends Fragment{
         makePackActivity =(makePackActivity)getActivity();
         mainApplication=(com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
 
-        //test用packData.csvファイルの作成
-//        mainApplication.testPackDataFileMaker();
-//        mainApplication.testQuizDataFileMaker();
+        //test用パック及びクイズファイルの作成
+        mainApplication.testPackDataFileMaker();
+        mainApplication.testQuizDataFileMaker();
+        mainApplication.testRandomDeleteFile();
 
         //レイアウトたちの取得
         btnSaveAndNext=view.findViewById(R.id.btnSaveAndNext);
@@ -145,7 +146,7 @@ public class editQuizFragment extends Fragment{
                     editTxtQuizExplanation.setText("");
 
                     //パックデータの更新
-                    savePack();
+//                    savePack();
                 }
             }
         });
@@ -176,7 +177,7 @@ public class editQuizFragment extends Fragment{
 
             String strQuizData = quizSentence+","+correctOption+","+inCorrectOption1+","+inCorrectOption2+","+inCorrectOption3+","+quizExplanation;
             //保存する
-            quizData.set(quizNum-1, strQuizData);
+            quizData.set(quizNum, strQuizData);
             String packId = mainApplication.getPackId();
 //            mainApplication.deleteFile(packId,false);
 //            mainApplication.saveFileByList(packId,quizData);
