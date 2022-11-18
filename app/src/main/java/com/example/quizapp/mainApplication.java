@@ -83,13 +83,12 @@ public class mainApplication extends Application {
         final int RANDOM_DELETE_FILE_NUM = 30;
         List<String> testAllList = getAllList();
         int randNum;
-        String randomDeletePackId;
 
         for(int i = 0 ;i<RANDOM_DELETE_FILE_NUM;i++){
             randNum = rand.nextInt(testAllList.size());
+            String[] testPackData = testAllList.get(randNum).split(",");
             testAllList.remove(randNum);
-            randomDeletePackId = String.format("%04d",randNum);
-            clearFile(randomDeletePackId);
+            clearFile(testPackData[0]);
         }
 
         //testAllListをpackDataとして新たに保存する
