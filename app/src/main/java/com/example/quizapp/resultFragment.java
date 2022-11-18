@@ -34,6 +34,7 @@ public class resultFragment extends Fragment {
 
 
 
+    @SuppressLint("MissingInflatedId")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreateView(inflater, container, savedInstanceState);
         /*追加内容*/
