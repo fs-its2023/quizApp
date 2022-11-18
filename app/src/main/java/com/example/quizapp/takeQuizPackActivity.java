@@ -51,19 +51,12 @@ public class takeQuizPackActivity extends AppCompatActivity {
         /*
         * パック選択画面起動
          */
-<<<<<<< HEAD
         this.mainApp.setSelectPack(false);   //takeQuizテスト用select省略, 後でこの1行は削除
-        if(mainApp.getSelectPack()){
-=======
-        //this.mainApp.setSelectPack(true);   //takeQuizテスト用select省略, 後でこの1行は削除
-        if(mainApp.getSelectPack()){
-            this.takeQuiz();
 
-        }else{
-            mainApplication.setFromTakeQuizPackActivity(true);
->>>>>>> dca37a03bdbf5b79fb46564d55399dead2a608b1
+        if(mainApp.getSelectPack()){
             this.selectPack();
         }else{
+            mainApplication.setFromTakeQuizPackActivity(true);
             this.takeQuiz();
         }
 
