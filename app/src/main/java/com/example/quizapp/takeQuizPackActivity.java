@@ -51,12 +51,11 @@ public class takeQuizPackActivity extends AppCompatActivity {
         /*
         * パック選択画面起動
          */
-        this.mainApp.setSelectPack(true);   //takeQuizテスト用select省略, 後でこの1行は削除
+        this.mainApp.setSelectPack(false);   //takeQuizテスト用select省略, 後でこの1行は削除
         if(mainApp.getSelectPack()){
-            this.takeQuiz();
-
-        }else{
             this.selectPack();
+        }else{
+            this.takeQuiz();
         }
 
     }
@@ -82,10 +81,11 @@ public class takeQuizPackActivity extends AppCompatActivity {
          */
         mainApplication.setQuizNum(0);
         this.correctNum = 0;
-        //this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+        this.mainApp.setPackId("0000"); //仮
+        this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
 
         //ここから数行は本来は削除, 上はアンコメント
-        this.lstPackIdFile = new ArrayList<>(Arrays.asList("Q1,a1,b1,c1,d1,ex1",
+        /*this.lstPackIdFile = new ArrayList<>(Arrays.asList("Q1,a1,b1,c1,d1,ex1",
                 "Q2,a2,b2,c2,d2,ex2",
                 "Q3,a3,b3,c3,d3,exq3"));
         deleteFile("0000");
@@ -102,6 +102,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
         lstFile.add("0001,title1,3,intro1,genre1");
         lstFile.add("0002,title2,3,intro2,genre2");
         this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME,lstFile);
+        */
         //ここまで削除
 
         /*
