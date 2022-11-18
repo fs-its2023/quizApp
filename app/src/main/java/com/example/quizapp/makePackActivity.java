@@ -158,6 +158,7 @@ public class makePackActivity extends AppCompatActivity {
         return mainApplication;
     }
 
+    //これ使う機会なくね？
     public void setQuizData(List<String> inputQuizData){
         this.quizData=inputQuizData;
     }
