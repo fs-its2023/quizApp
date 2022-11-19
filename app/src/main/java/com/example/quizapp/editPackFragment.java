@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,30 +21,22 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
 
     private mainApplication mainApp;
     private makePackActivity mpActivity;
-    private List<String> selectedQuizzes;
+    private List<Integer> selectedQuizzes;
     private LinearLayout scrollLayout;
+    private Button btnDeletePack, btnDeleteQuiz, btnEditQuiz;
 
     public editPackFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static editPackFragment newInstance() {
         editPackFragment fragment = new editPackFragment();
-/*        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);*/
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -62,6 +56,18 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         this.mainApp = mpActivity.getMainApplication();
 
         /*
+        * ボタン初期設定
+         */
+        this.btnDeletePack = view.findViewById(R.id.btnDeletePack);
+        this.btnDeletePack.setTag("deletePack");
+        this.btnDeleteQuiz = view.findViewById(R.id.btnDeleteQuiz);
+        this.btnDeleteQuiz.setTag("deleteQuiz");
+        this.btnDeleteQuiz.setActivated(false);
+        this.btnEditQuiz = view.findViewById(R.id.btnEditQuizInEPF);
+        this.btnEditQuiz.setTag("editQuiz");
+        this.btnEditQuiz.setActivated(false);
+
+        /*
          * パック情報読み込み
          */
         List<String> lstPackDataFile = this.mainApp.getAllList();
@@ -76,7 +82,9 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
                 break;
             }
         }
-
+        /*
+        * パックデータ取得
+         */
         this.mpActivity.setPackTitle(lineDataFile[1]);
         this.mpActivity.setQuizTotalNum(Integer.parseInt(lineDataFile[2]));
         this.mpActivity.setPackIntroduction(lineDataFile[3]);
@@ -110,10 +118,104 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view){
+        if(view.getTag().toString().contains("quizSelect")){
+            //クイズ選択ボタン
+            int quizNum = Integer.parseInt(view.getTag().toString().substring(10));
+            if(this.selectedQuizzes.contains(quizNum)){
+                //選択済みの場合
+                this.selectedQuizzes.remove(this.selectedQuizzes.indexOf(quizNum));
+            }else{
+                //未選択の場合
+                this.selectedQuizzes.add(this.selectedQuizzes.indexOf(quizNum));
+            }
 
+            /*
+            * 編集・削除ボタンの有効・無効化
+             */
+            if(selectedQuizzes.size() == 0){
+                //編集・削除無効
+                this.btnDeleteQuiz.setActivated(false);
+                this.btnEditQuiz.setActivated(false);
+            }else if(selectedQuizzes.size() == 1){
+                //編集・削除有効
+                this.btnDeleteQuiz.setActivated(true);
+                this.btnEditQuiz.setActivated(true);
+            }else{
+                //削除有効　編集無効
+                this.btnDeleteQuiz.setActivated(true);
+                this.btnEditQuiz.setActivated(false);
+            }
+
+        }else if(view.getTag().equals("back")){
+            /*
+            * 戻るボタン
+            * makePackActivityの再読み込み
+             */
+            mainApplication.setSelectPack(true);
+            this.mpActivity.reload();
+        }else if(view.getTag().equals("deletePack")){
+            /*
+            * パック削除ボタン
+            * パックidファイルの削除
+             */
+            this.mainApp.clearFile(this.mainApp.getPackId());
+            List<String> lstPackDataFile = this.mainApp.getAllList();
+            for (String i:lstPackDataFile) {
+                String packId = i.substring(0,i.indexOf(","));
+                if(packId.equals(this.mainApp.getPackId())){
+
+                }
+            }
+            /*
+            * パックデータファイルの該当行削除
+             */
+            String linePackData;
+            String packId;
+            for(int i = lstPackDataFile.size() - 1; i >= 0; i--){
+                linePackData = lstPackDataFile.get(i);
+                packId = linePackData.substring(0,linePackData.indexOf(","));
+                if(packId.equals(this.mainApp.getPackId())){
+                    lstPackDataFile.remove(i);
+                }
+            }
+            this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME, lstPackDataFile);
+
+            //activity再起動
+            mainApplication.setSelectPack(true);
+            this.mpActivity.reload();
+
+        }else if(view.getTag().equals("deleteQuiz")){
+            /*
+            * クイズ削除ボタン
+             */
+            List<String> lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+            for (int i:this.selectedQuizzes) {
+                lstPackIdFile.remove(i);
+            }
+            this.mainApp.saveFileByList(this.mainApp.getPackId(), lstPackIdFile);
+
+            /*
+            * クイズリスト再読み込み
+             */
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, new editPackFragment());
+        }else if(view.getTag().equals("editQuiz")){
+            /*
+            * クイズ編集ボタン
+             */
+            this.mainApp.setQuizNum(this.selectedQuizzes.get(0));
+
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.addToBackStack(null);
+            ft.replace(R.id.container, new editQuizFragment());
+        }
     }
+
 
     public boolean canDelete(){
         boolean isDeleteConfirmed=false;

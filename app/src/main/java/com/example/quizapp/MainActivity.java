@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        //テスト用ファイル作成
+        //mainApplication.testPackDataFileMaker();
     }
 
     //--- パック編集へ遷移
