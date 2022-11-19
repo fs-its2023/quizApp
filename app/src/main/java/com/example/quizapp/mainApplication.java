@@ -30,27 +30,35 @@ public class mainApplication extends Application {
     private static boolean selectPack=false;
     public static final String PACK_DATA_FILE_NAME = "packData";
 
-    //デバック用クイズデータ作成
+    //テスト用フィールド
+    final int MAX_QUIZ_TOTAL_NUM = 30;
+    final int GENLE_TYPE_NUM = 10;
+    final int MAX_PACK_TOTAL_NUM = 100;
+    Random rand = new Random();
+
+    // デバック用クイズパックデータ作成
+    //100個のクイズパックを作成する
     public void testPackDataFileMaker(){
         clearFile(PACK_DATA_FILE_NAME);
         String testPackData ="";
         String testPackId;
         String testPackIntroduction = "パックの説明文";
         String testPackGenre = "パックのジャンル";
-        Random rand = new Random();
         int randomQuizTotalNum ;
         int ranomGenre;
 
-        for(int i = 0 ;i<100;i++){
+        for(int i = 0 ;i<MAX_PACK_TOTAL_NUM;i++){
             testPackId = String.format("%04d",i);
-            randomQuizTotalNum = rand.nextInt(30)+1;
-            ranomGenre = rand.nextInt(10)+1;
+            randomQuizTotalNum = rand.nextInt(MAX_QUIZ_TOTAL_NUM)+1;
+            ranomGenre = rand.nextInt(GENLE_TYPE_NUM)+1;
             testPackData = ""+testPackId+",パック名"+i+","+randomQuizTotalNum+","+testPackIntroduction+i+","+testPackGenre+ranomGenre+"\n";
             saveFile(PACK_DATA_FILE_NAME,testPackData);
         }
         testQuizDataFileMaker();
     }
 
+    //testPackDataFileMaker()のあとに使う、デバック用クイズデータのファイルを作成する
+    //ジャンルはとりあえず適当にランダム
     public void testQuizDataFileMaker(){
         List<String> testDataAlllist = new ArrayList<String>();
         testDataAlllist=getAllList();
@@ -68,6 +76,24 @@ public class mainApplication extends Application {
                 saveFile(testPackId,testQuizData);
             }
         }
+    }
+
+    //歯抜けのデータを作成するメソッド
+    public void testRandomDeleteFile(){
+        final int RANDOM_DELETE_FILE_NUM = 30;
+        List<String> testAllList = getAllList();
+        int randNum;
+
+        for(int i = 0 ;i<RANDOM_DELETE_FILE_NUM;i++){
+            randNum = rand.nextInt(testAllList.size());
+            String[] testPackData = testAllList.get(randNum).split(",");
+            testAllList.remove(randNum);
+            clearFile(testPackData[0]);
+        }
+
+        //testAllListをpackDataとして新たに保存する
+        clearFile(PACK_DATA_FILE_NAME);
+        saveFileByList(PACK_DATA_FILE_NAME,testAllList);
     }
 
     /*

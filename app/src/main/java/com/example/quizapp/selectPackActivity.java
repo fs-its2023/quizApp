@@ -153,6 +153,29 @@ public class selectPackActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    *検索ボタンが押された時の処理
+     */
+    public void showSearchFragment(View view){
+        /*レイアウトの上のボタンをすべて削除*/
+        vLayout.removeAllViews();
+        /*Activity上にある”検索ボタン”、”ページを変更するボタン”、”現在ページと全ページを表示しているテキストの削除”*/
+        Button search=(Button) findViewById(R.id.search);
+        Button backPage=(Button) findViewById(R.id.backPage);
+        Button nextPage=(Button) findViewById(R.id.nextPage);
+        TextView pageNum=(TextView) findViewById(R.id.pageNum);
+        search.setVisibility(View.INVISIBLE);
+        backPage.setVisibility(View.INVISIBLE);
+        nextPage.setVisibility(View.INVISIBLE);
+        pageNum.setVisibility(View.INVISIBLE);
+        /*searchFragmentの表示*/
+        /*searchFragment searchFragment=new searchFragment();
+        FragmentTransaction transaction;
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.verticalLayout, searchFragment);
+        transaction.commit();*/
+    }
+
 
     /*
     *前の画面に戻る

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -21,22 +20,29 @@ import java.util.List;
 
 public class resultFragment extends Fragment {
 
-    //フィールド変数の宣言
+    /*フィールド変数の宣言*/
     takeQuizPackActivity tqActivity;
     mainApplication mainApplication;
     int packNum;
     int quizNumProblem;
     String packId;
+    TextView resultText;
+    LinearLayout resultLayout;
     String[] listData=new String[6];
     List<String> allList=new ArrayList<>();
-    Button button;
-    LinearLayout layout;
 
 
 
+
+    @SuppressLint("MissingInflatedId")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_result,container,false);
+        /*追加内容*/
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        resultText=view.findViewById(R.id.resultText);
+        resultLayout=view.findViewById(R.id.resultVerticalLayout);
+        return view;
+        //return inflater.inflate(R.layout.fragment_result,container,false);
     }
 
 
@@ -52,6 +58,7 @@ public class resultFragment extends Fragment {
         packNum = mainApplication.getPackNum();
         packId=mainApplication.getPackId();
 
+
         //Applicationクラスにあるパックの情報をリストに代入
         allList= mainApplication.readFileAsList(mainApplication.PACK_DATA_FILE_NAME);
 
@@ -63,8 +70,6 @@ public class resultFragment extends Fragment {
 
         //最終結果の表示とボタンの生成を行う
         createView(quizNumProblem);
-
-
     }
 
 
@@ -84,48 +89,25 @@ public class resultFragment extends Fragment {
     //Viewの作成
     @SuppressLint("ResourceType")
     public void createView(int quizNumProblem){
-
-        //スクロールバーの生成
-        //スクロールバーの設定
-        ScrollView scrollView=new ScrollView(tqActivity);
-        tqActivity.setContentView(scrollView);
-
-        //リニアレイアウトの生成
-        //リニアレイアウトのの設定
-        layout=tqActivity.getLinearLayout();
-        //リニアレイアウトの表示
-        scrollView.addView(layout);
-
-
-        //テキストの生成
-        //テキストの設定
-        TextView textView=new TextView(tqActivity);
-        textView.setTextSize(30);
-        textView.setText("最終結果："+tqActivity.getCorrectNum()+"/"+quizNumProblem);
-        //テキストの幅、高さの設定
-        LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        textView.setLayoutParams(textLayoutParams);
-        //テキストの表示
-        layout.addView(textView);
+        resultText.setText("最終結果："+tqActivity.getCorrectNum()+"/"+quizNumProblem);
 
 
         //ボタンの生成
+        Button commentaryButton;
         for(int i=1;i<=quizNumProblem;i++){
             //ボタンの設定
-            button = new Button(tqActivity);
-            button.setText("問題番号"+i+"番");
-            button.setTextSize(30);
-            button.setTag(i-1);
-            button.setOnClickListener(createShowExplanationFragment);
+            commentaryButton = new Button(tqActivity);
+            commentaryButton.setText("問題番号"+i+"番");
+            commentaryButton.setTextSize(30);
+            commentaryButton.setTag(i-1);
+            commentaryButton.setOnClickListener(createShowExplanationFragment);
             //ボタンの幅、高さの設定
             LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            button.setLayoutParams(buttonLayoutParams);
+            commentaryButton.setLayoutParams(buttonLayoutParams);
             //ボタンの表示
-            layout.addView(button);
+            resultLayout.addView(commentaryButton);
         }
 
     }
@@ -138,17 +120,16 @@ public class resultFragment extends Fragment {
             mainApplication.setQuizNum((int)view.getTag());  //押されたボタンのタグをint型に変換し問題番号を入れている変数に渡す
 
             mainApplication.setFromTakeQuizFragment(false);
+
             // フラグメントマネージャーの取得
-            //FragmentManager manager = tqActivity.getSupportFragmentManager(); // アクティビティではgetSupportFragmentManager()?
-            FragmentManager manager = getParentFragmentManager();
+            FragmentManager manager = getFragmentManager(); // アクティビティではgetSupportFragmentManager()?
             // フラグメントトランザクションの開始
             FragmentTransaction transaction = manager.beginTransaction();
             // レイアウトをfragmentに置き換え（追加）
-            showExplanationFragment showExplanationFragment=new showExplanationFragment();
-            transaction.replace(layout.getId(),showExplanationFragment);
+            transaction.replace(R.id.container, new showExplanationFragment());
             // 置き換えのトランザクションをバックスタックに保存する
             transaction.addToBackStack(null);
-            // フラグメントを表示する
+            // フラグメントトランザクションをコミット
             transaction.commit();
         }
     };

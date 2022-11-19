@@ -16,10 +16,6 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 public class editQuizFragment extends Fragment{
     private Button btnSaveAndNext;
     private Button btnSaveAndExit;
@@ -42,7 +38,7 @@ public class editQuizFragment extends Fragment{
     mainApplication mainApplication;
 
     //新規か編集かの判定、trueなら新規
-    boolean isMakeNewPack;
+    boolean isMakeNewQuiz;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -58,9 +54,10 @@ public class editQuizFragment extends Fragment{
         makePackActivity =(makePackActivity)getActivity();
         mainApplication=(com.example.quizapp.mainApplication) makePackActivity.getMainApplication();
 
-        //test用packData.csvファイルの作成
-//        mainApplication.testPackDataFileMaker();
-//        mainApplication.testQuizDataFileMaker();
+        //test用パック及びクイズファイルの作成
+        mainApplication.testPackDataFileMaker();
+        mainApplication.testQuizDataFileMaker();
+        mainApplication.testRandomDeleteFile();
 
         //レイアウトたちの取得
         btnSaveAndNext=view.findViewById(R.id.btnSaveAndNext);
@@ -76,13 +73,13 @@ public class editQuizFragment extends Fragment{
 
         //新規か編集かの判定
         if(makePackActivity.getQuizTotalNum()==0){
-            isMakeNewPack=true;
+            isMakeNewQuiz =true;
         }else{
-            isMakeNewPack=false;
+            isMakeNewQuiz =false;
         }
 
         //テスト用,編集の場合
-        isMakeNewPack=false;
+        isMakeNewQuiz =false;
         makePackActivity.setPackTitle("編集テスト：タイトル");
         List<String> list1 = new ArrayList<>();
         list1.add("title,aaa,bbb,ccc,ddd,kaisetsu");
@@ -94,7 +91,7 @@ public class editQuizFragment extends Fragment{
 //        makePackActivity.setPackTitle("新規作成テスト：タイトル");
 
         //新規だった場合。パックタイトルを表示する、packIdの新規作成を行う
-        if(isMakeNewPack){
+        if(isMakeNewQuiz){
             //packIdの新規作成 ファイル最終行のId+1のIdを作成する
             List<String> allList = mainApplication.getAllList();
             String[] strLastRowAllList = allList.get(allList.size()-1).split(",");
@@ -110,16 +107,14 @@ public class editQuizFragment extends Fragment{
         }
 
         //編集だった場合。入力欄に、保存されていた情報を表示する
-        if(!isMakeNewPack) {
+        if(!isMakeNewQuiz) {
             //保存されている情報を取り出す
             String packTitle = makePackActivity.getPackTitle();
             quizData = makePackActivity.getQuizData();
             quizNum = mainApplication.getQuizNum();
-            String strQuizData;
-            String[] arrayQuizData;
-            strQuizData = quizData.get(quizNum);
-            arrayQuizData = strQuizData.split(",");
-
+            String strQuizData= quizData.get(quizNum);
+            String[] arrayQuizData= strQuizData.split(",");
+            quizTotalNum = makePackActivity.getQuizTotalNum();
 
             //テキストを表示
             txtPackTitle.setText(packTitle);
@@ -143,9 +138,6 @@ public class editQuizFragment extends Fragment{
                     editTxtIncorrectOption2.setText("");
                     editTxtIncorrectOption3.setText("");
                     editTxtQuizExplanation.setText("");
-
-                    //パックデータの更新
-                    savePack();
                 }
             }
         });
@@ -175,17 +167,38 @@ public class editQuizFragment extends Fragment{
             String quizExplanation=editTxtQuizExplanation.getText().toString();
 
             String strQuizData = quizSentence+","+correctOption+","+inCorrectOption1+","+inCorrectOption2+","+inCorrectOption3+","+quizExplanation;
-            //保存する
-            quizData.set(quizNum-1, strQuizData);
+
+            //クイズデータをリストに追加、新規の場合
+            if(isMakeNewQuiz){
+                quizData.add(strQuizData);
+            }
+
+            //クイズデータをリストに追加、編集の場合
+            if(!isMakeNewQuiz) {
+                quizData.set(quizNum, strQuizData);
+            }
+
+            //クイズデータのリストを該当するpackIdのファイルに保存
             String packId = mainApplication.getPackId();
-//            mainApplication.deleteFile(packId,false);
-//            mainApplication.saveFileByList(packId,quizData);
+            mainApplication.clearFile(packId);
+            mainApplication.saveFileByList(packId, quizData);
+
+            //ポップアップの表示
             Toast myToast = Toast.makeText(
                     makePackActivity.getApplicationContext(),
                     "保存しました",
                     Toast.LENGTH_SHORT
             );
             myToast.show();
+            
+            //クイズ数を追加(編集の時は追加しない)
+            if(!isMakeNewQuiz){
+                quizTotalNum += 1;
+                isMakeNewQuiz = true;
+            }
+
+            //パックデータの更新
+            savePack();
             return true;
         }
         return false;
@@ -228,18 +241,31 @@ public class editQuizFragment extends Fragment{
     //パックのデータを保存する、新規と編集で保存内容が増減する
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void savePack(){
+        String packId = "";
         //新規だった場合。パック情報をpackData.csvの最終行に追加
-        if(isMakeNewPack){
-            String packId = mainApplication.getPackId();
+        if(isMakeNewQuiz){
+            packId = mainApplication.getPackId();
             String packTitle = makePackActivity.getPackTitle();
             String packIntroduction = makePackActivity.getPackIntroduction();
             String packGenre = makePackActivity.getPackGenre();
-//            String userName;
 
+            String newPackData =packId+","+packTitle+","+quizTotalNum+","+packIntroduction+","+packGenre;
+            mainApplication.saveFile(mainApplication.PACK_DATA_FILE_NAME,newPackData);
         }
         //編集だった場合。パックリストを取得、合計クイズ数を変更して再度保存
-        if(!isMakeNewPack){
-
+        if(!isMakeNewQuiz){
+            List<String> allList = mainApplication.getAllList();
+            for(int i = 0 ; i < allList.size();i++){
+                String[] quizData = allList.get(i).split(",");
+                if(quizData[0].equals(packId)==true){
+                    quizData[2] = String.valueOf(quizTotalNum);
+                    String newQuizData = quizData[0]+","+quizData[1]+","+quizData[2]+","+quizData[3]+","+quizData[4];
+                    allList.set(i,newQuizData);
+                    mainApplication.clearFile(mainApplication.PACK_DATA_FILE_NAME);
+                    mainApplication.saveFileByList(mainApplication.PACK_DATA_FILE_NAME,allList);
+                    break;
+                }
+            }
         }
     }
 }

@@ -51,7 +51,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
         /*
         * パック選択画面起動
          */
-        this.mainApp.setSelectPack(false);   //takeQuizテスト用select省略, 後でこの1行は削除
+        //this.mainApp.setSelectPack(false);   //takeQuizテスト用select省略, 後でこの1行は削除
 
         if(mainApp.getSelectPack()){
             mainApplication.setFromTakeQuizPackActivity(true);
@@ -59,7 +59,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
         }else{
             this.takeQuiz();
         }
-
     }
 
     /*
