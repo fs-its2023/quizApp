@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +31,8 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
     private LinearLayout scrollLayout;
     private Button btnResetSelection, btnDeletePack, btnDeleteQuiz, btnEditQuiz;
     private ConstraintLayout deleteMsgBox;
-    private Button btnDeleteYes, btnDeleteNo;
+    private Button btnDeleteOk, btnDeleteCancel;
+    private String deleteMode;
 
     public editPackFragment() {
         // Required empty public constructor
@@ -80,14 +82,22 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         this.btnEditQuiz.setTag("editQuiz");
         this.btnEditQuiz.setOnClickListener(this);
         this.btnEditQuiz.setEnabled(false);
+
         this.deleteMsgBox = view.findViewById(R.id.deleteMsgBox);
+        this.deleteMsgBox.setBackgroundColor(Color.rgb(220,220,220));
+        this.btnDeleteOk = view.findViewById(R.id.btnDeleteOk);
+        this.btnDeleteOk.setOnClickListener(this);
+        this.btnDeleteOk.setTag("deleteOk");
+        this.btnDeleteCancel = view.findViewById(R.id.btnDeleteCancel);
+        this.btnDeleteCancel.setOnClickListener(this);
+        this.btnDeleteCancel.setTag("deleteCancel");
 
         /*
          * パック情報読み込み
          */
         List<String> lstPackDataFile = this.mainApp.getAllList();
         String[] lineDataFile = new String[5];
-        this.mainApp.setPackId("0000");
+
         /*
         * 該当行の特定
          */
@@ -104,6 +114,9 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         this.mpActivity.setQuizTotalNum(Integer.parseInt(lineDataFile[2]));
         this.mpActivity.setPackIntroduction(lineDataFile[3]);
         this.mpActivity.setPackGenre(lineDataFile[4]);
+
+        TextView txtPackTitle = view.findViewById(R.id.txtPackTitleEPF);
+        txtPackTitle.setText(lineDataFile[1]);
 
         /*
         * クイズ情報読み込み
@@ -131,20 +144,60 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             btnSelectQuiz.setLayoutParams(buttonLayoutParams);
             scrollLayout.addView(btnSelectQuiz);
-
-            /*cbxSelectQuiz = new CheckBox(this.mpActivity);
-            cbxSelectQuiz.setText(lineIdFile[0]);
-            cbxSelectQuiz.setTextSize(30);
-            cbxSelectQuiz.setTag("quizSelect" + i);
-            cbxSelectQuiz.setOnClickListener(this);
-            //ボタンの幅、高さの設定
-            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            cbxSelectQuiz.setLayoutParams(buttonLayoutParams);
-            scrollLayout.addView(cbxSelectQuiz);*/
         }
+    }
 
+    /*
+    * パック削除メソッド
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void deletePack(){
+        //packIdファイル削除
+        this.mainApp.clearFile(this.mainApp.getPackId());
+
+        //パックデータファイルの該当行削除
+        List<String> lstFileData = this.mainApp.readFileAsList(this.mainApp.PACK_DATA_FILE_NAME);
+        String line;
+        String packId;
+
+        for(int i = 0; i < lstFileData.size(); i++){
+            line = lstFileData.get(i);
+            packId = line.substring(0,line.indexOf(","));
+            if(packId.equals(this.mainApp.getPackId())){
+                lstFileData.remove(i);
+                break;
+            }
+        }
+        this.mainApp.clearFile(this.mainApp.PACK_DATA_FILE_NAME);
+        this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME, lstFileData);
+
+        //activity再起動
+        this.mpActivity.reload();
+    }
+
+    /*
+    * クイズ削除メソッド
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void deleteQuiz(){
+        //選択されたクイズ番号を降順ソート
+        Collections.sort(this.selectedQuizzes, Collections.reverseOrder());
+
+        //ファイルから該当行削除
+        List<String> lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+        for (int i:this.selectedQuizzes) {
+            lstPackIdFile.remove(i);
+        }
+        this.mainApp.clearFile(this.mainApp.getPackId());
+        this.mainApp.saveFileByList(this.mainApp.getPackId(), lstPackIdFile);
+
+        if(lstPackIdFile.size() == 0){
+            //activity再起動
+            this.mpActivity.reload();
+        }else{
+            //クイズリスト再読み込み
+            this.reloadFragment();
+        }
     }
 
     public void reloadFragment(){
@@ -194,53 +247,15 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
             /*
             * パック削除ボタン
              */
-            //packIdファイル削除
-            this.mainApp.clearFile(this.mainApp.getPackId());
-
-            //パックデータファイルの該当行削除
-            List<String> lstFileData = this.mainApp.getAllList();
-            String line;
-            String packId;
-            lstFileData = this.mainApp.readFileAsList(this.mainApp.PACK_DATA_FILE_NAME);
-            for(int i = 0; i < lstFileData.size(); i++){
-                line = lstFileData.get(i);
-                packId = line.substring(0,line.indexOf(","));
-                if(packId.equals(this.mainApp.getPackId())){
-                    lstFileData.remove(i);
-                    break;
-                }
-            }
-            this.mainApp.clearFile(this.mainApp.PACK_DATA_FILE_NAME);
-            this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME, lstFileData);
-
-            //activity再起動
-            this.mpActivity.reload();
+            this.deleteMode = "pack";
+            this.deleteMsgBox.setVisibility(View.VISIBLE);
 
         }else if(view.getTag().toString().equals("deleteQuiz")){
             /*
             * クイズ削除ボタン
              */
-
-            //選択されたクイズ番号を降順ソート
-            Collections.sort(this.selectedQuizzes, Collections.reverseOrder());
-
-            //ファイルから該当行削除
-            List<String> lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
-            for (int i:this.selectedQuizzes) {
-                lstPackIdFile.remove(i);
-            }
-            this.mainApp.clearFile(this.mainApp.getPackId());
-            this.mainApp.saveFileByList(this.mainApp.getPackId(), lstPackIdFile);
-
-            if(lstPackIdFile.size() == 0){
-                //activity再起動
-                //this.mpActivity.reload();
-                this.canDelete();
-            }else{
-                //クイズリスト再読み込み
-                //this.reloadFragment();
-                this.canDelete();
-            }
+            this.deleteMode = "quiz";
+            this.deleteMsgBox.setVisibility(View.VISIBLE);
 
         }else if(view.getTag().toString().equals("editQuiz")){
             /*
@@ -254,24 +269,25 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
             ft.replace(R.id.container, new editQuizFragment());
             ft.commit();
         }else if(view.getTag().toString().equals("resetSelection")){
+            /*
+             * 選択解除ボタン
+             */
             this.reloadFragment();
+        }else if(view.getTag().toString().equals("deleteOk")){
+            /*
+             * 削除OKボタン
+             */
+            this.deleteMsgBox.setVisibility(View.GONE);
+            if(this.deleteMode.equals("quiz")){
+                this.deleteQuiz();
+            }else if(this.deleteMode.equals("pack")){
+                this.deletePack();
+            }
+        }else if(view.getTag().toString().equals("deleteCancel")){
+            /*
+             * 削除cancelボタン
+             */
+            this.deleteMsgBox.setVisibility(View.GONE);
         }
     }
-
-
-    public boolean canDelete(){
-        //this.deleteMsgBox.setVisibility(View.VISIBLE);
-        YesNoDialog dialog = new YesNoDialog();
-        Bundle args = new Bundle();
-        args.putString("title", "警告");
-        args.putString("msg", "削除しますか?");
-        args.putString("Yes", "OK");
-        args.putString("No", "Cancel");
-        //dialog.setArguments(args);
-        //dialog.show(getChildFragmentManager(), "my_dialog");
-        boolean isDeleteConfirmed=false;
-
-        return isDeleteConfirmed;
-    }
-
 }
