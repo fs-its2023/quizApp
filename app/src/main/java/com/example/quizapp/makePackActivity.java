@@ -48,6 +48,7 @@ public class makePackActivity extends AppCompatActivity {
 
         /*変更を加えました詳しくは佐竹君に聞いてください*/
         if(!mainApplication.getSelectPack()){
+            mainApplication.setSelectPack(true);
             this.editPackFragment();
         }
 
