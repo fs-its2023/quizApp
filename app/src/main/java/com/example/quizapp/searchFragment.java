@@ -93,7 +93,7 @@ public class searchFragment extends Fragment {
         }
         mainApplication.setSelectList(selectLines);
         //getFragmentManager().beginTransaction().remove(this).commit();
-        selectPackActivity.enter();
+        selectPackActivity.reload();
     }
 
 
