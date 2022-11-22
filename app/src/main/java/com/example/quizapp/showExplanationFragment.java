@@ -100,7 +100,7 @@ public class showExplanationFragment extends Fragment {
     public void createView(){
         problemStatement.setText("問題文\n"+ quizData[0]);
         explanation.setText("解説\n"+ quizData[5]);
-        correctAnswer.setText("正解の選択し\n"+ quizData[1]);
+        correctAnswer.setText("正解の選択肢\n"+ quizData[1]);
         backFragment.setOnClickListener(this::onClick);
     }
 

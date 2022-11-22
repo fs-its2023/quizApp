@@ -94,7 +94,7 @@ public class searchFragment extends Fragment {
         //if (selectLines)
         mainApplication.setSelectList(selectLines);
         //getFragmentManager().beginTransaction().remove(this).commit();
-        selectPackActivity.enter();
+        selectPackActivity.reload();
     }
 
 

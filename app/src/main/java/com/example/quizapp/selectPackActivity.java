@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
@@ -43,24 +42,27 @@ public class selectPackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_pack);
 
         mainApplication=(com.example.quizapp.mainApplication) getApplication();
-        mainApplication.deleteFile("packData");
-        mainApplication.testPackDataFileMaker();
+        //deleteFile("packData");
+        //mainApplication.testPackDataFileMaker();
         vLayout=(LinearLayout) findViewById(R.id.verticalLayout);
 
         //mainApplication.saveFile("packData","1,パック名,20,パック1説明,ジャンル1\n");
 
-        allList= mainApplication.getAllList();
-        /*selectListに値を入れ、新着順に変更*/
-        mainApplication.deleteSelectList();
-        Collections.reverse(allList);
-        mainApplication.setSelectList(allList);
+        //selectlistが空の場合のみ新着順表示　(Activity呼び出し前にリストを初期化
+        if(mainApplication.getSelectList().size() == 0){
+            allList= mainApplication.getAllList();
+            /*selectListに値を入れ、新着順に変更*/
+            mainApplication.deleteSelectList();
+            Collections.reverse(allList);
+            mainApplication.setSelectList(allList);
+        }
 
         selectList=mainApplication.getSelectList();
 
         pageCurrent=1;
         pageAll=((selectList.size()-1)/10)+1;
 
-        mainApplication.setSelectPack(true);
+        mainApplication.setMustSelectPack(true);
 
         /*パック情報の表示*/
         showPackList();
@@ -115,7 +117,7 @@ public class selectPackActivity extends AppCompatActivity {
         public void onClick(View view) {
             String[] selectListData=selectList.get((int)view.getTag()).split(",");
             mainApplication.setPackId(selectListData[0]);
-            mainApplication.setSelectPack(false);
+            mainApplication.setMustSelectPack(false);
             /*makePackActivityから来ていた場合*/
             if(mainApplication.getFromMakePackActivity()){
                 mainApplication.setFromMakePackActivity(false);
@@ -188,7 +190,9 @@ public class selectPackActivity extends AppCompatActivity {
         return mainApplication;
     }
 
-    public void enter(){
+    public void reload(){
+        Intent intent = getIntent();
         finish();
+        startActivity(intent);
     }
 }
