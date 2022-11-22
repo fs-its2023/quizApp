@@ -184,4 +184,11 @@ public class selectPackActivity extends AppCompatActivity {
         finish();
     }
 
+    public mainApplication getMainApplication(){
+        return mainApplication;
+    }
+
+    public void enter(){
+        finish();
+    }
 }
