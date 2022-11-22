@@ -1,3 +1,7 @@
+## ショートカット
+- ![javaコード](https://github.com/fs-its2023/quizApp/tree/main/app/src/main/java/com/example/quizapp)
+- ![レイアウト](https://github.com/fs-its2023/quizApp/tree/main/app/src/main/res/layout)
+
 # quizApp
 
 - 以下の問題を解消するためにレポジトリを移行しました. 
