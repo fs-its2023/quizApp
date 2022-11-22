@@ -2,12 +2,10 @@ package com.example.quizapp;
 
 import android.app.Application;
 import android.os.Build;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,7 +25,7 @@ public class mainApplication extends Application {
     private static boolean fromTakeQuizPackActivity =false;
     private static boolean fromTakeQuizFragment=false;
     private static boolean fromResultFragment=false;
-    private static boolean selectPack=false;
+    private static boolean mustSelectPack = true;
     public static final String PACK_DATA_FILE_NAME = "packData";
 
     //テスト用フィールド
@@ -302,11 +300,11 @@ public class mainApplication extends Application {
         mainApplication.fromTakeQuizPackActivity = fromTakeQuizPackActivity;
     }
 
-    public static boolean getSelectPack() {
-        return selectPack;
+    public static boolean getMustSelectPack() {
+        return mustSelectPack;
     }
 
-    public static void setSelectPack(boolean selectPack) {
-        mainApplication.selectPack = selectPack;
+    public static void setMustSelectPack(boolean selectPack) {
+        mainApplication.mustSelectPack = selectPack;
     }
 }

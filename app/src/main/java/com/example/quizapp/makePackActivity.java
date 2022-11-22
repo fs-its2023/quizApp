@@ -1,13 +1,10 @@
 package com.example.quizapp;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,8 +44,8 @@ public class makePackActivity extends AppCompatActivity {
         btnMenu.setOnClickListener(v -> finish());
 
         /*変更を加えました詳しくは佐竹君に聞いてください*/
-        if(!mainApplication.getSelectPack()){
-            mainApplication.setSelectPack(true);
+        if(!mainApplication.getMustSelectPack()){
+            mainApplication.setMustSelectPack(true);
             this.editPackFragment();
         }
 
@@ -72,6 +69,7 @@ public class makePackActivity extends AppCompatActivity {
         });
     }
 
+
     //編集ボタンを押した後の動作、selectPackFragmentを開く
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectPack(){
@@ -80,6 +78,8 @@ public class makePackActivity extends AppCompatActivity {
         packIntroduction=null;
         quizTotalNum=0;
         mainApplication.setFromMakePackActivity(true);
+
+        mainApplication.setSelectList(new ArrayList<>());
         Intent intent=new Intent(getApplication(), selectPackActivity.class);
         startActivity(intent);
     }

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class takeQuizPackActivity extends AppCompatActivity {
@@ -51,9 +50,7 @@ public class takeQuizPackActivity extends AppCompatActivity {
         /*
         * パック選択画面起動
          */
-        //this.mainApp.setSelectPack(false);   //takeQuizテスト用select省略, 後でこの1行は削除
-
-        if(mainApp.getSelectPack()){
+        if(mainApp.getMustSelectPack()){
             mainApplication.setFromTakeQuizPackActivity(true);
             this.selectPack();
         }else{
@@ -64,7 +61,9 @@ public class takeQuizPackActivity extends AppCompatActivity {
     /*
     * パック選択画面を表示するメソッド
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectPack(){
+        this.mainApp.setSelectList(new ArrayList<>());
         Intent intent =new Intent(getApplication(), selectPackActivity.class);
         startActivity(intent);
         finish();
@@ -75,7 +74,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void takeQuiz(){
-
         /*
         * クイズ初期化
          */
