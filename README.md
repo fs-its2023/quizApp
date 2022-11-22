@@ -1,6 +1,6 @@
 ## ショートカット
-- ![javaコード](https://github.com/fs-its2023/quizApp/tree/main/app/src/main/java/com/example/quizapp)
-- ![レイアウト](https://github.com/fs-its2023/quizApp/tree/main/app/src/main/res/layout)
+- [javaコード](https://github.com/fs-its2023/quizApp/tree/main/app/src/main/java/com/example/quizapp)
+- [レイアウト](https://github.com/fs-its2023/quizApp/tree/main/app/src/main/res/layout)
 
 # quizApp
 
