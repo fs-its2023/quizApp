@@ -34,6 +34,7 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
     private ConstraintLayout deleteMsgBox;
     private Button btnDeleteOk, btnDeleteCancel;
     private String deleteMode;
+    private boolean isEnabled = true;
 
     public editPackFragment() {
         // Required empty public constructor
@@ -129,6 +130,8 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         String[] lineIdFile = new String[6];
         scrollLayout = view.findViewById(R.id.quizListScroll);
         Button btnSelectQuiz;
+        TextView space;
+
         for(int i = 0; i < lstPackIdFile.size(); i++){
             lineIdFile = lstPackIdFile.get(i).split(",");
             /*
@@ -145,9 +148,12 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
             //ボタンの幅、高さの設定
             LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
+                    120);
             btnSelectQuiz.setLayoutParams(buttonLayoutParams);
             scrollLayout.addView(btnSelectQuiz);
+            space = new TextView(this.mpActivity);
+            space.setHeight(30);
+            scrollLayout.addView(space);
         }
     }
 
@@ -222,7 +228,7 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view){
-        if(view.getTag().toString().contains("quizSelect")){
+        if(view.getTag().toString().contains("quizSelect") && this.isEnabled){
             //クイズ選択ボタン
             Integer quizNum = Integer.parseInt(view.getTag().toString().substring(10));
             if(this.selectedQuizzes.contains(quizNum)){
@@ -255,21 +261,23 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
                 this.btnEditQuiz.setEnabled(false);
             }
 
-        }else if(view.getTag().toString().equals("deletePack")){
+        }else if(view.getTag().toString().equals("deletePack") && this.isEnabled){
             /*
             * パック削除ボタン
              */
             this.deleteMode = "pack";
             this.deleteMsgBox.setVisibility(View.VISIBLE);
+            this.isEnabled = false;
 
-        }else if(view.getTag().toString().equals("deleteQuiz")){
+        }else if(view.getTag().toString().equals("deleteQuiz") && this.isEnabled){
             /*
             * クイズ削除ボタン
              */
             this.deleteMode = "quiz";
             this.deleteMsgBox.setVisibility(View.VISIBLE);
+            this.isEnabled = false;
 
-        }else if(view.getTag().toString().equals("addQuiz")){
+        }else if(view.getTag().toString().equals("addQuiz") && this.isEnabled){
             /*
              * クイズ編集ボタン
              */
@@ -277,15 +285,15 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
 
             this.editQuiz();
 
-        }else if(view.getTag().toString().equals("editQuiz")){
+        }else if(view.getTag().toString().equals("editQuiz") && this.isEnabled){
             /*
             * クイズ編集ボタン
              */
             this.mainApp.setQuizNum(this.selectedQuizzes.get(0));
 
-            editQuiz();
+            this.editQuiz();
             
-        }else if(view.getTag().toString().equals("resetSelection")){
+        }else if(view.getTag().toString().equals("resetSelection") && this.isEnabled){
             /*
              * 選択解除ボタン
              */
@@ -305,6 +313,7 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
              * 削除cancelボタン
              */
             this.deleteMsgBox.setVisibility(View.GONE);
+            this.isEnabled = true;
         }
     }
 }
