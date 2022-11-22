@@ -92,11 +92,11 @@ public class makePackActivity extends AppCompatActivity {
         quizTotalNum=0;
         btnEditQuiz.setVisibility(View.GONE);
         btnMakeNewQuiz.setVisibility(View.GONE);
-//        makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
-        editQuizFragment editQuizFragment = new editQuizFragment();
+        makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
+//        editQuizFragment editQuizFragment = new editQuizFragment();
         transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.container, makeNewPackFragment);
-        transaction.replace(R.id.container, editQuizFragment);
+        transaction.replace(R.id.container, makeNewPackFragment);
+//        transaction.replace(R.id.container, editQuizFragment);
         transaction.commit();
     }
 
