@@ -1,4 +1,3 @@
-/*
 package com.example.quizapp;
 
 import android.os.Bundle;
@@ -47,8 +46,7 @@ public class searchFragment extends Fragment {
 
                 } else {
                     textView.setText(String.format("ジャンルは" + spinner1 + ",問題数は" + spinner2 + ",キーワードは" + keyword + "になります"));
-                    */
-/*listUpPackを起動*//*
+        //listUpPackを起動
 
                     listUpPack();
 
@@ -61,7 +59,7 @@ public class searchFragment extends Fragment {
     public void listUpPack(){
         List<String> lines = new ArrayList<String>(Arrays.asList("ワンピース大全","ワンピースのクイズだよ","24","アニメ","0001","アニマル百科","動物のクイズだよ","46","動物","0021"));
 
-        for (int i = 1; i < lines.size(); i++) {
+        for (int i = 0; i < lines.size(); i++) {
             //String[] data = lines.get(i).split(",");
             if (!spinner2.equals("なし") && spinner2 != lines.get(3)){
                 continue;
@@ -87,4 +85,3 @@ public class searchFragment extends Fragment {
         }
     }
 }
-*/
