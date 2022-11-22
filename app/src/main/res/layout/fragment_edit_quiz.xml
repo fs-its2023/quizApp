@@ -116,7 +116,7 @@
         android:id="@+id/btnSaveAndExit"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:onClick="onClickSaveAndClose"
+        android:onClick="onclickSaveAndExit"
         android:text="保存して終了"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import android.app.Application;
 import android.os.Build;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class mainApplication extends Application {
@@ -28,21 +30,77 @@ public class mainApplication extends Application {
     private static boolean selectPack=false;
     public static final String PACK_DATA_FILE_NAME = "packData";
 
+    //テスト用フィールド
+    final int MAX_QUIZ_TOTAL_NUM = 30;
+    final int GENLE_TYPE_NUM = 10;
+    final int MAX_PACK_TOTAL_NUM = 100;
+    Random rand = new Random();
+
+    // デバック用クイズパックデータ作成
+    //100個のクイズパックを作成する
+    public void testPackDataFileMaker(){
+        clearFile(PACK_DATA_FILE_NAME);
+        String testPackData ="";
+        String testPackId;
+        String testPackIntroduction = "パックの説明文";
+        String testPackGenre = "パックのジャンル";
+        int randomQuizTotalNum ;
+        int ranomGenre;
+
+        for(int i = 0 ;i<MAX_PACK_TOTAL_NUM;i++){
+            testPackId = String.format("%04d",i);
+            randomQuizTotalNum = rand.nextInt(MAX_QUIZ_TOTAL_NUM)+1;
+            ranomGenre = rand.nextInt(GENLE_TYPE_NUM)+1;
+            testPackData = ""+testPackId+",パック名"+i+","+randomQuizTotalNum+","+testPackIntroduction+i+","+testPackGenre+ranomGenre+"\n";
+            saveFile(PACK_DATA_FILE_NAME,testPackData);
+        }
+        testQuizDataFileMaker();
+    }
+
+    //testPackDataFileMaker()のあとに使う、デバック用クイズデータのファイルを作成する
+    //ジャンルはとりあえず適当にランダム
+    public void testQuizDataFileMaker(){
+        List<String> testDataAlllist = new ArrayList<String>();
+        testDataAlllist=getAllList();
+        int testQuizTotalNum;
+        String testPackId;
+        String testQuizData;
+
+        for(int i = 0 ; i<testDataAlllist.size();i++){
+            String[] testQuizDatas = testDataAlllist.get(i).split(",");
+            testQuizTotalNum = Integer.parseInt(testQuizDatas[2]);
+            testPackId = String.format("%04d",i);
+            clearFile(testPackId);
+            for(int j = 1 ; j<=testQuizTotalNum;j++){
+                testQuizData = "問題文"+i+"-"+j+",正解,不正解1,不正解2,不正解3,解説文"+j+"\n";
+                saveFile(testPackId,testQuizData);
+            }
+        }
+    }
+
+    //歯抜けのデータを作成するメソッド
+    public void testRandomDeleteFile(){
+        final int RANDOM_DELETE_FILE_NUM = 30;
+        List<String> testAllList = getAllList();
+        int randNum;
+
+        for(int i = 0 ;i<RANDOM_DELETE_FILE_NUM;i++){
+            randNum = rand.nextInt(testAllList.size());
+            String[] testPackData = testAllList.get(randNum).split(",");
+            testAllList.remove(randNum);
+            clearFile(testPackData[0]);
+        }
+
+        //testAllListをpackDataとして新たに保存する
+        clearFile(PACK_DATA_FILE_NAME);
+        saveFileByList(PACK_DATA_FILE_NAME,testAllList);
+    }
+
     /*
     * ファイル削除
-    * isRemainedでファイル自体を残すか選択
      */
-    public void deleteFile(String fileName, boolean isRemained){
-        if(isRemained){
-            try (FileOutputStream fileOutputStream = new FileOutputStream(fileName, false)) {
-                //空白で置き換え
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else{
-            File file = new File(fileName);
-            file.delete();
-        }
+    public void clearFile(String fileName){
+        deleteFile(fileName);
     }
 
     /*
@@ -57,6 +115,7 @@ public class mainApplication extends Application {
             /*
             *指定したファイルに書き込み
              */
+            fileOutputStream.write(strSaveData.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -185,8 +244,8 @@ public class mainApplication extends Application {
         return packNum;
     }
 
-    public static void setPackNum(int puckNum) {
-        mainApplication.packNum=puckNum;
+    public static void setPackNum(int packNum) {
+        mainApplication.packNum=packNum;
     }
 
     public List<String> getAllList() {

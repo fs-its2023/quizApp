@@ -27,12 +27,11 @@ public class makePackActivity extends AppCompatActivity {
     //↓あるパックに含まれる全クイズデータを入れるリスト。↑のquizTotalNumいらなくね？
     private List<String> quizData = new ArrayList<String>();
 
-    private mainApplication mainApplication;
-
     private Button btnMakeNewQuiz;
     private Button btnEditQuiz;
     private FragmentTransaction transaction;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +46,12 @@ public class makePackActivity extends AppCompatActivity {
         Button btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> finish());
 
+        /*変更を加えました詳しくは佐竹君に聞いてください*/
+        if(!mainApplication.getSelectPack()){
+            mainApplication.setSelectPack(true);
+            this.editPackFragment();
+        }
+
         //新規作成のボタンを押したときの処理
         btnMakeNewQuiz = findViewById(R.id.btnMakeNewQuiz);
         btnMakeNewQuiz.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +64,7 @@ public class makePackActivity extends AppCompatActivity {
         //編集のボタンを押したときの処理 
         btnEditQuiz = findViewById(R.id.btnEditQuiz);
         btnEditQuiz.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 selectPack();
@@ -67,16 +73,18 @@ public class makePackActivity extends AppCompatActivity {
     }
 
     //編集ボタンを押した後の動作、selectPackFragmentを開く
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectPack(){
         packTitle=null;
         packGenre=null;
         packIntroduction=null;
         quizTotalNum=0;
+        mainApplication.setFromMakePackActivity(true);
         Intent intent=new Intent(getApplication(), selectPackActivity.class);
         startActivity(intent);
     }
 
-    //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く
+    //新規作成ボタンを押した後の動作、makeNewPackFragmentを開く。
     public void makeNewPack(){
         packTitle=null;
         packGenre=null;
@@ -85,43 +93,34 @@ public class makePackActivity extends AppCompatActivity {
         btnEditQuiz.setVisibility(View.GONE);
         btnMakeNewQuiz.setVisibility(View.GONE);
         makeNewPackFragment makeNewPackFragment = new makeNewPackFragment();
+//        editQuizFragment editQuizFragment = new editQuizFragment();
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, makeNewPackFragment);
+//        transaction.replace(R.id.container, editQuizFragment);
         transaction.commit();
     }
 
-    //遷移先のFragmentからメニューボタンを再表示させるメソッド
-    @SuppressLint("ResourceType")
-    public LinearLayout getLinearLayout() {
-        LinearLayout layout=new LinearLayout(this);
-        layout.setId(101);
-        //垂直方向にViewを追加していく
-        layout.setOrientation(LinearLayout.VERTICAL);
-        //layoutの幅、高さの設定
-        layout.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
-
-        Button button = new Button(this);
-        button.setTextSize(10);
-        button.setText("メニュー");
-        button.setOnClickListener(backMainActivity);
-        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        button.setLayoutParams(buttonLayoutParams);
-        layout.addView(button);
-
-        return layout;
+    /*変更を加えました詳しくは佐竹君に聞いてください*/
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void editPackFragment(){
+        mainApplication.setFromMakePackActivity(false);
+        editPackFragment editPackFragment=new editPackFragment();
+        btnEditQuiz=(Button)findViewById(R.id.btnEditQuiz);
+        btnEditQuiz.setVisibility(View.GONE);
+        btnMakeNewQuiz = (Button) findViewById(R.id.btnMakeNewQuiz);
+        btnMakeNewQuiz.setVisibility(View.GONE);
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container, editPackFragment);
+        transaction.commit();
     }
-    //再作成したメニューボタンの処理
-    View.OnClickListener backMainActivity = new View.OnClickListener(){
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        public void onClick(View v){
-            finish();
-        }
-    };
+
+
+
+    public void reload() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
 
     //フィールドのセッターとゲッター
     public void setPackTitle(String packTitle){
@@ -160,6 +159,7 @@ public class makePackActivity extends AppCompatActivity {
         return mainApplication;
     }
 
+    //これ使う機会なくね？
     public void setQuizData(List<String> inputQuizData){
         this.quizData=inputQuizData;
     }

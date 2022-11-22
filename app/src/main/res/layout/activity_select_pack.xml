@@ -61,12 +61,12 @@
         app:layout_constraintVertical_bias="0.092" />
 
 
-
     <Button
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="検索"
+        android:onClick="showSearchFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.021"
@@ -75,8 +75,8 @@
         app:layout_constraintVertical_bias="0.077" />
 
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="628dp"
+        android:layout_width="411dp"
+        android:layout_height="605dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -86,10 +86,11 @@
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
+            android:id="@+id/verticalLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/vertivalLayout"/>
+            android:orientation="vertical"></LinearLayout>
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
