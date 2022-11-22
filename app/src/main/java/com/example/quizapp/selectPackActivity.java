@@ -168,12 +168,12 @@ public class selectPackActivity extends AppCompatActivity {
         backPage.setVisibility(View.INVISIBLE);
         nextPage.setVisibility(View.INVISIBLE);
         pageNum.setVisibility(View.INVISIBLE);
-        /*searchFragmentの表示*/
-        /*searchFragment searchFragment=new searchFragment();
+        //searchFragmentの表示
+        searchFragment searchFragment=new searchFragment();
         FragmentTransaction transaction;
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.verticalLayout, searchFragment);
-        transaction.commit();*/
+        transaction.commit();
     }
 
 
@@ -184,4 +184,11 @@ public class selectPackActivity extends AppCompatActivity {
         finish();
     }
 
+    public mainApplication getMainApplication(){
+        return mainApplication;
+    }
+
+    public void enter(){
+        finish();
+    }
 }
