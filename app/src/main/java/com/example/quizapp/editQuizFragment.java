@@ -241,10 +241,9 @@ public class editQuizFragment extends Fragment{
     //パックのデータを保存する、新規と編集で保存内容が増減する
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void savePack(){
-        String packId = "";
+        String packId = mainApplication.getPackId();
         //新規だった場合。パック情報をpackData.csvの最終行に追加
         if(isMakeNewQuiz){
-            packId = mainApplication.getPackId();
             String packTitle = makePackActivity.getPackTitle();
             String packIntroduction = makePackActivity.getPackIntroduction();
             String packGenre = makePackActivity.getPackGenre();
@@ -260,7 +259,7 @@ public class editQuizFragment extends Fragment{
                 if(quizData[0].equals(packId)==true){
                     quizData[2] = String.valueOf(quizTotalNum);
                     String newQuizData = quizData[0]+","+quizData[1]+","+quizData[2]+","+quizData[3]+","+quizData[4];
-                    allList.set(i,newQuizData);
+                    allList.set(Integer.parseInt(packId),newQuizData);
                     mainApplication.clearFile(mainApplication.PACK_DATA_FILE_NAME);
                     mainApplication.saveFileByList(mainApplication.PACK_DATA_FILE_NAME,allList);
                     break;
