@@ -59,7 +59,7 @@ public class searchFragment extends Fragment {
         List<String> lines = new ArrayList<String>(Arrays.asList("ワンピース大全","ワンピースのクイズだよ","24","アニメ","0001","アニマル百科","動物のクイズだよ","46","動物","0021"));
 
         for (int i = 1; i < lines.size(); i++) {
-            String[] data = lines.get(i).split(",");
+            //String[] data = lines.get(i).split(",");
             if (!spinner2.equals("なし") && spinner2 != lines.get(3)){
                 continue;
             }
