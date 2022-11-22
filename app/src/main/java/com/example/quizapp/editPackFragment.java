@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -125,7 +126,6 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         String[] lineIdFile = new String[6];
         scrollLayout = view.findViewById(R.id.quizListScroll);
         Button btnSelectQuiz;
-        CheckBox cbxSelectQuiz;
         for(int i = 0; i < lstPackIdFile.size(); i++){
             lineIdFile = lstPackIdFile.get(i).split(",");
             /*
@@ -133,15 +133,16 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
              */
             btnSelectQuiz = new Button(this.mpActivity);
             btnSelectQuiz.setText(lineIdFile[0]);
-            btnSelectQuiz.setTextSize(30);
+            btnSelectQuiz.setTextSize(20);
             btnSelectQuiz.setTag("quizSelect" + i);
             btnSelectQuiz.setHighlightColor(Color.RED);
-            btnSelectQuiz.setBackgroundColor(Color.rgb(100,100,100));
+            btnSelectQuiz.setBackgroundColor(Color.rgb(200,200,200));
             btnSelectQuiz.setOnClickListener(this);
+
             //ボタンの幅、高さの設定
             LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams.MATCH_PARENT);
             btnSelectQuiz.setLayoutParams(buttonLayoutParams);
             scrollLayout.addView(btnSelectQuiz);
         }
@@ -216,11 +217,11 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
             if(this.selectedQuizzes.contains(quizNum)){
                 //選択済みの場合
                 this.selectedQuizzes.remove(this.selectedQuizzes.indexOf(quizNum));
-                view.setBackgroundColor(Color.rgb(100,100,100));
+                view.setBackgroundColor(Color.rgb(200,200,200));
             }else{
                 //未選択の場合
                 this.selectedQuizzes.add(quizNum);
-                view.setBackgroundColor(Color.rgb(70,70,70));
+                view.setBackgroundColor(Color.rgb(150,150,150));
             }
 
             /*
