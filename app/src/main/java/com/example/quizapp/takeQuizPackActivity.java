@@ -78,33 +78,11 @@ public class takeQuizPackActivity extends AppCompatActivity {
 
         /*
         * クイズ初期化
-        * テスト用仮データで初期化中
          */
         mainApplication.setQuizNum(0);
         this.correctNum = 0;
         this.mainApp.setPackId("0000"); //仮
         this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
-
-        //ここから数行は本来は削除, 上はアンコメント
-        /*this.lstPackIdFile = new ArrayList<>(Arrays.asList("Q1,a1,b1,c1,d1,ex1",
-                "Q2,a2,b2,c2,d2,ex2",
-                "Q3,a3,b3,c3,d3,exq3"));
-        deleteFile("0000");
-        this.mainApp.saveFileByList("0000", this.lstPackIdFile);
-        deleteFile("0001");
-        this.mainApp.saveFileByList("0001", this.lstPackIdFile);
-        deleteFile("0002");
-        this.mainApp.saveFileByList("0002", this.lstPackIdFile);
-        this.mainApp.setPackId("0000");
-        String path = this.mainApp.PACK_DATA_FILE_NAME;
-        this.mainApp.clearFile(this.mainApp.PACK_DATA_FILE_NAME);
-        List<String> lstFile = new ArrayList<>();
-        lstFile.add("0000,title0,3,intro0,genre0");
-        lstFile.add("0001,title1,3,intro1,genre1");
-        lstFile.add("0002,title2,3,intro2,genre2");
-        this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME,lstFile);
-        */
-        //ここまで削除
 
         /*
         * クイズ回答画面表示 本当はtakeQuizFragment
