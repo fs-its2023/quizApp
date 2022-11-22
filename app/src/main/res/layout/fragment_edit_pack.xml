@@ -13,9 +13,8 @@
         android:layout_marginEnd="8dp"
         android:onClick="onClick"
         android:text="パック削除"
-        app:layout_constraintBottom_toBottomOf="@+id/btnEditQuizInEPF"
-        app:layout_constraintEnd_toStartOf="@+id/btnDeleteQuiz"
-        app:layout_constraintTop_toTopOf="@+id/btnDeleteQuiz" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnDeleteQuiz"
+        app:layout_constraintEnd_toStartOf="@+id/btnDeleteQuiz" />
 
     <Button
         android:id="@+id/btnEditQuizInEPF"
@@ -55,6 +54,7 @@
             android:id="@+id/quizListScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:orientation="vertical" />
     </ScrollView>
 
@@ -115,9 +115,18 @@
         android:id="@+id/btnResetSelection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:text="選択解除"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnEditQuizInEPF"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAddQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="クイズ追加"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnEditQuizInEPF"
+        app:layout_constraintEnd_toStartOf="@+id/btnEditQuizInEPF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
