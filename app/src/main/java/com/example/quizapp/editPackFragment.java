@@ -30,7 +30,7 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
     private makePackActivity mpActivity;
     private List<Integer> selectedQuizzes = new ArrayList<>();
     private LinearLayout scrollLayout;
-    private Button btnResetSelection, btnDeletePack, btnDeleteQuiz, btnEditQuiz;
+    private Button btnResetSelection, btnDeletePack, btnAddQuiz, btnDeleteQuiz, btnEditQuiz;
     private ConstraintLayout deleteMsgBox;
     private Button btnDeleteOk, btnDeleteCancel;
     private String deleteMode;
@@ -83,6 +83,9 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         this.btnEditQuiz.setTag("editQuiz");
         this.btnEditQuiz.setOnClickListener(this);
         this.btnEditQuiz.setEnabled(false);
+        this.btnAddQuiz = view.findViewById(R.id.btnAddQuiz);
+        this.btnAddQuiz.setTag("addQuiz");
+        this.btnAddQuiz.setOnClickListener(this);
 
         this.deleteMsgBox = view.findViewById(R.id.deleteMsgBox);
         this.deleteMsgBox.setBackgroundColor(Color.rgb(220,220,220));
@@ -208,6 +211,14 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         ft.commit();
     }
 
+    public void editQuiz(){
+        FragmentManager fm = getParentFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.addToBackStack(null);
+        ft.replace(R.id.container, new editQuizFragment());
+        ft.commit();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View view){
@@ -258,17 +269,22 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
             this.deleteMode = "quiz";
             this.deleteMsgBox.setVisibility(View.VISIBLE);
 
+        }else if(view.getTag().toString().equals("addQuiz")){
+            /*
+             * クイズ編集ボタン
+             */
+            this.mainApp.setQuizNum(this.mpActivity.getQuizTotalNum());
+
+            this.editQuiz();
+
         }else if(view.getTag().toString().equals("editQuiz")){
             /*
             * クイズ編集ボタン
              */
             this.mainApp.setQuizNum(this.selectedQuizzes.get(0));
 
-            FragmentManager fm = getParentFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.addToBackStack(null);
-            ft.replace(R.id.container, new editQuizFragment());
-            ft.commit();
+            editQuiz();
+            
         }else if(view.getTag().toString().equals("resetSelection")){
             /*
              * 選択解除ボタン
