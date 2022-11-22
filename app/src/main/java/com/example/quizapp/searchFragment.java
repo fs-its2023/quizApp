@@ -77,7 +77,7 @@ public class searchFragment extends Fragment {
             minQuiz = 0;
 
             int linesGet = Integer.parseInt(data[2]);//Listからとりだした値（String型）をint型の変数として宣言
-            maxQuiz = Integer.parseInt(spinnerNum.substring(index-1));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
+            maxQuiz = Integer.parseInt(spinnerNum.substring(index+1));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
             minQuiz = Integer.parseInt(spinnerNum.substring(index-1));//spinner1で入力したString型の値（~の前の数字）をint型にしmixQuizに代入
 
 
