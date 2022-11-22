@@ -121,7 +121,9 @@ public class editQuizFragment extends Fragment{
             quizTotalNum = makePackActivity.getQuizTotalNum();
 
             //追加の場合
-            if(quizData.size() > quizNum)
+            if(quizData.size()-1 > quizNum){
+
+            }
 
             //テキストを表示
             txtPackTitle.setText(packTitle);
@@ -202,11 +204,10 @@ public class editQuizFragment extends Fragment{
             //パックデータの更新
             savePack();
 
-            //クイズ数を追加(編集の時は追加しない)
-            if(!isMakeNewQuiz){
-                quizTotalNum += 1;
-                isMakeNewQuiz = true;
-            }
+            //編集モードを解除する
+
+            isMakeNewQuiz = true;
+
             return true;
         }
         return false;
@@ -251,23 +252,25 @@ public class editQuizFragment extends Fragment{
     public void savePack(){
         String packId = mainApplication.getPackId();
         //新規だった場合。パック情報をpackData.csvの最終行に追加
-        if(isMakeNewQuiz){
+        if(quizData.size()==1){
             String packTitle = makePackActivity.getPackTitle();
             String packIntroduction = makePackActivity.getPackIntroduction();
             String packGenre = makePackActivity.getPackGenre();
+            quizTotalNum = quizData.size();
 
             String newPackData =packId+","+packTitle+","+quizTotalNum+","+packIntroduction+","+packGenre+"\n";
             mainApplication.saveFile(mainApplication.PACK_DATA_FILE_NAME,newPackData);
         }
         //編集だった場合。パックリストを取得、合計クイズ数を変更して再度保存
-        if(!isMakeNewQuiz){
+        if(quizData.size()>1){
             List<String> allList = mainApplication.getAllList();
             for(int i = 0 ; i < allList.size();i++){
-                String[] quizData = allList.get(i).split(",");
-                if(quizData[0].equals(packId)==true){
-                    quizData[2] = String.valueOf(quizTotalNum);
-                    String newQuizData = quizData[0]+","+quizData[1]+","+quizData[2]+","+quizData[3]+","+quizData[4];
-                    allList.set(Integer.parseInt(packId),newQuizData);
+                String[] quizDataArray = allList.get(i).split(",");
+                if(quizDataArray[0].equals(packId)==true){
+                    quizTotalNum = quizData.size();
+                    quizDataArray[2] = String.valueOf(quizTotalNum);
+                    String newQuizData = quizDataArray[0]+","+quizDataArray[1]+","+quizDataArray[2]+","+quizDataArray[3]+","+quizDataArray[4];
+                    allList.set(Integer.parseInt(packId)+1,newQuizData);
                     mainApplication.clearFile(mainApplication.PACK_DATA_FILE_NAME);
                     mainApplication.saveFileByList(mainApplication.PACK_DATA_FILE_NAME,allList);
                     break;
