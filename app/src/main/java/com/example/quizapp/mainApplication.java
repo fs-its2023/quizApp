@@ -72,7 +72,7 @@ public class mainApplication extends Application {
             testPackId = String.format("%04d",i);
             clearFile(testPackId);
             for(int j = 1 ; j<=testQuizTotalNum;j++){
-                testQuizData = "問題文"+testPackId+"-"+j+",正解,不正解1,不正解2,不正解3,解説文"+j+"\n";
+                testQuizData = "問題文"+i+"-"+j+",正解,不正解1,不正解2,不正解3,解説文"+j+"\n";
                 saveFile(testPackId,testQuizData);
             }
         }
