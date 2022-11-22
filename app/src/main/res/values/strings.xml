@@ -7,6 +7,28 @@
         <item>アニメ</item>
         <item>歴史</item>
     </string-array>
+    <string name="spnGenre_prompt">ジャンルを選択してください</string>
+    <string-array name="spnGenre_items">
+        <item>なし</item>
+        <item>動物</item>
+        <item>アニメ</item>
+        <item>歴史</item>
+    </string-array>
+
+    <string name="spnNumber_prompt">問題数を選択してください</string>
+    <string-array name="spnNumber_items">
+        <item>なし</item>
+        <item>0~10</item>
+        <item>11~20</item>
+        <item>21~30</item>
+        <item>31~40</item>
+        <item>41~50</item>
+        <item>51~60</item>
+        <item>61~70</item>
+        <item>71~80</item>
+        <item>81~90</item>
+        <item>91~100</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
