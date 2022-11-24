@@ -42,8 +42,10 @@ public class selectPackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_pack);
 
         mainApplication=(com.example.quizapp.mainApplication) getApplication();
-        //deleteFile("packData");
-        //mainApplication.testPackDataFileMaker();
+
+//        mainApplication.deleteFile("packData");
+//        mainApplication.testPackDataFileMaker();
+
         vLayout=(LinearLayout) findViewById(R.id.verticalLayout);
 
         //mainApplication.saveFile("packData","1,パック名,20,パック1説明,ジャンル1\n");
