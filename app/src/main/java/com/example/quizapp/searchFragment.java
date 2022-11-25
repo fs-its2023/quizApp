@@ -65,20 +65,17 @@ public class searchFragment extends Fragment {
     public void listUpPack(){
         List<String> lines = mainApplication.getAllList();
         List<String> selectLines = new ArrayList<>();
+
+        index = spinnerNum.indexOf("~");
+        maxQuiz = Integer.parseInt(spinnerNum.substring(index+1,spinnerNum.length()));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
+        minQuiz = Integer.parseInt(spinnerNum.substring(0,index));//spinner1で入力したString型の値（~の前の数字）をint型にしmixQuizに代入
+
         for (int i = 0; i < lines.size(); i++) {
             String[] data = lines.get(i).split(",");
             if (!spinnerGen.equals("なし") && !spinnerGen.equals(data[4])){
                 continue;
             }
-
-            index = spinnerNum.indexOf("~");
-            maxQuiz = 0;
-            minQuiz = 0;
-
             int linesGet = Integer.parseInt(data[2]);//Listからとりだした値（String型）をint型の変数として宣言
-            maxQuiz = Integer.parseInt(spinnerNum.substring(index+1,spinnerNum.length()));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
-            minQuiz = Integer.parseInt(spinnerNum.substring(0,index));//spinner1で入力したString型の値（~の前の数字）をint型にしmixQuizに代入
-
 
             if (!spinnerNum.equals("なし") && (maxQuiz < linesGet || minQuiz > linesGet)) {
                 continue;
