@@ -141,7 +141,6 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
             btnSelectQuiz.setText(lineIdFile[0]);
             btnSelectQuiz.setTextSize(20);
             btnSelectQuiz.setTag("quizSelect" + i);
-            btnSelectQuiz.setHighlightColor(Color.RED);
             btnSelectQuiz.setBackgroundColor(Color.rgb(200,200,200));
             btnSelectQuiz.setOnClickListener(this);
 
