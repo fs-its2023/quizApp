@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class searchFragment extends Fragment {
@@ -33,8 +32,8 @@ public class searchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         Button searchButton = view.findViewById(R.id.searchButton);
         EditText keywordInSub = view.findViewById(R.id.keywordIn);
-        Spinner sp1 = (Spinner) view.findViewById(R.id.spinner1);
-        Spinner sp2 = (Spinner) view.findViewById(R.id.spinner2);
+        Spinner spGen = (Spinner) view.findViewById(R.id.spinnerGen);
+        Spinner spNum = (Spinner) view.findViewById(R.id.spinnerNum);
 
         selectPackActivity=(com.example.quizapp.selectPackActivity) getActivity();
         mainApplication= (com.example.quizapp.mainApplication) selectPackActivity.getMainApplication();
@@ -45,8 +44,8 @@ public class searchFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View view) {
                 keyword = keywordInSub.getText().toString();//タイトルのテキストエディットに入力された値を取得
-                spinnerNum = sp1.getSelectedItem().toString();//スピナーで選択された値を取得
-                spinnerGen = sp2.getSelectedItem().toString();//スピナーで選択された値を取得
+                spinnerGen = spGen.getSelectedItem().toString();//スピナーで選択された値を取得
+                spinnerNum = spNum.getSelectedItem().toString();//スピナーで選択された値を取得
                 if (keyword.equals("") && spinnerNum.equals("なし") && spinnerGen.equals("なし")) {
                     Toast.makeText(view.getContext(), "欄に入力してください", Toast.LENGTH_SHORT).show();
                     //「欄に入力してください」というポップアップを表示
@@ -72,13 +71,13 @@ public class searchFragment extends Fragment {
                 continue;
             }
 
-            index = data[2].indexOf("~");
+            index = spinnerNum.indexOf("~");
             maxQuiz = 0;
             minQuiz = 0;
 
             int linesGet = Integer.parseInt(data[2]);//Listからとりだした値（String型）をint型の変数として宣言
-            maxQuiz = Integer.parseInt(spinnerNum.substring(index+1));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
-            minQuiz = Integer.parseInt(spinnerNum.substring(index-1));//spinner1で入力したString型の値（~の前の数字）をint型にしmixQuizに代入
+            maxQuiz = Integer.parseInt(spinnerNum.substring(index+1,spinnerNum.length()));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
+            minQuiz = Integer.parseInt(spinnerNum.substring(0,index));//spinner1で入力したString型の値（~の前の数字）をint型にしmixQuizに代入
 
 
             if (!spinnerNum.equals("なし") && (maxQuiz < linesGet || minQuiz > linesGet)) {
@@ -93,7 +92,8 @@ public class searchFragment extends Fragment {
         }
 
         if (selectLines == null || selectLines.size() == 0){
-            Toast.makeText(view.getContext(), "該当する検索結果がありません", Toast.LENGTH_LONG).show();
+           // Toast.makeText(view.getContext(), "該当する検索結果がありません", Toast.LENGTH_LONG).show();
+            Toast.makeText(selectPackActivity, "該当する検索結果がありません", Toast.LENGTH_LONG).show();
         }else {
             mainApplication.setSelectList(selectLines);
             //getFragmentManager().beginTransaction().remove(this).commit();
