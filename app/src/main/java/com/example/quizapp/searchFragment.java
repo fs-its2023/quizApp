@@ -54,7 +54,7 @@ public class searchFragment extends Fragment {
                 } else {
 
                     /*listUpPackを起動*/
-                    listUpPack(view);
+                    listUpPack();
 
                 }
             }
@@ -62,7 +62,7 @@ public class searchFragment extends Fragment {
         return view;
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void listUpPack(View view){
+    public void listUpPack(){
         List<String> lines = mainApplication.getAllList();
         List<String> selectLines = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
@@ -92,11 +92,9 @@ public class searchFragment extends Fragment {
         }
 
         if (selectLines == null || selectLines.size() == 0){
-           // Toast.makeText(view.getContext(), "該当する検索結果がありません", Toast.LENGTH_LONG).show();
             Toast.makeText(selectPackActivity, "該当する検索結果がありません", Toast.LENGTH_LONG).show();
         }else {
             mainApplication.setSelectList(selectLines);
-            //getFragmentManager().beginTransaction().remove(this).commit();
             selectPackActivity.reload();
         }
 
