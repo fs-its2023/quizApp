@@ -61,15 +61,20 @@ public class searchFragment extends Fragment {
         });
         return view;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void listUpPack(){
         List<String> lines = mainApplication.getAllList();
         List<String> selectLines = new ArrayList<>();
 
-        index = spinnerNum.indexOf("~");
-        maxQuiz = Integer.parseInt(spinnerNum.substring(index+1,spinnerNum.length()));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
-        minQuiz = Integer.parseInt(spinnerNum.substring(0,index));//spinner1で入力したString型の値（~の前の数字）をint型にしmixQuizに代入
-
+        if(spinnerNum.equals("なし")){
+            maxQuiz = 0;
+            minQuiz = 100;
+        }else{
+            index = spinnerNum.indexOf("~");
+            maxQuiz = Integer.parseInt(spinnerNum.substring(index+1,spinnerNum.length()));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
+            minQuiz = Integer.parseInt(spinnerNum.substring(0,index));//spinner1で入力したString型の値（~の前の数字）をint型にしmixQuizに代入
+        }
         for (int i = 0; i < lines.size(); i++) {
             String[] data = lines.get(i).split(",");
             if (!spinnerGen.equals("なし") && !spinnerGen.equals(data[4])){
