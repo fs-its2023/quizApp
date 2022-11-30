@@ -60,7 +60,8 @@ public class resultFragment extends Fragment {
 
 
         //Applicationクラスにあるパックの情報をリストに代入
-        allList= mainApplication.readFileAsList(mainApplication.PACK_DATA_FILE_NAME);
+        //allList= mainApplication.readFileAsList(mainApplication.PACK_DATA_FILE_NAME);
+        allList=mainApplication.getAllList();
 
         //配列に値を代入
         setListData(allList);
