@@ -118,6 +118,7 @@ public class selectPackActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             String[] selectListData=selectList.get((int)view.getTag()).split(",");
+            //mainApplication.setPackNum((int)view.getTag()); 単体テストで修正する箇所、コメントアウトを解除すればおｋ
             mainApplication.setPackId(selectListData[0]);
             mainApplication.setMustSelectPack(false);
             /*makePackActivityから来ていた場合*/
