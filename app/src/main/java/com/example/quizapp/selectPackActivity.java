@@ -139,7 +139,6 @@ public class selectPackActivity extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View view) {
-            int x=(int)view.getTag();
             String[] selectListData;
             if(reverseChecker){
                 selectListData=selectList.get(99-(int)view.getTag()).split(",");
