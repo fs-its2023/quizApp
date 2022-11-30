@@ -21,6 +21,8 @@ import android.media.MediaPlayer;
 import android.util.Log;
 import android.content.res.AssetFileDescriptor;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
         // アプリ開始時に音楽を再生
         audioPlay();
+        /*Switchがクリックされた時の処理*/
+        Switch sw=(Switch) findViewById(R.id.switch1);
+        sw.setOnCheckedChangeListener(this::onCheckedChanged);
+
 
         //activity遷移ボタン
         /*Button button0 = findViewById(R.id.buttonTakeQuiz);
@@ -72,20 +78,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //--- ミュート処理
-    public void onClickMute() {
-        @SuppressLint("UseSwitchCompatOrMaterialCode")
-        Switch sw = findViewById(R.id.switch1);
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // スイッチ(トグル)がオンの時
-                    audioStop();
-                } else {
-                    // スイッチ(トグル)がオフの時　
-                    audioPlay();
-                }
-            }
-        });
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            // スイッチ(トグル)がオンの時
+            audioStop();
+        } else {
+            // スイッチ(トグル)がオフの時　
+            audioPlay();
+        }
     }
 
     // MediaPlayer関係
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 再生する
+        mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
         // 終了を検知するリスナー

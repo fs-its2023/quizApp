@@ -34,6 +34,7 @@ public class selectPackActivity extends AppCompatActivity {
     int pageCurrent;
     int pageAll;
     LinearLayout vLayout;
+    boolean reverseChecker=false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -56,6 +57,7 @@ public class selectPackActivity extends AppCompatActivity {
             /*selectListに値を入れ、新着順に変更*/
             mainApplication.deleteSelectList();
             Collections.reverse(allList);
+            this.reverseChecker=true;
             mainApplication.setSelectList(allList);
         }
 
@@ -88,24 +90,44 @@ public class selectPackActivity extends AppCompatActivity {
         TextView page=findViewById(R.id.pageNum);
         page.setText(""+pageCurrent+"ページ/"+pageAll+"ページ");
 
-        /*パックの情報を出力する（修正必要）*/
+        /*パックの情報を出力する*/
         vLayout.removeAllViews();
-        for(int i=10*pageCurrent-10;i<10*pageCurrent;i++){
+        if(reverseChecker){
+            for(int i=10*pageCurrent-10;i<10*pageCurrent;i++){
 
-            if(i>=selectList.size()){
-                break;
+                if(i>=selectList.size()){
+                    break;
+                }
+                String[] listData=selectList.get(i).split(",");
+                Button packButton=new Button(this);
+                packButton.setText(listData[3]);
+                packButton.setTextSize(20);
+                packButton.setTag(selectList.size()-1-i);
+                packButton.setOnClickListener(onClickSetPackId);
+                LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                packButton.setLayoutParams(buttonLayoutParams);
+                vLayout.addView(packButton);
             }
-            String[] listData=selectList.get(i).split(",");
-            Button packButton=new Button(this);
-            packButton.setText(listData[3]);
-            packButton.setTextSize(20);
-            packButton.setTag(i);
-            packButton.setOnClickListener(onClickSetPackId);
-            LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT);
-            packButton.setLayoutParams(buttonLayoutParams);
-            vLayout.addView(packButton);
+        }else{
+            for(int i=10*pageCurrent-10;i<10*pageCurrent;i++){
+
+                if(i>=selectList.size()){
+                    break;
+                }
+                String[] listData=selectList.get(i).split(",");
+                Button packButton=new Button(this);
+                packButton.setText(listData[3]);
+                packButton.setTextSize(20);
+                packButton.setTag(i);
+                packButton.setOnClickListener(onClickSetPackId);
+                LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                packButton.setLayoutParams(buttonLayoutParams);
+                vLayout.addView(packButton);
+            }
         }
     }
 
@@ -117,7 +139,15 @@ public class selectPackActivity extends AppCompatActivity {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View view) {
-            String[] selectListData=selectList.get((int)view.getTag()).split(",");
+            String[] selectListData;
+            if(reverseChecker){
+                selectListData=selectList.get(99-(int)view.getTag()).split(",");
+                reverseChecker=false;
+            }else{
+                selectListData=selectList.get((int)view.getTag()).split(",");
+            }
+            mainApplication.setPackNum((int)view.getTag());
+            mainApplication.setQuizNum(Integer.parseInt(selectListData[2]));
             mainApplication.setPackId(selectListData[0]);
             mainApplication.setMustSelectPack(false);
             /*makePackActivityから来ていた場合*/
