@@ -88,6 +88,9 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         this.btnAddQuiz.setTag("addQuiz");
         this.btnAddQuiz.setOnClickListener(this);
 
+        /*
+        * 削除確認ダイアログ
+         */
         this.deleteMsgBox = view.findViewById(R.id.deleteMsgBox);
         this.deleteMsgBox.setBackgroundColor(Color.rgb(220,220,220));
         this.btnDeleteOk = view.findViewById(R.id.btnDeleteOk);

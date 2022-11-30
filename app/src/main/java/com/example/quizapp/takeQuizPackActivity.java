@@ -79,7 +79,6 @@ public class takeQuizPackActivity extends AppCompatActivity {
          */
         mainApplication.setQuizNum(0);
         this.correctNum = 0;
-        this.mainApp.setPackId("0000"); //仮
         this.lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
 
         /*
