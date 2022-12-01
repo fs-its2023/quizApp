@@ -141,7 +141,7 @@ public class selectPackActivity extends AppCompatActivity {
         public void onClick(View view) {
             String[] selectListData;
             if(reverseChecker){
-                selectListData=selectList.get(99-(int)view.getTag()).split(",");
+                selectListData=selectList.get((selectList.size()-1)-(int)view.getTag()).split(",");
                 reverseChecker=false;
             }else{
                 selectListData=selectList.get((int)view.getTag()).split(",");
