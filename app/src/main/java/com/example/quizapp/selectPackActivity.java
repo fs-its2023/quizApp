@@ -188,6 +188,7 @@ public class selectPackActivity extends AppCompatActivity {
     *検索ボタンが押された時の処理
      */
     public void showSearchFragment(View view){
+        reverseChecker=false;
         /*レイアウトの上のボタンをすべて削除*/
         vLayout.removeAllViews();
         /*Activity上にある”検索ボタン”、”ページを変更するボタン”、”現在ページと全ページを表示しているテキストの削除”*/
