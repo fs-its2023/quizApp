@@ -95,20 +95,20 @@ public class editQuizFragment extends Fragment{
 //        makePackActivity.setPackIntroduction("解説しよう！");
 
         //テスト用,追加の場合
-        isMakeNewQuiz =false;
+        /*isMakeNewQuiz =false;
         List<String> testAllList = mainApplication.getAllList();
         String[] testStrQuizData = testAllList.get(0).split(",");
         List<String> testQuizData = mainApplication.readFileAsList(testStrQuizData[0]);
         makePackActivity.setQuizData(testQuizData);
         mainApplication.setQuizNum(Integer.parseInt(testStrQuizData[2])-1);
         mainApplication.setPackId(testStrQuizData[0]);
-        makePackActivity.setPackTitle(testStrQuizData[1]);
+        makePackActivity.setPackTitle(testStrQuizData[1]);*/
 
 //        新規だった場合。パックタイトルを表示する、packIdの新規作成を行う
         if(isMakeNewQuiz){
             //packIdの新規作成 ファイル最終行のId+1のIdを作成する
             List<String> allList = mainApplication.getAllList();
-            String[] strLastRowAllList = allList.get(allList.size()).split(",");
+            String[] strLastRowAllList = allList.get(allList.size()-1).split(",");
             String newPackId =String.format("%04d",Integer.parseInt(strLastRowAllList[0])+1);
             mainApplication.setPackId(newPackId);
 
