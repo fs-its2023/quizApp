@@ -126,7 +126,8 @@ public class editQuizFragment extends Fragment{
         if(!isMakeNewQuiz&&quizData.size() >= quizNum) {
             //保存されている情報を取り出す
             String packTitle = makePackActivity.getPackTitle();
-            quizData = makePackActivity.getQuizData();
+            String packId = mainApplication.getPackId();
+            quizData = mainApplication.readFileAsList(packId);
 
             String strQuizData= quizData.get(quizNum);
             String[] arrayQuizData= strQuizData.split(",");
@@ -144,7 +145,8 @@ public class editQuizFragment extends Fragment{
 
         //追加だった場合,クイズタイトルだけ表示
         if(!isMakeNewQuiz&&quizData.size() < quizNum){
-            quizData = makePackActivity.getQuizData();
+            String packId = mainApplication.getPackId();
+            quizData = mainApplication.readFileAsList(packId);
             String packTitle = makePackActivity.getPackTitle();
             txtPackTitle.setText(packTitle);
             //あとは新規作成と同じ処理で大丈夫
