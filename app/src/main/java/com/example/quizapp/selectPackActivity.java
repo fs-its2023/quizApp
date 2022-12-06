@@ -51,7 +51,7 @@ public class selectPackActivity extends AppCompatActivity {
 
         //mainApplication.saveFile("packData","1,パック名,20,パック1説明,ジャンル1\n");
 
-        //selectlistが空の場合のみ新着順表示　(Activity呼び出し前にリストを初期化
+        /*selectlistが空の場合のみ新着順表示　(Activity呼び出し前にリストを初期化*/
         if(mainApplication.getSelectList().size() == 0){
             allList= mainApplication.getAllList();
             /*selectListに値を入れ、新着順に変更*/
@@ -82,9 +82,6 @@ public class selectPackActivity extends AppCompatActivity {
         /*selectListの取得*/
         selectList=mainApplication.getSelectList();
         pageAll=((selectList.size()-1)/10)+1;
-
-        /*レイアウトの取得
-        LinearLayout vLayout=(LinearLayout) findViewById(R.id.verticalLayout);*/
 
         /*ページ数の表示*/
         TextView page=findViewById(R.id.pageNum);
@@ -141,7 +138,7 @@ public class selectPackActivity extends AppCompatActivity {
         public void onClick(View view) {
             String[] selectListData;
             if(reverseChecker){
-                selectListData=selectList.get(99-(int)view.getTag()).split(",");
+                selectListData=selectList.get((selectList.size()-1)-(int)view.getTag()).split(",");
                 reverseChecker=false;
             }else{
                 selectListData=selectList.get((int)view.getTag()).split(",");
@@ -191,6 +188,7 @@ public class selectPackActivity extends AppCompatActivity {
     *検索ボタンが押された時の処理
      */
     public void showSearchFragment(View view){
+        reverseChecker=false;
         /*レイアウトの上のボタンをすべて削除*/
         vLayout.removeAllViews();
         /*Activity上にある”検索ボタン”、”ページを変更するボタン”、”現在ページと全ページを表示しているテキストの削除”*/
@@ -202,7 +200,7 @@ public class selectPackActivity extends AppCompatActivity {
         backPage.setVisibility(View.INVISIBLE);
         nextPage.setVisibility(View.INVISIBLE);
         pageNum.setVisibility(View.INVISIBLE);
-        //searchFragmentの表示
+        /*searchFragmentの表示*/
         searchFragment searchFragment=new searchFragment();
         FragmentTransaction transaction;
         transaction = getSupportFragmentManager().beginTransaction();

@@ -20,43 +20,43 @@
         app:layout_constraintVertical_bias="0.049"
         tools:ignore="OnClick" />
 
-    <TextView
-        android:id="@+id/problemStatement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="問題文"
-        android:textSize="30dp"
+    <ScrollView
+        android:layout_width="394dp"
+        android:layout_height="595dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.211" />
+        app:layout_constraintVertical_bias="0.992">
 
-    <TextView
-        android:id="@+id/explanation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="解説"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/problemStatement"
-        app:layout_constraintVertical_bias="0.143" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/correctAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="正解の答え"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/explanation"
-        app:layout_constraintVertical_bias="0.178" />
+            <TextView
+                android:id="@+id/problemStatement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="問題文"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/explanation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="解説"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/correctAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正解の答え"
+                android:textSize="25dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
