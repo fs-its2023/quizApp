@@ -281,7 +281,7 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
 
         }else if(view.getTag().toString().equals("addQuiz") && this.isEnabled){
             /*
-             * クイズ編集ボタン
+             * クイズ追加ボタン
              */
             this.mainApp.setQuizNum(this.mpActivity.getQuizTotalNum());
 
