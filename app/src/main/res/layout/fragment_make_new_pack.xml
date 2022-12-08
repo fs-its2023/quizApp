@@ -6,57 +6,72 @@
     android:layout_height="match_parent">
 
 
-    <EditText
-        android:id="@+id/editTxtIncorrectOption3"
-        android:layout_width="235dp"
-        android:layout_height="70dp"
-        android:ems="10"
-        android:hint="パックのタイトルを入力してください"
-        android:inputType="textPersonName"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.251" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/packIntroduction"
-        android:layout_width="240dp"
-        android:layout_height="85dp"
-        android:ems="10"
-        android:hint="パックの説明文を入力してください"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416" />
+        <EditText
+            android:id="@+id/editTxtIncorrectOption3"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:ems="10"
+            android:hint="パックのタイトルを入力してください"
+            android:inputType="textMultiLine"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"/>
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="138dp"
-        android:layout_height="55dp"
-        android:text="決定"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.937" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="401dp"
-        android:layout_height="64dp"
-        android:entries="@array/spnOs_items"
-        android:minHeight="32dp"
-        android:prompt="@string/spnOs_prompt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.596" />
+        <EditText
+            android:id="@+id/packIntroduction"
+            android:layout_width="350dp"
+            android:layout_height="300dp"
+            android:ems="10"
+            android:hint="パックの説明文を入力してください"
+            android:inputType="textMultiLine"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"/>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="350dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="30dp"
+            android:entries="@array/spnOs_items"
+            android:minHeight="32dp"
+            android:prompt="@string/spnOs_prompt"
+            android:layout_marginTop="30dp"/>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:text="決定"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="30dp"/>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
