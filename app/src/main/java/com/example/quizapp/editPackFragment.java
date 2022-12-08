@@ -192,21 +192,39 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void deleteQuiz(){
-        //選択されたクイズ番号を降順ソート
-        Collections.sort(this.selectedQuizzes, Collections.reverseOrder());
-
-        //ファイルから該当行削除
-        List<String> lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
-        for (int i:this.selectedQuizzes) {
-            lstPackIdFile.remove(i);
-        }
-        this.mainApp.clearFile(this.mainApp.getPackId());
-        this.mainApp.saveFileByList(this.mainApp.getPackId(), lstPackIdFile);
-
-        if(lstPackIdFile.size() == 0){
-            //activity再起動
-            this.mpActivity.reload();
+        
+        if(this.selectedQuizzes.size() == this.mpActivity.getQuizTotalNum()){
+            this.deletePack();
         }else{
+            //選択されたクイズ番号を降順ソート
+            Collections.sort(this.selectedQuizzes, Collections.reverseOrder());
+
+            //パックIDファイルから該当行削除
+            List<String> lstPackIdFile = this.mainApp.readFileAsList(this.mainApp.getPackId());
+            for (int i:this.selectedQuizzes) {
+                lstPackIdFile.remove(i);
+            }
+            this.mainApp.clearFile(this.mainApp.getPackId());
+            this.mainApp.saveFileByList(this.mainApp.getPackId(), lstPackIdFile);
+
+            //パックデータファイルの問題数修正
+            List<String> lstFileData = this.mainApp.readFileAsList(this.mainApp.PACK_DATA_FILE_NAME);
+            String[] lineArray;
+            Integer numOfQuiz;
+
+            for(int i = 0; i < lstFileData.size(); i++){
+                lineArray = lstFileData.get(i).split(",");
+                if(lineArray[0].equals(this.mainApp.getPackId())){
+                    numOfQuiz = Integer.parseInt(lineArray[2]);
+                    numOfQuiz -= this.selectedQuizzes.size();
+                    lineArray[2] = numOfQuiz.toString();
+                    lstFileData.set(i, lineArray[0] + "," + lineArray[1] + "," + lineArray[2] + "," + lineArray[3] + "," + lineArray[4]);
+                    break;
+                }
+            }
+            this.mainApp.clearFile(this.mainApp.PACK_DATA_FILE_NAME);
+            this.mainApp.saveFileByList(this.mainApp.PACK_DATA_FILE_NAME, lstFileData);
+
             //クイズリスト再読み込み
             this.reloadFragment();
         }
