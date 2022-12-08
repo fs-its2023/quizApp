@@ -3,16 +3,28 @@
     <string name="spnOs_prompt">ジャンルを選択してください</string>
     <string-array name="spnOs_items">
         <item>なし</item>
-        <item>動物</item>
-        <item>アニメ</item>
-        <item>歴史</item>
+        <item>自然科学</item>
+        <item>語学・文学</item>
+        <item>歴史・地理・社会</item>
+        <item>漫画・アニメ・ゲーム</item>
+        <item>エンターテイメント</item>
+        <item>スポーツ</item>
+        <item>グルメ・生活</item>
+        <item>趣味・雑学</item>
+        <item>その他</item>
     </string-array>
     <string name="spnGenre_prompt">ジャンルを選択してください</string>
     <string-array name="spnGenre_items">
         <item>なし</item>
-        <item>動物</item>
-        <item>アニメ</item>
-        <item>歴史</item>
+        <item>自然科学</item>
+        <item>語学・文学</item>
+        <item>歴史・地理・社会</item>
+        <item>漫画・アニメ・ゲーム</item>
+        <item>エンターテイメント</item>
+        <item>スポーツ</item>
+        <item>グルメ・生活</item>
+        <item>趣味・雑学</item>
+        <item>その他</item>
     </string-array>
 
     <string name="spnNumber_prompt">問題数を選択してください</string>

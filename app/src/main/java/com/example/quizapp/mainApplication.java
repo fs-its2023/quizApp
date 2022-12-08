@@ -30,7 +30,7 @@ public class mainApplication extends Application {
 
     //テスト用フィールド
     final int MAX_QUIZ_TOTAL_NUM = 30;
-    final int GENLE_TYPE_NUM = 3;
+    final int GENLE_TYPE_NUM = 9;
     final int MAX_PACK_TOTAL_NUM = 100;
     Random rand = new Random();
 
@@ -41,7 +41,7 @@ public class mainApplication extends Application {
         String testPackData ="";
         String testPackId;
         String testPackIntroduction = "パックの説明文";
-        String[] testPackGenre = {"動物","歴史","アニメ"};
+        String[] testPackGenre = {"自然科学","語学・文学","歴史・地理・社会","漫画・アニメ・ゲーム","エンターテイメント","スポーツ","グルメ・生活","趣味・雑学","その他"};
         int randomQuizTotalNum ;
         int ranomGenre;
 
