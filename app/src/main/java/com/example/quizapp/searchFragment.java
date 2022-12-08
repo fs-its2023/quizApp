@@ -47,7 +47,7 @@ public class searchFragment extends Fragment {
                 spinnerGen = spGen.getSelectedItem().toString();//スピナーで選択された値を取得
                 spinnerNum = spNum.getSelectedItem().toString();//スピナーで選択された値を取得
                 if (keyword.equals("") && spinnerNum.equals("なし") && spinnerGen.equals("なし")) {
-                    Toast.makeText(view.getContext(), "欄に入力してください", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "検索条件を入力してください", Toast.LENGTH_SHORT).show();
                     //「欄に入力してください」というポップアップを表示
                     //×を押してポップアップが消える
 
