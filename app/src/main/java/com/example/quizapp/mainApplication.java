@@ -30,7 +30,7 @@ public class mainApplication extends Application {
 
     //テスト用フィールド
     final int MAX_QUIZ_TOTAL_NUM = 30;
-    final int GENLE_TYPE_NUM = 10;
+    final int GENLE_TYPE_NUM = 3;
     final int MAX_PACK_TOTAL_NUM = 100;
     Random rand = new Random();
 
@@ -41,15 +41,15 @@ public class mainApplication extends Application {
         String testPackData ="";
         String testPackId;
         String testPackIntroduction = "パックの説明文";
-        String testPackGenre = "パックのジャンル";
+        String[] testPackGenre = {"動物","歴史","アニメ"};
         int randomQuizTotalNum ;
         int ranomGenre;
 
         for(int i = 0 ;i<MAX_PACK_TOTAL_NUM;i++){
             testPackId = String.format("%04d",i);
             randomQuizTotalNum = rand.nextInt(MAX_QUIZ_TOTAL_NUM)+1;
-            ranomGenre = rand.nextInt(GENLE_TYPE_NUM)+1;
-            testPackData = ""+testPackId+",パック名"+i+","+randomQuizTotalNum+","+testPackIntroduction+i+","+testPackGenre+ranomGenre+"\n";
+            ranomGenre = rand.nextInt(GENLE_TYPE_NUM);
+            testPackData = ""+testPackId+",パック名"+i+","+randomQuizTotalNum+","+testPackIntroduction+i+","+testPackGenre[ranomGenre]+"\n";
             saveFile(PACK_DATA_FILE_NAME,testPackData);
         }
         testQuizDataFileMaker();
