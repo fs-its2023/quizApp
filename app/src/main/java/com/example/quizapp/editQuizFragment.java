@@ -121,13 +121,13 @@ public class editQuizFragment extends Fragment{
         }
 
         quizNum = mainApplication.getQuizNum();
+        String packId = mainApplication.getPackId();
+        quizData = mainApplication.readFileAsList(packId);
 
         //編集だった場合。入力欄に、保存されていた情報を表示する
         if(!isMakeNewQuiz&&quizData.size() >= quizNum) {
             //保存されている情報を取り出す
             String packTitle = makePackActivity.getPackTitle();
-            String packId = mainApplication.getPackId();
-            quizData = mainApplication.readFileAsList(packId);
 
             String strQuizData= quizData.get(quizNum);
             String[] arrayQuizData= strQuizData.split(",");
@@ -145,8 +145,6 @@ public class editQuizFragment extends Fragment{
 
         //追加だった場合,クイズタイトルだけ表示
         if(!isMakeNewQuiz&&quizData.size() < quizNum){
-            String packId = mainApplication.getPackId();
-            quizData = mainApplication.readFileAsList(packId);
             String packTitle = makePackActivity.getPackTitle();
             txtPackTitle.setText(packTitle);
             //あとは新規作成と同じ処理で大丈夫
