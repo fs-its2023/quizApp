@@ -68,8 +68,8 @@ public class searchFragment extends Fragment {
         List<String> selectLines = new ArrayList<>();
 
         if(spinnerNum.equals("なし")){
-            maxQuiz = 0;
-            minQuiz = 100;
+            maxQuiz = 100;
+            minQuiz = 0;
         }else{
             index = spinnerNum.indexOf("~");
             maxQuiz = Integer.parseInt(spinnerNum.substring(index+1,spinnerNum.length()));//spinner1で入力したString型の値（~の後の数字）をint型にしmaxQuizに代入
