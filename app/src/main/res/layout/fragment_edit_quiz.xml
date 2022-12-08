@@ -25,7 +25,7 @@
                 android:id="@+id/txtPackTitle"
                 android:layout_width="360dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="25dp"
                 android:text="タイトル名を表示する" />
 
@@ -34,11 +34,11 @@
                 android:layout_width="360dp"
                 android:layout_height="160dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:ems="10"
                 android:hint="問題文を入力してください"
-                android:inputType="textPersonName" />
+                android:inputType="textMultiLine" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,10 +50,10 @@
                     android:layout_width="173dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:hint="正答を入力してください"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine"
                     android:textSize="14sp" />
 
                 <EditText
@@ -61,11 +61,11 @@
                     android:layout_width="173dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:ems="10"
                     android:hint="誤答を入力してください"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -79,10 +79,10 @@
                     android:layout_width="173dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:hint="誤答を入力してください"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine"
                     android:textSize="14sp" />
 
                 <EditText
@@ -90,11 +90,11 @@
                     android:layout_width="173dp"
                     android:layout_height="66dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:ems="10"
                     android:hint="誤答を入力してください"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -103,11 +103,11 @@
                 android:layout_width="360dp"
                 android:layout_height="162dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:ems="10"
                 android:hint="問題の解説を入力してください"
-                android:inputType="textPersonName" />
+                android:inputType="textMultiLine" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,7 +119,8 @@
                     android:layout_width="150dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
                     android:onClick="onclickSaveAndExit"
                     android:text="保存して終了" />
@@ -128,12 +129,13 @@
                     android:id="@+id/btnSaveAndNext"
                     android:layout_width="150dp"
                     android:layout_height="60dp"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="20dp"
                     android:onClick="onClickSaveAndNext"
                     android:text="保存して         次の問題を作成" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
