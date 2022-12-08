@@ -8,149 +8,135 @@
     tools:layout_editor_absoluteY="-6dp"
     tools:context=".makePackActivity">
 
-    <EditText
-        android:id="@+id/editTxtQuizExplanation"
-        android:layout_width="360dp"
-        android:layout_height="162dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="問題の解説を入力してください"
-        android:inputType="textPersonName"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtIncorrectOption3"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editTxtIncorrectOption3"
-        android:layout_width="173dp"
-        android:layout_height="66dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="誤答を入力してください"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.936"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtIncorrectOption1"
-        app:layout_constraintVertical_bias="0.049" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/editTxtIncorrectOption2"
-        android:layout_width="173dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
-        android:ems="10"
-        android:hint="誤答を入力してください"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtCorrectOption"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/txtPackTitle"
+                android:layout_width="360dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="25dp"
+                android:text="タイトル名を表示する" />
 
-    <EditText
-        android:id="@+id/editTxtIncorrectOption1"
-        android:layout_width="173dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="誤答を入力してください"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.932"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtQuizSentence"
-        app:layout_constraintVertical_bias="0.0" />
+            <EditText
+                android:id="@+id/editTxtQuizSentence"
+                android:layout_width="360dp"
+                android:layout_height="160dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="10dp"
+                android:ems="10"
+                android:hint="問題文を入力してください"
+                android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editTxtCorrectOption"
-        android:layout_width="173dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="正答を入力してください"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtQuizSentence"
-        app:layout_constraintVertical_bias="0.0" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editTxtQuizSentence"
-        android:layout_width="360dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:hint="問題文を入力してください"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPackTitle"
-        app:layout_constraintVertical_bias="0.035" />
+                <EditText
+                    android:id="@+id/editTxtCorrectOption"
+                    android:layout_width="173dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="18dp"
+                    android:ems="10"
+                    android:hint="正答を入力してください"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/txtPackTitle"
-        android:layout_width="360dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:text="タイトル名を表示する"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+                <EditText
+                    android:id="@+id/editTxtIncorrectOption1"
+                    android:layout_width="173dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="10dp"
+                    android:ems="10"
+                    android:hint="誤答を入力してください"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSaveAndExit"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="20dp"
-        android:onClick="onclickSaveAndExit"
-        android:text="保存して終了"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtQuizExplanation"
-        app:layout_constraintVertical_bias="0.586" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnSaveAndNext"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:onClick="onClickSaveAndNext"
-        android:text="保存して　　　次の問題を作成"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTxtQuizExplanation"
-        app:layout_constraintVertical_bias="0.586" />
+                <EditText
+                    android:id="@+id/editTxtIncorrectOption2"
+                    android:layout_width="173dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="14dp"
+                    android:ems="10"
+                    android:hint="誤答を入力してください"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
 
+                <EditText
+                    android:id="@+id/editTxtIncorrectOption3"
+                    android:layout_width="173dp"
+                    android:layout_height="66dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="10dp"
+                    android:ems="10"
+                    android:hint="誤答を入力してください"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editTxtQuizExplanation"
+                android:layout_width="360dp"
+                android:layout_height="162dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="10dp"
+                android:ems="10"
+                android:hint="問題の解説を入力してください"
+                android:inputType="textPersonName" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSaveAndExit"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginBottom="20dp"
+                    android:onClick="onclickSaveAndExit"
+                    android:text="保存して終了" />
+
+                <Button
+                    android:id="@+id/btnSaveAndNext"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:onClick="onClickSaveAndNext"
+                    android:text="保存して         次の問題を作成" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
