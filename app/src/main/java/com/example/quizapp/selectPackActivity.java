@@ -212,7 +212,10 @@ public class selectPackActivity extends AppCompatActivity {
     /*
     *前の画面に戻る
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void backMenu(View view){
+        mainApplication.setFromMakePackActivity(false);
+        mainApplication.setFromTakeQuizPackActivity(false);
         finish();
     }
 
