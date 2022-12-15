@@ -96,6 +96,7 @@ public class showExplanationFragment extends Fragment {
     /*
     *Viewの生成をするメソッド
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("ResourceType")
     public void createView(){
         problemStatement.setText("問題文\n"+ quizData[0]);
@@ -107,8 +108,24 @@ public class showExplanationFragment extends Fragment {
     /*
     *ボタンが押された時の処理
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onClick(View v){
-        getFragmentManager().popBackStack();
+        if(this.quizList.size()-1>this.quizNum){
+            this.mainApplication.setQuizNum(this.quizNum + 1);
+            getFragmentManager().popBackStack();
+        }else {
+            // フラグメントマネージャーの取得
+            //FragmentManager manager = getFragmentManager(); // アクティビティではgetSupportFragmentManager()?
+            FragmentManager manager =getParentFragmentManager();
+            // フラグメントトランザクションの開始
+            FragmentTransaction transaction = manager.beginTransaction();
+            // レイアウトをfragmentに置き換え（追加）
+            transaction.replace(R.id.container, new resultFragment());
+            // 置き換えのトランザクションをバックスタックに保存する
+            transaction.addToBackStack(null);
+            // フラグメントトランザクションをコミット
+            transaction.commit();
+        }
     }
 
     /*
