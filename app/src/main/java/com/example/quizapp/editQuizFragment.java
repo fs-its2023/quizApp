@@ -129,7 +129,7 @@ public class editQuizFragment extends Fragment{
             //保存されている情報を取り出す
             String packTitle = makePackActivity.getPackTitle();
 
-            String strQuizData= quizData.get(quizNum);
+            String strQuizData= quizData.get(quizNum-1);
             String[] arrayQuizData= strQuizData.split(",");
             quizTotalNum = quizData.size();
 
@@ -269,13 +269,13 @@ public class editQuizFragment extends Fragment{
         String packId = mainApplication.getPackId();
         //新規だった場合。パック情報をpackData.csvの最終行に追加
         if(quizData.size()==1){
-            String packTitle = makePackActivity.getPackTitle();
-            String packIntroduction = makePackActivity.getPackIntroduction();
-            String packGenre = makePackActivity.getPackGenre();
-            quizTotalNum = quizData.size();
+                String packTitle = makePackActivity.getPackTitle();
+                String packIntroduction = makePackActivity.getPackIntroduction();
+                String packGenre = makePackActivity.getPackGenre();
+                quizTotalNum = quizData.size();
 
-            String newPackData =packId+","+packTitle+","+quizTotalNum+","+packIntroduction+","+packGenre+"\n";
-            mainApplication.saveFile(mainApplication.PACK_DATA_FILE_NAME,newPackData);
+                String newPackData = packId + "," + packTitle + "," + quizTotalNum + "," + packIntroduction + "," + packGenre + "\n";
+                mainApplication.saveFile(mainApplication.PACK_DATA_FILE_NAME, newPackData);
         }
         //編集だった場合。パックリストを取得、合計クイズ数を変更して再度保存
         if(quizData.size()>1){

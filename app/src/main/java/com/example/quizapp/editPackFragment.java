@@ -149,8 +149,7 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
 
             //ボタンの幅、高さの設定
             LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    120);
+                    LinearLayout.LayoutParams.MATCH_PARENT, 120);
             btnSelectQuiz.setLayoutParams(buttonLayoutParams);
             scrollLayout.addView(btnSelectQuiz);
             space = new TextView(this.mpActivity);
@@ -237,7 +236,9 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
         ft.commit();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void editQuiz(){
+        mainApp.setQuizNum(mainApp.getQuizNum()+1);
         FragmentManager fm = getParentFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.addToBackStack(null);
