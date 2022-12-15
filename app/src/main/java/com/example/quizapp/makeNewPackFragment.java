@@ -58,20 +58,24 @@ public class makeNewPackFragment extends Fragment {
 
                 /*スピナーで選択された値を取得*/
                 String packGenre = sp.getSelectedItem().toString();
-
-                if(packTitle.equals("")||packIntroduction.equals("")||packGenre.equals("なし")){
-                    /*「すべての欄に入力してください」というポップアップを表示*/
-                    Toast.makeText(view.getContext(), "すべての欄に入力してください", Toast.LENGTH_SHORT).show();
+                if(packTitle.contains(",")||packIntroduction.contains(",")){
+                    Toast.makeText(view.getContext(), "使用できない文字が含まれています", Toast.LENGTH_SHORT).show();
                 }else{
+                    if(packTitle.equals("")||packIntroduction.equals("")||packGenre.equals("なし")){
+                        /*「すべての欄に入力してください」というポップアップを表示*/
+                        Toast.makeText(view.getContext(), "すべての欄に入力してください", Toast.LENGTH_SHORT).show();
+                    }else{
 
-                    makePackActivity.setPackTitle(packTitle);
-                    makePackActivity.setPackIntroduction(packIntroduction);
-                    makePackActivity.setPackGenre(packGenre);
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.container,new editQuizFragment())
-                            .addToBackStack(null)
-                            .commit();
-                }
+                        makePackActivity.setPackTitle(packTitle);
+                        makePackActivity.setPackIntroduction(packIntroduction);
+                        makePackActivity.setPackGenre(packGenre);
+                        getParentFragmentManager().beginTransaction()
+                                .replace(R.id.container,new editQuizFragment())
+                                .addToBackStack(null)
+                                .commit();
+                        }
+                    }
+
             }
         });
         return view;
