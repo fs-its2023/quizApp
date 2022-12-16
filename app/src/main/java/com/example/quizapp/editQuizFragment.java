@@ -182,7 +182,7 @@ public class editQuizFragment extends Fragment{
     //クイズデータを保存する
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean saveQuiz(){
-        if(quizNum<100) {
+        if(quizData.size()<99) {
             if (isSavePossible()) {
                 //入力情報の取得
                 String quizSentence = editTxtQuizSentence.getText().toString();
@@ -231,7 +231,7 @@ public class editQuizFragment extends Fragment{
             //ポップアップの表示
             Toast myToast = Toast.makeText(
                     makePackActivity.getApplicationContext(),
-                    "クイズは最大100個までです",
+                    "クイズは最大99個までです",
                     Toast.LENGTH_SHORT
             );
             myToast.show();
