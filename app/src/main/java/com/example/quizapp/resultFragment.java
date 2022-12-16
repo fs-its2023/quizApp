@@ -30,6 +30,7 @@ public class resultFragment extends Fragment {
     LinearLayout resultLayout;
     String[] listData=new String[6];
     List<String> allList=new ArrayList<>();
+    Button backButton;
 
 
 
@@ -41,6 +42,7 @@ public class resultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
         resultText=view.findViewById(R.id.resultText);
         resultLayout=view.findViewById(R.id.resultVerticalLayout);
+        backButton=view.findViewById(R.id.backButton);
         return view;
         //return inflater.inflate(R.layout.fragment_result,container,false);
     }
@@ -57,6 +59,7 @@ public class resultFragment extends Fragment {
         mainApplication = (com.example.quizapp.mainApplication) tqActivity.getMainApplication();
         packNum = mainApplication.getPackNum();
         packId=mainApplication.getPackId();
+        this.backButton.setOnClickListener(backButtonListener);
 
 
         //Applicationクラスにあるパックの情報をリストに代入
@@ -123,7 +126,8 @@ public class resultFragment extends Fragment {
             mainApplication.setFromTakeQuizFragment(false);
 
             // フラグメントマネージャーの取得
-            FragmentManager manager = getFragmentManager(); // アクティビティではgetSupportFragmentManager()?
+            //FragmentManager manager = getFragmentManager(); // アクティビティではgetSupportFragmentManager()?
+            FragmentManager manager =getParentFragmentManager();
             // フラグメントトランザクションの開始
             FragmentTransaction transaction = manager.beginTransaction();
             // レイアウトをfragmentに置き換え（追加）
@@ -132,6 +136,16 @@ public class resultFragment extends Fragment {
             transaction.addToBackStack(null);
             // フラグメントトランザクションをコミット
             transaction.commit();
+        }
+    };
+
+    View.OnClickListener backButtonListener =new View.OnClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onClick(View view) {
+            mainApplication.setMustSelectPack(true);
+            mainApplication.setFromTakeQuizPackActivity(true);
+            tqActivity.selectPack();
         }
     };
 }

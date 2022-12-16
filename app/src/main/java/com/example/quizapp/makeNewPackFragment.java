@@ -66,18 +66,22 @@ public class makeNewPackFragment extends Fragment {
                         Toast.makeText(view.getContext(), "すべての欄に入力してください", Toast.LENGTH_SHORT).show();
                     }else{
 
+                    if(packTitle.length()<=10) {
                         makePackActivity.setPackTitle(packTitle);
                         makePackActivity.setPackIntroduction(packIntroduction);
                         makePackActivity.setPackGenre(packGenre);
                         getParentFragmentManager().beginTransaction()
-                                .replace(R.id.container,new editQuizFragment())
+                                .replace(R.id.container, new editQuizFragment())
                                 .addToBackStack(null)
                                 .commit();
-                        }
+                    }else{
+                        Toast.makeText(view.getContext(), "タイトルは10文字以下までです", Toast.LENGTH_SHORT).show();
                     }
-
+                    }
+                }
             }
         });
         return view;
+
     }
 }

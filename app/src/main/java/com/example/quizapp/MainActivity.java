@@ -55,8 +55,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        //テスト用ファイル作成
-        //mainApplication.testPackDataFileMaker();
+        /*テスト用ファイル作成
+        mainApplication.deleteFile("packData");
+        mainApplication.testPackDataFileMaker();
+        for(int i=0;i<=2134;i++){
+            deleteFile(String.format("%04d",i));
+        }*/
     }
 
     //--- パック編集へ遷移
