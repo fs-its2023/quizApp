@@ -182,49 +182,59 @@ public class editQuizFragment extends Fragment{
     //クイズデータを保存する
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean saveQuiz(){
-        if(isSavePossible()){
-            //入力情報の取得
-            String quizSentence=editTxtQuizSentence.getText().toString();
-            String correctOption=editTxtCorrectOption.getText().toString();
-            String inCorrectOption1=editTxtIncorrectOption1.getText().toString();
-            String inCorrectOption2=editTxtIncorrectOption2.getText().toString();
-            String inCorrectOption3=editTxtIncorrectOption3.getText().toString();
-            String quizExplanation=editTxtQuizExplanation.getText().toString();
+        if(quizNum<100) {
+            if (isSavePossible()) {
+                //入力情報の取得
+                String quizSentence = editTxtQuizSentence.getText().toString();
+                String correctOption = editTxtCorrectOption.getText().toString();
+                String inCorrectOption1 = editTxtIncorrectOption1.getText().toString();
+                String inCorrectOption2 = editTxtIncorrectOption2.getText().toString();
+                String inCorrectOption3 = editTxtIncorrectOption3.getText().toString();
+                String quizExplanation = editTxtQuizExplanation.getText().toString();
 
-            String strQuizData = quizSentence+","+correctOption+","+inCorrectOption1+","+inCorrectOption2+","+inCorrectOption3+","+quizExplanation;
+                String strQuizData = quizSentence + "," + correctOption + "," + inCorrectOption1 + "," + inCorrectOption2 + "," + inCorrectOption3 + "," + quizExplanation;
 
-            //クイズデータをリストに追加、新規の場合
-            if(isMakeNewQuiz){
-                quizData.add(strQuizData);
+                //クイズデータをリストに追加、新規の場合
+                if (isMakeNewQuiz) {
+                    quizData.add(strQuizData);
+                }
+
+
+                //クイズデータをリストに追加、編集の場合
+                if (!isMakeNewQuiz) {
+                    quizData.set(quizNum, strQuizData);
+                }
+
+                //クイズデータのリストを該当するpackIdのファイルに保存
+                String packId = mainApplication.getPackId();
+                mainApplication.clearFile(packId);
+                mainApplication.saveFileByList(packId, quizData);
+
+                //ポップアップの表示
+                Toast myToast = Toast.makeText(
+                        makePackActivity.getApplicationContext(),
+                        "保存しました",
+                        Toast.LENGTH_SHORT
+                );
+                myToast.show();
+
+                //パックデータの更新
+                savePack();
+
+                //編集モードを解除する
+
+                isMakeNewQuiz = true;
+
+                return true;
             }
-
-
-            //クイズデータをリストに追加、編集の場合
-            if(!isMakeNewQuiz) {
-                quizData.set(quizNum, strQuizData);
-            }
-
-            //クイズデータのリストを該当するpackIdのファイルに保存
-            String packId = mainApplication.getPackId();
-            mainApplication.clearFile(packId);
-            mainApplication.saveFileByList(packId, quizData);
-
+        }else{
             //ポップアップの表示
             Toast myToast = Toast.makeText(
                     makePackActivity.getApplicationContext(),
-                    "保存しました",
+                    "クイズは最大100個までです",
                     Toast.LENGTH_SHORT
             );
             myToast.show();
-
-            //パックデータの更新
-            savePack();
-
-            //編集モードを解除する
-
-            isMakeNewQuiz = true;
-
-            return true;
         }
         return false;
     }
