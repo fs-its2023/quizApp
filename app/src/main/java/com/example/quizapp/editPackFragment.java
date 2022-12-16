@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -303,8 +304,11 @@ public class editPackFragment extends Fragment implements View.OnClickListener {
              * クイズ追加ボタン
              */
             this.mainApp.setQuizNum(this.mpActivity.getQuizTotalNum());
-
-            this.editQuiz();
+            if(mainApp.getQuizNum()<99){
+                this.editQuiz();
+            }else{
+                Toast.makeText(view.getContext(), "問題数は最大99個です", Toast.LENGTH_SHORT).show();
+            }
 
         }else if(view.getTag().toString().equals("editQuiz") && this.isEnabled){
             /*
